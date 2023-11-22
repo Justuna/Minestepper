@@ -1,12 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "wI7e09zfakQ9jUBXatlML80bNOZHxHMUY6yVW9tGSusBCnhgaPgskA9K3knioRcdafu+lzksNlg/buS3Xhe4/w==",
+  "dgSpecHash": "q19plR7GaEGFZlTTJRL0ng0SDSZm8d9uFvq+LXITDTTZrQKyV3XqpKCmq/gol8WRZHULCtBiL8VWTuvx6alP1g==",
   "success": true,
-  "projectFilePath": "D:\\Justin\\Documents\\Projects\\Godot\\Minestepper\\Minestepper.csproj",
+  "projectFilePath": "C:\\Users\\Justin\\Documents\\GitHub\\Minestepper\\Minestepper.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Justin\\.nuget\\packages\\godot.sourcegenerators\\4.1.2\\godot.sourcegenerators.4.1.2.nupkg.sha512",
     "C:\\Users\\Justin\\.nuget\\packages\\godotsharp\\4.1.2\\godotsharp.4.1.2.nupkg.sha512",
-    "C:\\Users\\Justin\\.nuget\\packages\\godotsharpeditor\\4.1.2\\godotsharpeditor.4.1.2.nupkg.sha512"
+    "C:\\Users\\Justin\\.nuget\\packages\\godotsharpeditor\\4.1.2\\godotsharpeditor.4.1.2.nupkg.sha512",
+    "C:\\Users\\Justin\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.21\\microsoft.netcore.app.ref.6.0.21.nupkg.sha512",
+    "C:\\Users\\Justin\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.21\\microsoft.windowsdesktop.app.ref.6.0.21.nupkg.sha512",
+    "C:\\Users\\Justin\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.21\\microsoft.aspnetcore.app.ref.6.0.21.nupkg.sha512"
   ],
   "logs": []
 }

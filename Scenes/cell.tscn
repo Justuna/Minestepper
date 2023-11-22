@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://pcb2neyjjif"]
+
+[ext_resource type="Script" path="res://Scripts/MinesweeperCell.cs" id="1_ebpc6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qne38"]
+bg_color = Color(0.556863, 0.886275, 0.427451, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_thkp1"]
+font_size = 60
+outline_size = 5
+outline_color = Color(0.0392157, 0.0117647, 0.00392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5qpok"]
+bg_color = Color(0.72549, 1, 0.529412, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hrubo"]
+bg_color = Color(0.980392, 0.980392, 0.980392, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Cell" type="Control" node_paths=PackedStringArray("_panel", "_cover", "_hint", "_sprite")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 100.0
+offset_bottom = 100.0
+script = ExtResource("1_ebpc6")
+_panel = NodePath("Panel")
+_cover = NodePath("Cover")
+_hint = NodePath("Label")
+_sprite = NodePath("Sprite2D")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_direction = 2
+offset_right = 100.0
+offset_bottom = 100.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qne38")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+text = "1"
+label_settings = SubResource("LabelSettings_thkp1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Cover" type="Button" parent="."]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_5qpok")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hrubo")

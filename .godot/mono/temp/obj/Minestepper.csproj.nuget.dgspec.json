@@ -1,33 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Justin\\Documents\\Projects\\Godot\\Minestepper\\Minestepper.csproj": {}
+    "C:\\Users\\Justin\\Documents\\GitHub\\Minestepper\\Minestepper.csproj": {}
   },
   "projects": {
-    "D:\\Justin\\Documents\\Projects\\Godot\\Minestepper\\Minestepper.csproj": {
+    "C:\\Users\\Justin\\Documents\\GitHub\\Minestepper\\Minestepper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Justin\\Documents\\Projects\\Godot\\Minestepper\\Minestepper.csproj",
+        "projectUniqueName": "C:\\Users\\Justin\\Documents\\GitHub\\Minestepper\\Minestepper.csproj",
         "projectName": "Minestepper",
-        "projectPath": "D:\\Justin\\Documents\\Projects\\Godot\\Minestepper\\Minestepper.csproj",
+        "projectPath": "C:\\Users\\Justin\\Documents\\GitHub\\Minestepper\\Minestepper.csproj",
         "packagesPath": "C:\\Users\\Justin\\.nuget\\packages\\",
-        "outputPath": "D:\\Justin\\Documents\\Projects\\Godot\\Minestepper\\.godot\\mono\\temp\\obj\\",
+        "outputPath": "C:\\Users\\Justin\\Documents\\GitHub\\Minestepper\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Users\\Justin\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Justin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Users\\Justin\\AppData\\Roaming\\NuGet\\config\\Godot.Offline.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Justin\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -70,12 +62,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.21, 6.0.21]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.21, 6.0.21]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.21, 6.0.21]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
