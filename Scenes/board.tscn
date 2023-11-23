@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/MinesweeperGrid.cs" id="1_hu0qi"]
 [ext_resource type="PackedScene" uid="uid://pcb2neyjjif" path="res://Scenes/cell.tscn" id="2_sfmog"]
 
-[node name="Board" type="Control"]
+[node name="Board" type="Control" node_paths=PackedStringArray("_background", "_gridLayout")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -13,6 +13,13 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hu0qi")
+_background = NodePath("ColorRect")
+_gridLayout = NodePath("GridContainer")
+_gridCellTemplate = ExtResource("2_sfmog")
+_spacing = 10
+_padding = 10
+_bgTint = Color(0.215686, 0.215686, 0.215686, 0.643137)
+_bgBlendMode = 3
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -42,9 +49,6 @@ offset_right = 125.0
 offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/h_separation = 5
-theme_override_constants/v_separation = 5
-columns = 6
-
-[node name="Cell" parent="GridContainer" instance=ExtResource("2_sfmog")]
-layout_mode = 2
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 100
+columns = 2

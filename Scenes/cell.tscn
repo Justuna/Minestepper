@@ -11,7 +11,7 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_thkp1"]
 font_size = 60
-outline_size = 5
+outline_size = 25
 outline_color = Color(0.0392157, 0.0117647, 0.00392157, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5qpok"]
@@ -38,10 +38,16 @@ _panel = NodePath("Panel")
 _cover = NodePath("Cover")
 _hint = NodePath("Label")
 _sprite = NodePath("Sprite2D")
+_panelTint = Color(0.74902, 0.74902, 0.74902, 0.529412)
+_panelBlendMode = 3
+_coverTint = Color(1, 1, 1, 0)
+_outlineTint = Color(0.137255, 0.137255, 0.137255, 0.584314)
+_outlineBlendMode = 3
 
 [node name="Panel" type="Panel" parent="."]
 custom_minimum_size = Vector2(50, 50)
 layout_direction = 2
+layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qne38")
@@ -50,7 +56,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_qne38")
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
-text = "1"
 label_settings = SubResource("LabelSettings_thkp1")
 horizontal_alignment = 1
 vertical_alignment = 1

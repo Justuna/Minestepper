@@ -4,15 +4,17 @@ using System.Collections.Generic;
 
 public partial class MinesweeperGrid : Control
 {
-	[Export] private Control _background;
+	[Export] private ColorRect _background;
 	[Export] private GridContainer _gridLayout;
 	[Export] private PackedScene _gridCellTemplate;
-	[Export] private float _spacing;
-	[Export] private float _padding;
+	[Export] private int _spacing;
+	[Export] private int _padding;
+	[Export] private Color _bgTint;
+	[Export] private BlendModes _bgBlendMode;
 
-	private const int DEFAULT_WIDTH = 7;
-	private const int DEFAULT_HEIGHT = 7;
-	private const int DEFAULT_MINE_COUNT = 10;
+	private const int DEFAULT_WIDTH = 6;
+	private const int DEFAULT_HEIGHT = 6;
+	private const int DEFAULT_MINE_COUNT = 4;
 
 	private MinesweeperCell[] _gridCells;
 	private int _width;
@@ -22,12 +24,17 @@ public partial class MinesweeperGrid : Control
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 	private int _area => _width * _height;
 
-	public void Init(int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int mineCount = DEFAULT_MINE_COUNT)
+    public override void _Ready()
+    {
+		Init(Color.FromHsv(0f, 1, 1));
+
+        base._Ready();
+    }
+
+    public void Init(Color color, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int mineCount = DEFAULT_MINE_COUNT)
 	{
 		_width = width;
 		_height = height;
-
-		_gridLayout.Columns = _height;
 
 		_mineCount = Math.Min(mineCount, _area - 1);
 		_gridCells = new MinesweeperCell[_area];
@@ -39,21 +46,26 @@ public partial class MinesweeperGrid : Control
 				MinesweeperCell cell = _gridCellTemplate.Instantiate() as MinesweeperCell;
 
 				// Use the first cell to figure out board size information
+
 				if (i == 0)
 				{
-					float sizeX = 2 * _padding + cell.GetRect().Size.X * _width + _spacing * (_width - 1);
-					float sizeY = 2 * _padding + cell.GetRect().Size.Y * _height + _spacing * (_height - 1);
+					int cWidth = Mathf.CeilToInt(cell.GetRect().Size.X);
+					int cHeight = Mathf.CeilToInt(cell.GetRect().Size.Y);
+
+					_gridLayout.AddThemeConstantOverride("h_separation", cWidth + _spacing);
+					_gridLayout.AddThemeConstantOverride("v_separation", cHeight + _spacing);
+
+					float sizeX = (2 * _padding) + (cWidth * _width) + (_spacing * (_width - 1));
+					float sizeY = (2 * _padding) + (cHeight * _height) + (_spacing * (_height - 1));
 
 					_background.SetSize(new Vector2(sizeX, sizeY));
-					_gridLayout.Set("h_separation", _spacing);
-					_gridLayout.Set("v_separation", _spacing);
+					_background.Color = ColorOperations.Mix(_bgTint, color, _bgBlendMode);
 				}
 
 				_gridLayout.AddChild(cell);
 				
-				//cell.Init(this, i);
+				cell.Init(this, i, color);
 				_gridCells[i] = cell;
-				
 			}
 			catch (InvalidCastException)
 			{
@@ -64,6 +76,8 @@ public partial class MinesweeperGrid : Control
 				GD.Print(e);
 			}
 		}
+
+		_gridLayout.Columns = _width;
 	}
 
 	public void Fill(int safeSpace)
@@ -94,8 +108,10 @@ public partial class MinesweeperGrid : Control
 			for (int n = 0; n < 8; n++)
 			{
 				int neighbor = neighbors[n];
-				if (neighbor > 0 && _gridCells[neighbor].IsMine) count++;
+
+				if (neighbor >= 0 && _gridCells[neighbor].IsMine) count++;
 			}
+
 			_gridCells[i].AddHint(count);
 		}
 	}
@@ -107,7 +123,7 @@ public partial class MinesweeperGrid : Control
 		if (index % _width > 0) neighbors[0] = index - 1;
 		else neighbors[0] = -1;
 		
-		if (index % _width < _width) neighbors[1] = index + 1;
+		if (index % _width < _width - 1) neighbors[1] = index + 1;
 		else neighbors[1] = -1;
 
 		if (index >= _width) neighbors[2] = index - _width;
@@ -122,10 +138,10 @@ public partial class MinesweeperGrid : Control
 		if (index % _width > 0 && index < _area - _width) neighbors[5] = index - 1 + _width;
 		else neighbors[5] = -1;
 
-		if (index % _width < _width && index >= _width) neighbors[6] = index + 1 - _width;
+		if (index % _width < _width - 1 && index >= _width) neighbors[6] = index + 1 - _width;
 		else neighbors[6] = -1;
 
-		if (index % _width < _width && index < _area - _width) neighbors[7] = index + 1 + _width;
+		if (index % _width < _width - 1 && index < _area - _width) neighbors[7] = index + 1 + _width;
 		else neighbors[7] = -1;
 		
 		return neighbors;
@@ -133,16 +149,11 @@ public partial class MinesweeperGrid : Control
 
 	public void Reveal(int index)
 	{
-		int area = _width * _height;
-
 		if (_gridCells[index].IsMine)
 		{
-			for (int i = 0; i < area; i++)
-			{
-				_gridCells[i].Reveal();
-			}
+			RevealAll();
 
-			// Do something on game loss
+			GD.Print("You lose!");
 		}
 		else
 		{
@@ -166,16 +177,26 @@ public partial class MinesweeperGrid : Control
 						for (int n = 0; n < 8; n++)
 						{
 							int neighbor = neighbors[n];
-							if (neighbor > 0) queue.Enqueue(neighbor);
+							if (neighbor >= 0) queue.Enqueue(neighbor);
 						}
 					}
 				}
 			}
 
-			if (_revealed + _mineCount == area)
+			if (_revealed + _mineCount == _area)
 			{
-				// Do something on game win
+				RevealAll();
+
+				GD.Print("You win!");
 			}
+		}
+	}
+
+	private void RevealAll()
+	{
+		for (int i = 0; i < _area; i++)
+		{
+			_gridCells[i].Reveal();
 		}
 	}
 }

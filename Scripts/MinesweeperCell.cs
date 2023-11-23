@@ -15,6 +15,12 @@ public partial class MinesweeperCell : Control
     [Export] private Button _cover;
     [Export] private Label _hint;
     [Export] private Sprite2D _sprite;
+    [Export] private Color _panelTint;
+	[Export] private BlendModes _panelBlendMode;
+    [Export] private Color _coverTint;
+	[Export] private BlendModes _coverBlendMode;
+    [Export] private Color _outlineTint;
+	[Export] private BlendModes _outlineBlendMode;
 
     private MinesweeperCellState _state = MinesweeperCellState.UNDECIDED;
     private MinesweeperGrid _grid;
@@ -25,18 +31,14 @@ public partial class MinesweeperCell : Control
     public bool IsHint => _state == MinesweeperCellState.HINT;
     public bool IsEmpty => _state == MinesweeperCellState.EMPTY;
 
-    public override void _Ready()
-    {
-        Init(null, 0, new Color(1, 0, 1, 1));
-    }
-
     public void Init(MinesweeperGrid grid, int index, Color color)
     {
         _grid = grid;
         _index = index;
 
-        _panel.GetThemeStylebox("panel").Set("bg_color", color);
-        _cover.GetThemeStylebox("normal").Set("bg_color", color.Darkened(0.2f));
+        _panel.GetThemeStylebox("panel").Set("bg_color", ColorOperations.Mix(_panelTint, color, _panelBlendMode));
+        _cover.GetThemeStylebox("normal").Set("bg_color", ColorOperations.Mix(_coverTint, color, _coverBlendMode));
+        _hint.LabelSettings.Set("outline_color", ColorOperations.Mix(_outlineTint, color, _outlineBlendMode));
         _cover.ButtonDown += Click;
     }
 
@@ -64,13 +66,12 @@ public partial class MinesweeperCell : Control
 
     public void Click()
     {
-        Reveal();
-        // if (_state == MinesweeperCellState.UNDECIDED)
-        // {
-        //     _grid.Fill(_index);
-        // }
+        if (_state == MinesweeperCellState.UNDECIDED)
+        {
+            _grid.Fill(_index);
+        }
 
-        // _grid.Reveal(_index);
+        _grid.Reveal(_index);
     }
 
     public bool Reveal()
@@ -78,6 +79,7 @@ public partial class MinesweeperCell : Control
         if (_revealed) return false;
 
         _cover.Visible = false;
+        _revealed = true;
 
         return true;
     }
