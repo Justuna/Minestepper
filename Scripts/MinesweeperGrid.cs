@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class MinesweeperGrid : Control
 {
-	[Export] private ColorRect _background;
+	[Export] private Panel _background;
 	[Export] private GridContainer _gridLayout;
 	[Export] private PackedScene _gridCellTemplate;
 	[Export] private int _spacing;
@@ -23,13 +23,6 @@ public partial class MinesweeperGrid : Control
 	private int _revealed = 0;
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 	private int _area => _width * _height;
-
-    public override void _Ready()
-    {
-		Init(Color.FromHsv(0f, 1, 1));
-
-        base._Ready();
-    }
 
     public void Init(Color color, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int mineCount = DEFAULT_MINE_COUNT)
 	{
@@ -59,21 +52,27 @@ public partial class MinesweeperGrid : Control
 					float sizeY = (2 * _padding) + (cHeight * _height) + (_spacing * (_height - 1));
 
 					_background.SetSize(new Vector2(sizeX, sizeY));
-					_background.Color = ColorOperations.Mix(_bgTint, color, _bgBlendMode);
+					_gridLayout.SetSize(new Vector2(sizeX - 2 * _padding, sizeY - 2 * _padding));
+					_background.GetThemeStylebox("panel").Set("bg_color", ColorOperations.Mix(_bgTint, color, _bgBlendMode));
 				}
 
 				_gridLayout.AddChild(cell);
-				
+
+				_gridLayout.PivotOffset = new Vector2(_gridLayout.Size.X / 2, _gridLayout.Size.Y / 2);
+				_background.PivotOffset = new Vector2(_background.Size.X / 2, _background.Size.Y / 2);
+				_gridLayout.SetPosition(-_gridLayout.PivotOffset);
+				_background.SetPosition(-_background.PivotOffset);
+
 				cell.Init(this, i, color);
 				_gridCells[i] = cell;
 			}
 			catch (InvalidCastException)
 			{
-				GD.Print("ERROR: Cell scene must have the MinesweeperCell script as its root type.");
+				GD.PrintErr("Cell scene must have the MinesweeperCell script as its root type.");
 			}
 			catch (Exception e)
 			{
-				GD.Print(e);
+				GD.PrintErr(e);
 			}
 		}
 

@@ -1,7 +1,9 @@
+Panel
 Control
+Node
+Node2D
 Label
 Sprite2D
 Button
-Panel
 ColorRect
 GridContainer

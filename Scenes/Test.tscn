@@ -1,3 +1,29 @@
-[gd_scene format=3 uid="uid://bw8l2u700t6mo"]
+[gd_scene load_steps=3 format=3 uid="uid://bw8l2u700t6mo"]
 
-[node name="Test" type="Node2D"]
+[ext_resource type="Script" path="res://Scripts/PlayerWindow.cs" id="1_jxhbt"]
+[ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/board.tscn" id="2_0qnsv"]
+
+[node name="Test" type="Control" node_paths=PackedStringArray("_gridCenter")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jxhbt")
+_gridCenter = NodePath("Center")
+_gridTemplate = ExtResource("2_0qnsv")
+
+[node name="Center" type="Control" parent="."]
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+metadata/_edit_use_anchors_ = true

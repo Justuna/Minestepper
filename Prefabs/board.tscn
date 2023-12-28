@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgtny3rdlhy55"]
+[gd_scene load_steps=4 format=3 uid="uid://cgtny3rdlhy55"]
 
 [ext_resource type="Script" path="res://Scripts/MinesweeperGrid.cs" id="1_wxs4r"]
 [ext_resource type="PackedScene" uid="uid://pcb2neyjjif" path="res://Prefabs/cell.tscn" id="2_pwk4a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydysm"]
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Board" type="Control" node_paths=PackedStringArray("_background", "_gridLayout")]
 layout_mode = 3
@@ -13,15 +19,15 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wxs4r")
-_background = NodePath("ColorRect")
-_gridLayout = NodePath("GridContainer")
+_background = NodePath("Background")
+_gridLayout = NodePath("Grid Layout")
 _gridCellTemplate = ExtResource("2_pwk4a")
 _spacing = 10
-_padding = 10
+_padding = 20
 _bgTint = Color(0.215686, 0.215686, 0.215686, 0.643137)
 _bgBlendMode = 3
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -34,9 +40,10 @@ offset_right = 135.0
 offset_bottom = 135.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.470588, 0.568627, 0.364706, 1)
+pivot_offset = Vector2(135, 135)
+theme_override_styles/panel = SubResource("StyleBoxFlat_ydysm")
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="Grid Layout" type="GridContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -51,4 +58,4 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 100
 theme_override_constants/v_separation = 100
-columns = 2
+columns = 10
