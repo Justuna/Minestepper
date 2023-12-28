@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cgtny3rdlhy55"]
 
-[ext_resource type="Script" path="res://Scripts/MinesweeperGrid.cs" id="1_hu0qi"]
-[ext_resource type="PackedScene" uid="uid://pcb2neyjjif" path="res://Scenes/cell.tscn" id="2_sfmog"]
+[ext_resource type="Script" path="res://Scripts/MinesweeperGrid.cs" id="1_wxs4r"]
+[ext_resource type="PackedScene" uid="uid://pcb2neyjjif" path="res://Prefabs/cell.tscn" id="2_pwk4a"]
 
 [node name="Board" type="Control" node_paths=PackedStringArray("_background", "_gridLayout")]
 layout_mode = 3
@@ -12,10 +12,10 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_hu0qi")
+script = ExtResource("1_wxs4r")
 _background = NodePath("ColorRect")
 _gridLayout = NodePath("GridContainer")
-_gridCellTemplate = ExtResource("2_sfmog")
+_gridCellTemplate = ExtResource("2_pwk4a")
 _spacing = 10
 _padding = 10
 _bgTint = Color(0.215686, 0.215686, 0.215686, 0.643137)

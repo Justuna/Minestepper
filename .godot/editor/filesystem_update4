@@ -1,4 +1,4 @@
-res://Scenes/board.tscn
-res://Scenes/cell.tscn
 res://Scripts/MinesweeperCell.cs
+res://board.tscn
 res://Scripts/MinesweeperGrid.cs
+res://Scenes/board.tscn
