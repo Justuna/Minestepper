@@ -67,7 +67,7 @@ var save_file_data: Dictionary = {}
 var applied_results: bool = false
 
 ## Our minigame's name
-@export var game_name: String = "Test Game"
+@export var game_name: String = "Minestepper"
 @export var min_player_count: int = 2
 @export var max_player_count: int = 4
 

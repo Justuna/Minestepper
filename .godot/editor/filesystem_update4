@@ -1,7 +1,7 @@
 res://Scripts/MinesweeperCell.cs
-res://board.tscn
 res://Scripts/MinesweeperGrid.cs
-res://Scenes/board.tscn
+res://Scripts/PlayerInput.cs
 res://Scripts/PlayerWindow.cs
 res://Scenes/Test.tscn
 res://Prefabs/board.tscn
+res://Prefabs/cell.tscn
