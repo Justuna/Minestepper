@@ -7,26 +7,42 @@ using System.Net.Http.Headers;
 
 public partial class PlayerInput : Node
 {
-    public const float NORMAL_SPEED = 1f;
-    public const float FAST_SPEED = 2f;
-    public const float DEADZONE = 0.2f;
+    [Export] private float _deadZone = 0.2f;
 
+    public Vector2 Direction = Vector2.Zero;
+    public bool Fast { get; private set; } = false;
 
-
-    private int _playerID;
+    private PlayerWindow _window;
     private int _deviceID;
-
-    private bool _fast = false;
     private bool _leftButton = false;
     private bool _rightButton = false;
     private bool _upButton = false;
     private bool _downButton = false;
-    private bool _buttons => _leftButton || _rightButton || _upButton || _downButton;
 
-    public void Init(int playerID, int deviceID)
+    public void Init(PlayerWindow window)
     {
-        _playerID = playerID;
-        _deviceID = deviceID;
+        _window = window;
+
+        try 
+        {
+            _deviceID = Input.GetConnectedJoypads()[_window.PlayerID - 1];
+        }
+        catch (Exception)
+        {
+            GD.Print("Oops");
+
+            _deviceID = -1;
+
+            if (_window.PlayerID <= 0)
+            {
+                // Negative player means this player viewport is not being used
+                // Zero player is unused
+            }
+            else
+            {
+                // Something went wrong with the controller
+            }
+        }
     }
 
     public override void _Process(double delta)
@@ -53,7 +69,7 @@ public partial class PlayerInput : Node
         {
             Vector2 joystick = new Vector2(Input.GetJoyAxis(_deviceID, JoyAxis.LeftX), Input.GetJoyAxis(_deviceID, JoyAxis.LeftY));
 
-            if (joystick.Length() <= DEADZONE) velocity = Vector2.Zero;
+            if (joystick.Length() <= _deadZone) velocity = Vector2.Zero;
             else
             {
                 if (Math.Abs(joystick.X) > Math.Abs(joystick.Y)) velocity = new Vector2(Math.Abs(joystick.X) / joystick.X, 0);
@@ -61,10 +77,7 @@ public partial class PlayerInput : Node
             }
         }
 
-        velocity.X *= _fast ? FAST_SPEED : NORMAL_SPEED;
-        velocity.Y *= _fast ? FAST_SPEED : NORMAL_SPEED;
-
-        GD.Print(velocity);
+        Direction = velocity;
     }
 
     public override void _Input(InputEvent @event)
@@ -76,11 +89,11 @@ public partial class PlayerInput : Node
 
         if (@event.IsActionPressed("Fast"))
         {
-            _fast = true;
+            Fast = true;
         }
         else if (@event.IsActionReleased("Fast"))
         {
-            _fast = false;
+            Fast = false;
         }
 
         if (@event.IsActionPressed("Left"))
@@ -121,7 +134,7 @@ public partial class PlayerInput : Node
 
         if (@event.IsAction("Reveal"))
         {
-            GD.Print("Reveal");
+            _window.Grid.Reveal();
         }
     }
 }

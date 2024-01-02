@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/board.tscn" id="2_0qnsv"]
 [ext_resource type="Script" path="res://Scripts/PlayerInput.cs" id="3_lsttt"]
 
-[node name="Test" type="Control" node_paths=PackedStringArray("_gridCenter")]
+[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_gridCenter")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jxhbt")
+_playerInput = NodePath("Node")
 _gridCenter = NodePath("Center")
 _gridTemplate = ExtResource("2_0qnsv")
 

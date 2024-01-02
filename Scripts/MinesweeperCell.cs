@@ -11,8 +11,9 @@ public enum MinesweeperCellState
 
 public partial class MinesweeperCell : Control
 {
+    [Export] private Panel _outline;
     [Export] private Panel _panel;
-    [Export] private Button _cover;
+    [Export] private Panel _cover;
     [Export] private Label _hint;
     [Export] private Sprite2D _sprite;
     [Export] private Color _panelTint;
@@ -30,16 +31,17 @@ public partial class MinesweeperCell : Control
     public bool IsMine => _state == MinesweeperCellState.MINE;
     public bool IsHint => _state == MinesweeperCellState.HINT;
     public bool IsEmpty => _state == MinesweeperCellState.EMPTY;
+    public bool IsDecided => _state != MinesweeperCellState.UNDECIDED;
 
     public void Init(MinesweeperGrid grid, int index, Color color)
     {
         _grid = grid;
         _index = index;
 
-        _panel.GetThemeStylebox("panel").Set("bg_color", ColorOperations.Mix(_panelTint, color, _panelBlendMode));
-        _cover.GetThemeStylebox("normal").Set("bg_color", ColorOperations.Mix(_coverTint, color, _coverBlendMode));
+        _panel.Modulate = ColorOperations.Mix(_panelTint, color, _panelBlendMode);
+        _cover.Modulate = ColorOperations.Mix(_coverTint, color, _coverBlendMode);
         _hint.LabelSettings.Set("outline_color", ColorOperations.Mix(_outlineTint, color, _outlineBlendMode));
-        _cover.ButtonDown += Click;
+        _outline.Hide();
     }
 
     public void AddMine()
@@ -64,16 +66,6 @@ public partial class MinesweeperCell : Control
         }
     }
 
-    public void Click()
-    {
-        if (_state == MinesweeperCellState.UNDECIDED)
-        {
-            _grid.Fill(_index);
-        }
-
-        _grid.Reveal(_index);
-    }
-
     public bool Reveal()
     {
         if (_revealed) return false;
@@ -82,5 +74,15 @@ public partial class MinesweeperCell : Control
         _revealed = true;
 
         return true;
+    }
+
+    public void Select()
+    {
+        _outline.Show();
+    }
+
+    public void Deselect()
+    {
+        _outline.Hide();
     }
 }

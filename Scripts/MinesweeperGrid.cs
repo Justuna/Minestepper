@@ -11,11 +11,14 @@ public partial class MinesweeperGrid : Control
 	[Export] private int _padding;
 	[Export] private Color _bgTint;
 	[Export] private BlendModes _bgBlendMode;
+	[Export] private float _speed;
+	[Export] private float _fastFactor;
 
 	private const int DEFAULT_WIDTH = 6;
 	private const int DEFAULT_HEIGHT = 6;
 	private const int DEFAULT_MINE_COUNT = 4;
 
+	private PlayerWindow _window;
 	private MinesweeperCell[] _gridCells;
 	private int _width;
 	private int _height;
@@ -23,11 +26,21 @@ public partial class MinesweeperGrid : Control
 	private int _revealed = 0;
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 	private int _area => _width * _height;
+	private bool _over = false;
 
-    public void Init(Color color, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int mineCount = DEFAULT_MINE_COUNT)
+	private Vector2 _direction;
+	private int _selected;
+	private double _moveProgress = 0;
+
+    public void Init(PlayerWindow window, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int mineCount = DEFAULT_MINE_COUNT)
 	{
+		_window = window;
+
 		_width = width;
 		_height = height;
+
+		_direction = Vector2.Zero;
+		_selected = _area % 2 == 0 ? _area / 2 - _width / 2  - 1: _area / 2;
 
 		_mineCount = Math.Min(mineCount, _area - 1);
 		_gridCells = new MinesweeperCell[_area];
@@ -53,7 +66,7 @@ public partial class MinesweeperGrid : Control
 
 					_background.SetSize(new Vector2(sizeX, sizeY));
 					_gridLayout.SetSize(new Vector2(sizeX - 2 * _padding, sizeY - 2 * _padding));
-					_background.GetThemeStylebox("panel").Set("bg_color", ColorOperations.Mix(_bgTint, color, _bgBlendMode));
+					_background.GetThemeStylebox("panel").Set("bg_color", ColorOperations.Mix(_bgTint, _window.PlayerColor, _bgBlendMode));
 				}
 
 				_gridLayout.AddChild(cell);
@@ -63,7 +76,7 @@ public partial class MinesweeperGrid : Control
 				_gridLayout.SetPosition(-_gridLayout.PivotOffset);
 				_background.SetPosition(-_background.PivotOffset);
 
-				cell.Init(this, i, color);
+				cell.Init(this, i, _window.PlayerColor);
 				_gridCells[i] = cell;
 			}
 			catch (InvalidCastException)
@@ -77,9 +90,51 @@ public partial class MinesweeperGrid : Control
 		}
 
 		_gridLayout.Columns = _width;
+		_gridCells[_selected].Select();
 	}
 
-	public void Fill(int safeSpace)
+    public override void _Process(double delta)
+    {
+		if (_over) return;
+
+        if (!_direction.Equals(_window.Input.Direction))
+		{
+			if (_direction.Equals(Vector2.Zero)) _moveProgress = 0.9;
+			else _moveProgress = 0.5;
+
+			_direction = _window.Input.Direction;
+		}
+
+		_moveProgress += (_window.Input.Fast ? _speed * _fastFactor : _speed) * delta;
+		if (_moveProgress >= 1)
+		{
+			_gridCells[_selected].Deselect();
+
+			_moveProgress = 0;
+			int[] adjacent = GetAdjacentCells(_selected);
+
+			if (_direction.Equals(Vector2.Left) && adjacent[(int) Direction.WEST] >= 0)
+			{
+				_selected = adjacent[(int) Direction.WEST];
+			}
+			else if (_direction.Equals(Vector2.Right) && adjacent[(int) Direction.EAST] >= 0)
+			{
+				_selected = adjacent[(int) Direction.EAST];
+			}
+			else if (_direction.Equals(Vector2.Up) && adjacent[(int) Direction.NORTH] >= 0)
+			{
+				_selected = adjacent[(int) Direction.NORTH];
+			}
+			else if (_direction.Equals(Vector2.Down) && adjacent[(int) Direction.SOUTH] >= 0)
+			{
+				_selected = adjacent[(int) Direction.SOUTH];
+			}
+
+			_gridCells[_selected].Select();
+		}
+    }
+
+    private void Fill(int safeSpace)
 	{
 		HashSet<int> filled = new HashSet<int>
 		{
@@ -115,6 +170,8 @@ public partial class MinesweeperGrid : Control
 		}
 	}
 
+	enum Direction { WEST, EAST, NORTH, SOUTH, NORTHWEST, SOUTHWEST, NORTHEAST, SOUTHEAST };
+
 	private int[] GetAdjacentCells(int index)
 	{
 		int[] neighbors = new int[8];
@@ -146,19 +203,27 @@ public partial class MinesweeperGrid : Control
 		return neighbors;
 	}
 
-	public void Reveal(int index)
+	public void Reveal()
 	{
-		if (_gridCells[index].IsMine)
+		if (_over) return;
+
+		if (_gridCells[_selected].IsMine)
 		{
 			RevealAll();
 
+			_over = true;
 			GD.Print("You lose!");
 		}
 		else
 		{
+			if (!_gridCells[_selected].IsDecided)
+			{
+				Fill(_selected);
+			}
+
 			Queue<int> queue = new Queue<int>();
 
-			queue.Enqueue(index);
+			queue.Enqueue(_selected);
 
 			while (queue.Count > 0)
 			{
@@ -186,6 +251,7 @@ public partial class MinesweeperGrid : Control
 			{
 				RevealAll();
 
+				_over = true;
 				GD.Print("You win!");
 			}
 		}
@@ -197,5 +263,7 @@ public partial class MinesweeperGrid : Control
 		{
 			_gridCells[i].Reveal();
 		}
+
+		_gridCells[_selected].Deselect();
 	}
 }
