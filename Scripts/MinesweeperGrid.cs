@@ -32,6 +32,9 @@ public partial class MinesweeperGrid : Control
 	private int _selected;
 	private double _moveProgress = 0;
 
+	[Signal]
+	public delegate void GridFinishedEventHandler(bool win);
+
     public void Init(PlayerWindow window, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int mineCount = DEFAULT_MINE_COUNT)
 	{
 		_window = window;
@@ -78,6 +81,15 @@ public partial class MinesweeperGrid : Control
 
 				cell.Init(this, i, _window.PlayerColor);
 				_gridCells[i] = cell;
+
+				if (_background.Size.X > _window.SqueezeSize.X || _background.Size.Y > _window.SqueezeSize.Y)
+				{
+					float ratioX = _window.SqueezeSize.X / _background.Size.X;
+					float ratioY = _window.SqueezeSize.Y / _background.Size.Y;
+					float newScale = Mathf.Min(ratioX, ratioY);
+
+					Scale = new Vector2(newScale, newScale);
+				}
 			}
 			catch (InvalidCastException)
 			{
@@ -212,7 +224,7 @@ public partial class MinesweeperGrid : Control
 			RevealAll();
 
 			_over = true;
-			GD.Print("You lose!");
+			EmitSignal(SignalName.GridFinished, false);
 		}
 		else
 		{
@@ -252,7 +264,7 @@ public partial class MinesweeperGrid : Control
 				RevealAll();
 
 				_over = true;
-				GD.Print("You win!");
+				EmitSignal(SignalName.GridFinished, true);
 			}
 		}
 	}

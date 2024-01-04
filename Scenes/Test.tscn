@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/board.tscn" id="2_0qnsv"]
 [ext_resource type="Script" path="res://Scripts/PlayerInput.cs" id="3_lsttt"]
 
-[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_gridCenter")]
+[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_squeezeBounds")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,10 +13,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jxhbt")
 _playerInput = NodePath("Node")
-_gridCenter = NodePath("Center")
+_squeezeBounds = NodePath("Bounds")
 _gridTemplate = ExtResource("2_0qnsv")
+_squeezePaddingH = 100
+_squeezePaddingV = 100
 
-[node name="Center" type="Control" parent="."]
+[node name="Bounds" type="Control" parent="."]
 layout_direction = 1
 layout_mode = 1
 anchors_preset = 8
@@ -28,7 +30,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-metadata/_edit_use_anchors_ = true
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("3_lsttt")
