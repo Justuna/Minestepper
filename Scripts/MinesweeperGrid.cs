@@ -1,16 +1,29 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public partial class MinesweeperGrid : Control
 {
+	[ExportSubgroup("References")]
+	[Export] private Control _gridAnchor;
 	[Export] private Panel _background;
 	[Export] private GridContainer _gridLayout;
 	[Export] private PackedScene _gridCellTemplate;
+
+	[ExportSubgroup("Visual Parameters")]
 	[Export] private int _spacing;
 	[Export] private int _padding;
+	[Export] private float _zoomStartScale;
+	[Export] private float _zoomIn;
 	[Export] private Color _bgTint;
 	[Export] private BlendModes _bgBlendMode;
+
+	[ExportSubgroup("Animation Parameters")]
+	[Export] private float _zoomDuration;
+	[Export] private Curve _zoomCurve;
+
+	[ExportSubgroup("Gameplay Parameters")]
 	[Export] private float _speed;
 	[Export] private float _fastFactor;
 
@@ -26,11 +39,16 @@ public partial class MinesweeperGrid : Control
 	private int _revealed = 0;
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 	private int _area => _width * _height;
-	private bool _over = false;
+	private bool _active = false;
 
 	private Vector2 _direction;
 	private int _selected;
 	private double _moveProgress = 0;
+
+	private bool _zoom = false;
+	private bool _zooming = false;
+	private double _zoomProgress = 0;
+	
 
 	[Signal]
 	public delegate void GridFinishedEventHandler(bool win);
@@ -89,6 +107,10 @@ public partial class MinesweeperGrid : Control
 					float newScale = Mathf.Min(ratioX, ratioY);
 
 					Scale = new Vector2(newScale, newScale);
+					if (newScale < _zoomStartScale)
+					{
+						_zoom = true;
+					}
 				}
 			}
 			catch (InvalidCastException)
@@ -102,13 +124,48 @@ public partial class MinesweeperGrid : Control
 		}
 
 		_gridLayout.Columns = _width;
+		
+		if (_zoom)
+		{
+			_zooming = true;
+		}
+		else
+		{
+			Start();
+		}
+	}
+
+	private void Start()
+	{
+		_active = true;
 		_gridCells[_selected].Select();
 	}
 
     public override void _Process(double delta)
     {
-		if (_over) return;
+		if (_zoom && _zooming)
+		{
+			if (_zoomProgress < 1)
+			{
+				_zoomProgress += delta / _zoomDuration;
+			}
+			else
+			{
+				_zoomProgress = 1;
+				_zooming = false;
+				Start();
+			}
 
+			float f = _zoomCurve.Sample((float) _zoomProgress);
+			float anchorScale = _zoomIn / Scale.X * f + (1 - f);
+			_gridAnchor.Scale = new Vector2(anchorScale, anchorScale);
+		}
+
+		if (_active) ProcessInput(delta);
+    }
+
+	private void ProcessInput(double delta)
+	{
         if (!_direction.Equals(_window.Input.Direction))
 		{
 			if (_direction.Equals(Vector2.Zero)) _moveProgress = 0.9;
@@ -144,7 +201,7 @@ public partial class MinesweeperGrid : Control
 
 			_gridCells[_selected].Select();
 		}
-    }
+	}
 
     private void Fill(int safeSpace)
 	{
@@ -217,13 +274,11 @@ public partial class MinesweeperGrid : Control
 
 	public void Reveal()
 	{
-		if (_over) return;
-
 		if (_gridCells[_selected].IsMine)
 		{
 			RevealAll();
 
-			_over = true;
+			_active = false;
 			EmitSignal(SignalName.GridFinished, false);
 		}
 		else
@@ -263,7 +318,7 @@ public partial class MinesweeperGrid : Control
 			{
 				RevealAll();
 
-				_over = true;
+				_active = false;
 				EmitSignal(SignalName.GridFinished, true);
 			}
 		}

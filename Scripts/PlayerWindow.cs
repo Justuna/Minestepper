@@ -11,8 +11,6 @@ public partial class PlayerWindow : Control
     [ExportSubgroup("Parameters")]
     [Export] private int _squeezePaddingH;
     [Export] private int _squeezePaddingV;
-    [Export] private float _minScale;
-    [Export] private float _zoomScale;
 
     public MinesweeperGrid Grid { get; private set; }
     public PlayerInput Input { get; private set; }
@@ -64,7 +62,7 @@ public partial class PlayerWindow : Control
         {
             MinesweeperGrid grid = _gridTemplate.Instantiate() as MinesweeperGrid;
 
-            grid.Init(this, 5, 5, 3);
+            grid.Init(this, 9, 9, 8);
             _squeezeBounds.AddChild(grid);
 
             Grid = grid;

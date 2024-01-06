@@ -1,8 +1,8 @@
-res://Prefabs/board.tscn
-res://Themes/cells.tres
-res://Scenes/Test.tscn
-res://Prefabs/cell.tscn
 res://Scripts/MinesweeperCell.cs
 res://Scripts/MinesweeperGrid.cs
 res://Scripts/PlayerInput.cs
 res://Scripts/PlayerWindow.cs
+res://Prefabs/board.tscn
+res://Themes/cells.tres
+res://Scenes/Test.tscn
+res://Prefabs/cell.tscn
