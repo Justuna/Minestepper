@@ -14,14 +14,14 @@ public partial class MinesweeperGrid : Control
 	[ExportSubgroup("Visual Parameters")]
 	[Export] private int _spacing;
 	[Export] private int _padding;
-	[Export] private float _zoomStartScale;
-	[Export] private float _zoomIn;
 	[Export] private Color _bgTint;
 	[Export] private BlendModes _bgBlendMode;
 
 	[ExportSubgroup("Animation Parameters")]
 	[Export] private float _zoomDuration;
 	[Export] private Curve _zoomCurve;
+	[Export] private float _zoomPanMinSpeed;
+	[Export] private float _zoomPanMaxSpeed;
 
 	[ExportSubgroup("Gameplay Parameters")]
 	[Export] private float _speed;
@@ -48,6 +48,8 @@ public partial class MinesweeperGrid : Control
 	private bool _zoom = false;
 	private bool _zooming = false;
 	private double _zoomProgress = 0;
+	private Vector2 _cellOffset;
+	private Vector2 _zoomPos = Vector2.Zero;
 	
 
 	[Signal]
@@ -79,8 +81,10 @@ public partial class MinesweeperGrid : Control
 					int cWidth = Mathf.CeilToInt(cell.GetRect().Size.X);
 					int cHeight = Mathf.CeilToInt(cell.GetRect().Size.Y);
 
-					_gridLayout.AddThemeConstantOverride("h_separation", cWidth + _spacing);
-					_gridLayout.AddThemeConstantOverride("v_separation", cHeight + _spacing);
+					_cellOffset = new Vector2(cWidth + _spacing, cHeight + _spacing);
+					_gridLayout.AddThemeConstantOverride("h_separation", (int) _cellOffset.X);
+					_gridLayout.AddThemeConstantOverride("v_separation", (int) _cellOffset.Y);
+					
 
 					float sizeX = (2 * _padding) + (cWidth * _width) + (_spacing * (_width - 1));
 					float sizeY = (2 * _padding) + (cHeight * _height) + (_spacing * (_height - 1));
@@ -99,19 +103,6 @@ public partial class MinesweeperGrid : Control
 
 				cell.Init(this, i, _window.PlayerColor);
 				_gridCells[i] = cell;
-
-				if (_background.Size.X > _window.SqueezeSize.X || _background.Size.Y > _window.SqueezeSize.Y)
-				{
-					float ratioX = _window.SqueezeSize.X / _background.Size.X;
-					float ratioY = _window.SqueezeSize.Y / _background.Size.Y;
-					float newScale = Mathf.Min(ratioX, ratioY);
-
-					Scale = new Vector2(newScale, newScale);
-					if (newScale < _zoomStartScale)
-					{
-						_zoom = true;
-					}
-				}
 			}
 			catch (InvalidCastException)
 			{
@@ -120,6 +111,31 @@ public partial class MinesweeperGrid : Control
 			catch (Exception e)
 			{
 				GD.PrintErr(e);
+			}
+		}
+
+		if (_background.Size.X > _window.SqueezeSize.X || _background.Size.Y > _window.SqueezeSize.Y)
+		{
+			float ratioX = _window.SqueezeSize.X / _background.Size.X;
+			float ratioY = _window.SqueezeSize.Y / _background.Size.Y;
+			float newScale = Mathf.Min(ratioX, ratioY);
+
+			Scale = new Vector2(newScale, newScale);
+
+			if (_width % 2 == 0)
+			{
+				_zoomPos.X += _cellOffset.X / 2 * (_window.ZoomIn / newScale);
+			}
+			if (_height % 2 == 0)
+			{
+				_zoomPos.Y += _cellOffset.Y / 2 * (_window.ZoomIn / newScale);
+			}
+
+			GD.Print(_zoomPos);
+
+			if (newScale < _window.ZoomStartScale)
+			{
+				_zoom = true;
 			}
 		}
 
@@ -157,8 +173,18 @@ public partial class MinesweeperGrid : Control
 			}
 
 			float f = _zoomCurve.Sample((float) _zoomProgress);
-			float anchorScale = _zoomIn / Scale.X * f + (1 - f);
+			float anchorScale = _window.ZoomIn / Scale.X * f + (1 - f);
 			_gridAnchor.Scale = new Vector2(anchorScale, anchorScale);
+			_gridAnchor.Position = _zoomPos * f + Vector2.Zero * (1 - f);
+		}
+		else if (_zoom && !_zooming)
+		{
+			Vector2 displacement = _zoomPos - _gridAnchor.Position;
+
+			float speed = Mathf.Clamp(Mathf.Pow(displacement.Length(), 2), _zoomPanMinSpeed, _zoomPanMaxSpeed) * ((float) delta);
+			Vector2 movement = displacement.Normalized() * Mathf.Min(displacement.Length(), speed);
+			
+			_gridAnchor.Position = _gridAnchor.Position + movement;
 		}
 
 		if (_active) ProcessInput(delta);
@@ -185,18 +211,22 @@ public partial class MinesweeperGrid : Control
 			if (_direction.Equals(Vector2.Left) && adjacent[(int) Direction.WEST] >= 0)
 			{
 				_selected = adjacent[(int) Direction.WEST];
+				_zoomPos += _gridAnchor.Scale * _cellOffset * Vector2.Right;
 			}
 			else if (_direction.Equals(Vector2.Right) && adjacent[(int) Direction.EAST] >= 0)
 			{
 				_selected = adjacent[(int) Direction.EAST];
+				_zoomPos += _gridAnchor.Scale * _cellOffset * Vector2.Left;
 			}
 			else if (_direction.Equals(Vector2.Up) && adjacent[(int) Direction.NORTH] >= 0)
 			{
 				_selected = adjacent[(int) Direction.NORTH];
+				_zoomPos += _gridAnchor.Scale * _cellOffset * Vector2.Down;
 			}
 			else if (_direction.Equals(Vector2.Down) && adjacent[(int) Direction.SOUTH] >= 0)
 			{
 				_selected = adjacent[(int) Direction.SOUTH];
+				_zoomPos += _gridAnchor.Scale * _cellOffset * Vector2.Up;
 			}
 
 			_gridCells[_selected].Select();

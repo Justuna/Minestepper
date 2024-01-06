@@ -17,6 +17,8 @@ _squeezeBounds = NodePath("Bounds")
 _gridTemplate = ExtResource("2_0qnsv")
 _squeezePaddingH = 100
 _squeezePaddingV = 100
+_zoomStartScale = 2.0
+_zoomIn = 1.5
 
 [node name="Bounds" type="Control" parent="."]
 layout_direction = 1

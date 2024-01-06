@@ -11,12 +11,16 @@ public partial class PlayerWindow : Control
     [ExportSubgroup("Parameters")]
     [Export] private int _squeezePaddingH;
     [Export] private int _squeezePaddingV;
+    [Export] private float _zoomStartScale;
+	[Export] private float _zoomIn;
 
     public MinesweeperGrid Grid { get; private set; }
     public PlayerInput Input { get; private set; }
     public Color PlayerColor { get; private set; }
     public int PlayerID { get; private set; }
     public Vector2 SqueezeSize => new Vector2(_squeezeBounds.Size.X, _squeezeBounds.Size.Y);
+    public float ZoomStartScale => _zoomStartScale;
+    public float ZoomIn => _zoomIn;
 
     public override void _Ready()
     {
@@ -62,7 +66,7 @@ public partial class PlayerWindow : Control
         {
             MinesweeperGrid grid = _gridTemplate.Instantiate() as MinesweeperGrid;
 
-            grid.Init(this, 9, 9, 8);
+            grid.Init(this, 10, 10, 10);
             _squeezeBounds.AddChild(grid);
 
             Grid = grid;
