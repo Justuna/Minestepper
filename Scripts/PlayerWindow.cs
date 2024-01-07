@@ -70,7 +70,7 @@ public partial class PlayerWindow : Control
             _squeezeBounds.AddChild(grid);
 
             Grid = grid;
-            grid.GridFinished += (won) => 
+            grid.GridAnimationComplete += () => 
             {
                 SpawnBoard();
             };
