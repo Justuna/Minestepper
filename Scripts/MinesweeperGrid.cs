@@ -37,6 +37,7 @@ public partial class MinesweeperGrid : Control
 	private int _height;
 	private int _mineCount;
 	private int _revealed = 0;
+	private int _flags = 0;
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 	private int _area => _width * _height;
 	private bool _active = false;
@@ -328,9 +329,11 @@ public partial class MinesweeperGrid : Control
 	{
 		if (!_active) return;
 
+		if (_gridCells[_selected].IsFlagged) return;
+
 		if (_gridCells[_selected].IsMine)
 		{
-			RevealAll();
+			RevealAll(false);
 
 			_active = false;
 			EmitSignal(SignalName.GridGameOver, false);
@@ -362,7 +365,7 @@ public partial class MinesweeperGrid : Control
 				{
 					_revealed += 1;
 
-					if (_gridCells[cell].IsEmpty)
+					if (_gridCells[cell].IsEmpty && !_gridCells[cell].IsFlagged)
 					{
 						int[] neighbors = GetAdjacentCells(cell);
 
@@ -377,7 +380,7 @@ public partial class MinesweeperGrid : Control
 
 			if (_revealed + _mineCount == _area)
 			{
-				RevealAll();
+				RevealAll(true);
 
 				_active = false;
 				EmitSignal(SignalName.GridGameOver, true);
@@ -392,13 +395,22 @@ public partial class MinesweeperGrid : Control
 		}
 	}
 
-	private void RevealAll()
+	private void RevealAll(bool flag)
 	{
 		for (int i = 0; i < _area; i++)
 		{
+			if (flag && _gridCells[i].IsMine && !_gridCells[i].IsFlagged)
+			{
+				_gridCells[i].Flag();
+			}
 			_gridCells[i].Reveal();
 		}
 
 		_gridCells[_selected].Deselect();
+	}
+
+	public void Flag()
+	{
+		_gridCells[_selected].Flag();
 	}
 }

@@ -132,9 +132,14 @@ public partial class PlayerInput : Node
             _downButton = false;
         }
 
-        if (@event.IsAction("Reveal"))
+        if (@event.IsActionPressed("Reveal"))
         {
             _window.Grid.Reveal();
+        }
+
+        if (@event.IsActionPressed("Flag"))
+        {
+            _window.Grid.Flag();
         }
     }
 }
