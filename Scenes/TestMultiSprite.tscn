@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4c6hjhl34uul"]
+
+[ext_resource type="Script" path="res://Scripts/Testing/TestMultiSprite.cs" id="1_sgyro"]
+[ext_resource type="PackedScene" uid="uid://5dy5pklrcj5r" path="res://Prefabs/Player4.tscn" id="2_vrpfs"]
+
+[node name="TestMultiSprite" type="Node2D" node_paths=PackedStringArray("_colorPicker", "_idle", "_excited", "_freakout", "_disappointed", "_player")]
+script = ExtResource("1_sgyro")
+_colorPicker = NodePath("Color Picker")
+_idle = NodePath("Idle")
+_excited = NodePath("Excited")
+_freakout = NodePath("Freakout")
+_disappointed = NodePath("Disappointed")
+_player = NodePath("Player 4")
+
+[node name="Color Picker" type="ColorPickerButton" parent="."]
+offset_left = 782.0
+offset_top = 31.0
+offset_right = 961.0
+offset_bottom = 171.0
+color = Color(0.996078, 0, 0.784314, 1)
+edit_alpha = false
+
+[node name="Idle" type="Button" parent="."]
+offset_left = 784.0
+offset_top = 204.0
+offset_right = 958.0
+offset_bottom = 257.0
+text = "Idle"
+
+[node name="Excited" type="Button" parent="."]
+offset_left = 784.0
+offset_top = 274.0
+offset_right = 958.0
+offset_bottom = 331.0
+text = "Excited
+"
+
+[node name="Freakout" type="Button" parent="."]
+offset_left = 784.0
+offset_top = 348.0
+offset_right = 959.0
+offset_bottom = 408.0
+text = "Freakout"
+
+[node name="Disappointed" type="Button" parent="."]
+offset_left = 784.0
+offset_top = 423.0
+offset_right = 957.0
+offset_bottom = 488.0
+text = "Disappointed"
+
+[node name="Player 4" parent="." instance=ExtResource("2_vrpfs")]
+position = Vector2(374, 289)

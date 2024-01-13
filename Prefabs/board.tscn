@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cgtny3rdlhy55"]
 
-[ext_resource type="Script" path="res://Scripts/MinesweeperGrid.cs" id="1_wxs4r"]
+[ext_resource type="Script" path="res://Scripts/Minesweeper/MinesweeperGrid.cs" id="1_sf5kq"]
 [ext_resource type="PackedScene" uid="uid://pcb2neyjjif" path="res://Prefabs/cell.tscn" id="2_pwk4a"]
 
 [sub_resource type="Curve" id="Curve_8ouox"]
@@ -22,7 +22,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_wxs4r")
+script = ExtResource("1_sf5kq")
 _gridAnchor = NodePath("Anchor")
 _background = NodePath("Anchor/Background")
 _gridLayout = NodePath("Anchor/Grid Layout")

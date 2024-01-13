@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://pcb2neyjjif"]
+[gd_scene load_steps=8 format=3 uid="uid://pcb2neyjjif"]
 
-[ext_resource type="Script" path="res://Scripts/MinesweeperCell.cs" id="1_ebpc6"]
+[ext_resource type="Script" path="res://Scripts/Minesweeper/MinesweeperCell.cs" id="1_i5ewb"]
 [ext_resource type="Theme" uid="uid://chy6pl1ht3rxp" path="res://Themes/cells.tres" id="2_ltsuo"]
-[ext_resource type="Texture2D" uid="uid://dp2ixx1g78gxq" path="res://Art/Sprites/betabomb.png" id="3_m0crk"]
-[ext_resource type="Texture2D" uid="uid://cc2rpfb3844sr" path="res://Art/Sprites/betaflag.png" id="4_5m0k0"]
+[ext_resource type="Texture2D" uid="uid://dnhgj7dpe4vwy" path="res://Art/Sprites/mine.png" id="3_iuexs"]
+[ext_resource type="Texture2D" uid="uid://deas4sywkanco" path="res://Art/Sprites/flagfill.png" id="4_5m05s"]
+[ext_resource type="Script" path="res://Scripts/Minesweeper/Flag.cs" id="4_gjbpw"]
+[ext_resource type="Texture2D" uid="uid://caamiqaaq4tao" path="res://Art/Sprites/flagoutline.png" id="5_orpfq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_thkp1"]
 font_size = 60
@@ -15,12 +17,13 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 100.0
 offset_bottom = 100.0
-script = ExtResource("1_ebpc6")
+script = ExtResource("1_i5ewb")
 _outline = NodePath("Outline")
 _panel = NodePath("Panel")
 _cover = NodePath("Cover")
 _hint = NodePath("Hint")
 _bomb = NodePath("Bomb")
+_defuseTint = Color(0.407843, 0.407843, 0.407843, 1)
 _flag = NodePath("Flag")
 _panelTint = Color(0.886275, 0.886275, 0.886275, 0.529412)
 _panelBlendMode = 3
@@ -49,8 +52,8 @@ vertical_alignment = 1
 [node name="Bomb" type="Sprite2D" parent="."]
 visible = false
 texture_filter = 1
-scale = Vector2(1.5625, 1.5625)
-texture = ExtResource("3_m0crk")
+scale = Vector2(0.390625, 0.390625)
+texture = ExtResource("3_iuexs")
 centered = false
 
 [node name="Cover" type="Panel" parent="."]
@@ -58,13 +61,6 @@ layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
 theme = ExtResource("2_ltsuo")
-
-[node name="Flag" type="Sprite2D" parent="."]
-visible = false
-texture_filter = 1
-scale = Vector2(1.5625, 1.5625)
-texture = ExtResource("4_5m0k0")
-centered = false
 
 [node name="Outline" type="Panel" parent="."]
 z_index = 1
@@ -77,3 +73,18 @@ offset_right = 120.0
 offset_bottom = 120.0
 theme = ExtResource("2_ltsuo")
 theme_type_variation = &"OutlinePanel"
+
+[node name="Flag" type="Node2D" parent="." node_paths=PackedStringArray("_flagFill")]
+visible = false
+script = ExtResource("4_gjbpw")
+_flagFill = NodePath("Flag Fill")
+
+[node name="Flag Fill" type="Sprite2D" parent="Flag"]
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("4_5m05s")
+centered = false
+
+[node name="Flag Outline" type="Sprite2D" parent="Flag"]
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("5_orpfq")
+centered = false

@@ -1,10 +1,11 @@
+Button
+ColorPickerButton
+Node2D
+Node
 Control
 CenterContainer
 Panel
-Node
-Node2D
 Label
 Sprite2D
-Button
 ColorRect
 GridContainer

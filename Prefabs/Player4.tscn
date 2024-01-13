@@ -1,0 +1,72 @@
+[gd_scene load_steps=15 format=3 uid="uid://5dy5pklrcj5r"]
+
+[ext_resource type="Script" path="res://Scripts/Graphics/PlayerMultiSprite.cs" id="1_q6fr0"]
+[ext_resource type="Script" path="res://Scripts/Graphics/PlayerSprite.cs" id="2_lsoda"]
+[ext_resource type="Texture2D" uid="uid://b372y60tj50x2" path="res://Art/Sprites/Cogijinkas/Player 4/Shaded/Player4DisappointedBase.png" id="3_1g6co"]
+[ext_resource type="Texture2D" uid="uid://dcc1fbncptt7q" path="res://Art/Sprites/Cogijinkas/Player 4/Shaded/Player4DisappointedFill.png" id="4_bcika"]
+[ext_resource type="Texture2D" uid="uid://bf2hlb200f5b" path="res://Art/Sprites/Cogijinkas/Player 4/Player4DisappointedLine.png" id="5_yh24k"]
+[ext_resource type="Texture2D" uid="uid://bh2tpdv4ih1hv" path="res://Art/Sprites/Cogijinkas/Player 4/Shaded/Player4ExcitedBase.png" id="6_j164r"]
+[ext_resource type="Texture2D" uid="uid://v8f16w7v3l32" path="res://Art/Sprites/Cogijinkas/Player 4/Shaded/Player4ExcitedFill.png" id="7_anqr3"]
+[ext_resource type="Texture2D" uid="uid://dk6ejmepx61do" path="res://Art/Sprites/Cogijinkas/Player 4/Player4ExcitedLine.png" id="8_ub2uj"]
+[ext_resource type="Texture2D" uid="uid://bp26mqqrtuduv" path="res://Art/Sprites/Cogijinkas/Player 4/Shaded/Player4FreakoutBase.png" id="9_rly62"]
+[ext_resource type="Texture2D" uid="uid://cqwo1v788c2iy" path="res://Art/Sprites/Cogijinkas/Player 4/Shaded/Player4FreakoutFill.png" id="10_yym28"]
+[ext_resource type="Texture2D" uid="uid://dltcly3244ust" path="res://Art/Sprites/Cogijinkas/Player 4/Player4FreakoutLine.png" id="11_ebme1"]
+[ext_resource type="Texture2D" uid="uid://btwg4nkbi7e0" path="res://Art/Sprites/Cogijinkas/Player 4/Shaded/Player4IdleBase.png" id="12_h4drd"]
+[ext_resource type="Texture2D" uid="uid://c48cu8mhf6p51" path="res://Art/Sprites/Cogijinkas/Player 4/Shaded/Player4IdleFill.png" id="13_4lxbm"]
+[ext_resource type="Texture2D" uid="uid://c33ing8p3rq8" path="res://Art/Sprites/Cogijinkas/Player 4/Player4IdleLine.png" id="14_0qkoc"]
+
+[node name="Player 4" type="Node2D"]
+script = ExtResource("1_q6fr0")
+_startingSprite = "Idle"
+
+[node name="Disappointed" type="Node2D" parent="." node_paths=PackedStringArray("_fills")]
+script = ExtResource("2_lsoda")
+_fills = [NodePath("Player4DisappointedFill")]
+
+[node name="Player4DisappointedBase" type="Sprite2D" parent="Disappointed"]
+texture = ExtResource("3_1g6co")
+
+[node name="Player4DisappointedFill" type="Sprite2D" parent="Disappointed"]
+texture = ExtResource("4_bcika")
+
+[node name="Player4DisappointedLine" type="Sprite2D" parent="Disappointed"]
+texture = ExtResource("5_yh24k")
+
+[node name="Excited" type="Node2D" parent="." node_paths=PackedStringArray("_fills")]
+script = ExtResource("2_lsoda")
+_fills = [NodePath("Player4ExcitedFill")]
+
+[node name="Player4ExcitedBase" type="Sprite2D" parent="Excited"]
+texture = ExtResource("6_j164r")
+
+[node name="Player4ExcitedFill" type="Sprite2D" parent="Excited"]
+texture = ExtResource("7_anqr3")
+
+[node name="Player4ExcitedLine" type="Sprite2D" parent="Excited"]
+texture = ExtResource("8_ub2uj")
+
+[node name="Freakout" type="Node2D" parent="." node_paths=PackedStringArray("_fills")]
+script = ExtResource("2_lsoda")
+_fills = [NodePath("Player4FreakoutFill")]
+
+[node name="Player4FreakoutBase" type="Sprite2D" parent="Freakout"]
+texture = ExtResource("9_rly62")
+
+[node name="Player4FreakoutFill" type="Sprite2D" parent="Freakout"]
+texture = ExtResource("10_yym28")
+
+[node name="Player4FreakoutLine" type="Sprite2D" parent="Freakout"]
+texture = ExtResource("11_ebme1")
+
+[node name="Idle" type="Node2D" parent="." node_paths=PackedStringArray("_fills")]
+script = ExtResource("2_lsoda")
+_fills = [NodePath("Player4IdleFill")]
+
+[node name="Player4IdleBase" type="Sprite2D" parent="Idle"]
+texture = ExtResource("12_h4drd")
+
+[node name="Player4IdleFill" type="Sprite2D" parent="Idle"]
+texture = ExtResource("13_4lxbm")
+
+[node name="Player4IdleLine" type="Sprite2D" parent="Idle"]
+texture = ExtResource("14_0qkoc")
