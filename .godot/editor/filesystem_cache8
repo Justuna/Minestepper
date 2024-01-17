@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1705173268
+::res://::1705449452
 icon.svg::CompressedTexture2D::6780086601546551240::1700417837::1700417841::1::::<><>::
 ::res://Art/::1704592783
 ::res://Art/Sprites/::1705172373
@@ -101,29 +101,31 @@ Player4FreakoutBase.png::CompressedTexture2D::3496896059814875705::1705164924::1
 Player4FreakoutFill.png::CompressedTexture2D::5942176798691965652::1705164944::1705172385::1::::<><>::
 Player4IdleBase.png::CompressedTexture2D::110760053285113457::1705165973::1705172385::1::::<><>::
 Player4IdleFill.png::CompressedTexture2D::6876601200770918906::1705165955::1705172385::1::::<><>::
-::res://Prefabs/::1705176801
-board.tscn::PackedScene::5234031283568002690::1705176702::0::1::::<><>::res://Scripts/Minesweeper/MinesweeperGrid.cs<>uid://pcb2neyjjif::::res://Prefabs/cell.tscn
-cell.tscn::PackedScene::31090324517423937::1705176702::0::1::::<><>::res://Scripts/Minesweeper/MinesweeperCell.cs<>uid://chy6pl1ht3rxp::::res://Themes/cells.tres<>uid://dnhgj7dpe4vwy::::res://Art/Sprites/mine.png<>uid://deas4sywkanco::::res://Art/Sprites/flagfill.png<>res://Scripts/Minesweeper/Flag.cs<>uid://caamiqaaq4tao::::res://Art/Sprites/flagoutline.png
-Player1.tscn::PackedScene::4785276243755469535::1705176388::0::1::::<><>::uid://livqvkfjdkt8::::res://Art/Sprites/Cogijinkas/Player 1/Player1DisappointedLine.png<>res://Scripts/Graphics/PlayerMultiSprite.cs<>uid://chl6ljj4gwwvt::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1DisappointedBase.png<>res://Scripts/Graphics/PlayerSprite.cs<>uid://cdrgrigrcqyqt::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1DisappointedFill.png<>uid://g58ppivebueg::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1ExcitedBase.png<>uid://syk16npdm3ba::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1ExcitedFill.png<>uid://djidj1omjvo5y::::res://Art/Sprites/Cogijinkas/Player 1/Player1ExcitedLine.png<>uid://db3mwhmcns0v3::::res://Art/Sprites/Cogijinkas/Player 1/Player1FreakoutLine.png<>uid://bthfmaaqrhjij::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1FreakoutBase.png<>uid://dv8qyuimogg0l::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1FreakoutFill.png<>uid://bvwqsicm4aerf::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1IdleBase.png<>uid://e0w2rj133pe8::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1IdleFill.png<>uid://cc5m4i2fc77s6::::res://Art/Sprites/Cogijinkas/Player 1/Player1IdleLine.png
-Player2.tscn::PackedScene::7100627440048147966::1705176702::0::1::::<><>::res://Scripts/Graphics/PlayerMultiSprite.cs<>res://Scripts/Graphics/PlayerSprite.cs<>uid://yiih50pgfrr::::res://Art/Sprites/Cogijinkas/Player 2/Shaded/Player2DisappointedBase.png<>uid://l0ej7xbdqs4::::res://Art/Sprites/Cogijinkas/Player 2/Shaded/Player2DisappointedFill.png<>uid://dtjk47jo5e65t::::res://Art/Sprites/Cogijinkas/Player 2/Player2DisappointedLine.png<>uid://d05idv0jij7p0::::res://Art/Sprites/Cogijinkas/Player 2/Shaded/Player2ExcitedBase.png<>uid://hkmco5ht3tix::::res://Art/Sprites/Cogijinkas/Player 2/Shaded/Player2ExcitedFill.png<>uid://dayjd1sqigrrq::::res://Art/Sprites/Cogijinkas/Player 2/Player2ExcitedLine.png<>uid://yyt87u8dno13::::res://Art/Sprites/Cogijinkas/Player 2/Shaded/Player2FreakoutBase.png<>uid://cje3d4d8rekkq::::res://Art/Sprites/Cogijinkas/Player 2/Shaded/Player2FreakoutFill.png<>uid://xybhuv1dejuu::::res://Art/Sprites/Cogijinkas/Player 2/Player2FreakoutLine.png<>uid://b3k6hw06u82d1::::res://Art/Sprites/Cogijinkas/Player 2/Shaded/Player2IdleBase.png<>uid://q1xf6n3e0x1f::::res://Art/Sprites/Cogijinkas/Player 2/Shaded/Player2IdleFill.png<>uid://dwlnfwo03n3m6::::res://Art/Sprites/Cogijinkas/Player 2/Player2IdleLine.png
-Player3.tscn::PackedScene::1638106854720703265::1705176801::0::1::::<><>::res://Scripts/Graphics/PlayerMultiSprite.cs<>res://Scripts/Graphics/PlayerSprite.cs<>uid://chl6ljj4gwwvt::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1DisappointedBase.png<>uid://cdrgrigrcqyqt::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1DisappointedFill.png<>uid://livqvkfjdkt8::::res://Art/Sprites/Cogijinkas/Player 1/Player1DisappointedLine.png<>uid://g58ppivebueg::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1ExcitedBase.png<>uid://syk16npdm3ba::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1ExcitedFill.png<>uid://djidj1omjvo5y::::res://Art/Sprites/Cogijinkas/Player 1/Player1ExcitedLine.png<>uid://bthfmaaqrhjij::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1FreakoutBase.png<>uid://dv8qyuimogg0l::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1FreakoutFill.png<>uid://db3mwhmcns0v3::::res://Art/Sprites/Cogijinkas/Player 1/Player1FreakoutLine.png<>uid://bvwqsicm4aerf::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1IdleBase.png<>uid://e0w2rj133pe8::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1IdleFill.png<>uid://cc5m4i2fc77s6::::res://Art/Sprites/Cogijinkas/Player 1/Player1IdleLine.png
-Player4.tscn::PackedScene::2113370027867586609::1705176805::0::1::::<><>::res://Scripts/Graphics/PlayerMultiSprite.cs<>res://Scripts/Graphics/PlayerSprite.cs<>uid://chl6ljj4gwwvt::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1DisappointedBase.png<>uid://cdrgrigrcqyqt::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1DisappointedFill.png<>uid://livqvkfjdkt8::::res://Art/Sprites/Cogijinkas/Player 1/Player1DisappointedLine.png<>uid://g58ppivebueg::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1ExcitedBase.png<>uid://syk16npdm3ba::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1ExcitedFill.png<>uid://djidj1omjvo5y::::res://Art/Sprites/Cogijinkas/Player 1/Player1ExcitedLine.png<>uid://bthfmaaqrhjij::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1FreakoutBase.png<>uid://dv8qyuimogg0l::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1FreakoutFill.png<>uid://db3mwhmcns0v3::::res://Art/Sprites/Cogijinkas/Player 1/Player1FreakoutLine.png<>uid://bvwqsicm4aerf::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1IdleBase.png<>uid://e0w2rj133pe8::::res://Art/Sprites/Cogijinkas/Player 1/Shaded/Player1IdleFill.png<>uid://cc5m4i2fc77s6::::res://Art/Sprites/Cogijinkas/Player 1/Player1IdleLine.png
-::res://Scenes/::1705176702
-Test.tscn::PackedScene::3999416914040470634::1705176702::0::1::::<><>::res://Scripts/Minesweeper/PlayerWindow.cs<>uid://cgtny3rdlhy55::::res://Prefabs/board.tscn<>res://Scripts/Minesweeper/PlayerInput.cs
-TestMultiSprite.tscn::PackedScene::9200762483485609419::1705176702::0::1::::<><>::res://Scripts/Testing/TestMultiSprite.cs<>uid://c8fukc1sjsldm::::res://Prefabs/Player2.tscn
+::res://Prefabs/::1705449512
+board.tscn::PackedScene::5234031283568002690::1705449512::0::1::::<><>::res://Scripts/Minesweeper/MinesweeperGrid.cs<>uid://pcb2neyjjif::::res://Prefabs/cell.tscn
+cell.tscn::PackedScene::31090324517423937::1705449512::0::1::::<><>::res://Scripts/Minesweeper/MinesweeperCell.cs<>uid://chy6pl1ht3rxp::::res://Themes/cells.tres<>uid://dnhgj7dpe4vwy::::res://Art/Sprites/mine.png<>uid://deas4sywkanco::::res://Art/Sprites/flagfill.png<>res://Scripts/Minesweeper/Flag.cs<>uid://caamiqaaq4tao::::res://Art/Sprites/flagoutline.png
+Player1.tscn::PackedScene::4785276243755469535::1705176388::0::1::::<><>::uid://livqvkfjdkt8
+Player2.tscn::PackedScene::7100627440048147966::1705176702::0::1::::<><>::res://Scripts/Graphics/PlayerMultiSprite.cs<>res://Scripts/Graphics/PlayerSprite.cs<>uid://yiih50pgfrr
+Player3.tscn::PackedScene::1638106854720703265::1705176925::0::1::::<><>::res://Scripts/Graphics/PlayerMultiSprite.cs<>res://Scripts/Graphics/PlayerSprite.cs<>uid://dlofdqdvr2nw8
+Player4.tscn::PackedScene::2113370027867586609::1705177177::0::1::::<><>::res://Scripts/Graphics/PlayerMultiSprite.cs<>res://Scripts/Graphics/PlayerSprite.cs<>uid://b372y60tj50x2
+::res://Scenes/::1705449512
+AvatarAnimationData.cs::CSharpScript::-1::1705184560::0::1::::<><>::
+PlayerAvatar.cs::CSharpScript::-1::1705186469::0::1::::<><>::
+PlayerWindow.tscn::PackedScene::3999416914040470634::1705449694::0::1::::<><>::res://Scripts/Minesweeper/PlayerWindow.cs<>uid://cgtny3rdlhy55::::res://Prefabs/board.tscn<>res://Scripts/Minesweeper/PlayerInput.cs<>uid://caga2hqwweqod::::res://Prefabs/Player1.tscn<>res://Scenes/PlayerAvatar.cs<>res://Scenes/AvatarAnimationData.cs
+TestMultiSprite.tscn::PackedScene::9200762483485609419::1705177177::0::1::::<><>::res://Scripts/Testing/TestMultiSprite.cs<>uid://5dy5pklrcj5r
 ::res://Scripts/::1705175657
 Helpers.cs::CSharpScript::-1::1703727925::0::1::::<><>::
 mini_game_manager.gd::GDScript::-1::1704052957::0::1::::MiniGameManager<>Node<>::
 ::res://Scripts/Graphics/::1705174412
-PlayerMultiSprite.cs::CSharpScript::-1::1705176366::0::1::::<><>::
+PlayerMultiSprite.cs::CSharpScript::-1::1705184731::0::1::::<><>::
 PlayerSprite.cs::CSharpScript::-1::1705175025::0::1::::<><>::
 ::res://Scripts/Minesweeper/::1705173267
 Flag.cs::CSharpScript::-1::1704933923::0::1::::<><>::
 MinesweeperCell.cs::CSharpScript::-1::1704934212::0::1::::<><>::
 MinesweeperGrid.cs::CSharpScript::-1::1704933966::0::1::::<><>::
 PlayerInput.cs::CSharpScript::-1::1704593703::0::1::::<><>::
-PlayerWindow.cs::CSharpScript::-1::1704934874::0::1::::<><>::
+PlayerWindow.cs::CSharpScript::-1::1705186797::0::1::::<><>::
 ::res://Scripts/Testing/::1705175664
-TestMultiSprite.cs::CSharpScript::-1::1705176386::0::1::::<><>::
-::res://Themes/::1705172404
-cells.tres::Theme::5315617970900522961::1705172404::0::1::::<><>::
+TestMultiSprite.cs::CSharpScript::-1::1705184726::0::1::::<><>::
+::res://Themes/::1705449464
+cells.tres::Theme::5315617970900522961::1705449464::0::1::::<><>::

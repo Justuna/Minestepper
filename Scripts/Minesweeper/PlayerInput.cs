@@ -134,12 +134,12 @@ public partial class PlayerInput : Node
 
         if (@event.IsActionPressed("Reveal"))
         {
-            _window.Grid.Reveal();
+            if (_window.ActiveGrid != null) _window.ActiveGrid.Reveal();
         }
 
         if (@event.IsActionPressed("Flag"))
         {
-            _window.Grid.Flag();
+            if (_window.ActiveGrid != null) _window.ActiveGrid.Flag();
         }
     }
 }

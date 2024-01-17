@@ -1,10 +1,53 @@
-[gd_scene load_steps=4 format=3 uid="uid://bw8l2u700t6mo"]
+[gd_scene load_steps=16 format=3 uid="uid://bw8l2u700t6mo"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerWindow.cs" id="1_fkkf7"]
 [ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/board.tscn" id="2_0qnsv"]
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerInput.cs" id="3_0jmo8"]
+[ext_resource type="Script" path="res://Scripts/Graphics/PlayerAvatar.cs" id="4_8lv8x"]
+[ext_resource type="PackedScene" uid="uid://caga2hqwweqod" path="res://Prefabs/Player1.tscn" id="4_gkrlj"]
+[ext_resource type="Script" path="res://Scripts/Graphics/AvatarAnimationData.cs" id="6_yv2sl"]
 
-[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_squeezeBounds")]
+[sub_resource type="Curve" id="Curve_r1sfb"]
+min_value = -1.0
+max_value = 2.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.159341, 0.0105262), 0.0, 0.0, 0, 0, Vector2(0.32967, -0.11579), 0.0, 0.0, 0, 0, Vector2(0.846154, 1.02105), 0.0, 0.0, 0, 0, Vector2(0.934066, 0.989473), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="Curve" id="Curve_8ovjo"]
+
+[sub_resource type="Curve" id="Curve_wujat"]
+resource_local_to_scene = true
+min_value = -300.0
+max_value = 50.0
+_data = [Vector2(0, 0), 0.0, 264.988, 0, 0, Vector2(0.1, 15), -427.288, -427.288, 0, 0, Vector2(0.6, -90), 0.0, 0.0, 0, 0, Vector2(1, -10), 388.0, 0.0, 0, 0]
+point_count = 4
+metadata/_snap_enabled = true
+
+[sub_resource type="Curve" id="Curve_6d2y5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ltq0m"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_cwji6"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0206186, 170.526), 0.0, 0.0, 0, 0, Vector2(0.0463917, -98.9474), 0.0, 0.0, 0, 0, Vector2(0.113402, 107.368), 0.0, 0.0, 0, 0, Vector2(0.159794, -44.2105), 0.0, 0.0, 0, 0, Vector2(0.231959, 65.2632), 0.0, 0.0, 0, 0, Vector2(0.298969, -31.5789), 0.0, 0.0, 0, 0, Vector2(0.386598, 44.2105), 0.0, 0.0, 0, 0, Vector2(0.51, 0), 0.0, 0.0, 0, 0]
+point_count = 9
+
+[sub_resource type="Curve" id="Curve_l5ff0"]
+
+[sub_resource type="Curve" id="Curve_4uuqp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ns1lk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 1, 0]
+point_count = 2
+
+[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,13 +55,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fkkf7")
-_playerInput = NodePath("Node")
+_playerInput = NodePath("Input Detector")
+_playerAvatar = NodePath("Player Avatar")
 _squeezeBounds = NodePath("Bounds")
 _gridTemplate = ExtResource("2_0qnsv")
 _squeezePaddingH = 100
 _squeezePaddingV = 100
 _zoomStartScale = 2.0
 _zoomIn = 1.5
+_boardSwitchDuration = 1.7
+_boardSwitchCurve = SubResource("Curve_r1sfb")
 
 [node name="Bounds" type="Control" parent="."]
 layout_direction = 1
@@ -33,5 +79,31 @@ grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Node" type="Node" parent="."]
+[node name="Input Detector" type="Node" parent="."]
 script = ExtResource("3_0jmo8")
+
+[node name="Player Avatar" type="Node2D" parent="."]
+z_index = 10
+position = Vector2(969, 557)
+scale = Vector2(0.7, 0.7)
+script = ExtResource("4_8lv8x")
+_playerPrefab = ExtResource("4_gkrlj")
+_startingBaseSprite = "Idle"
+
+[node name="HappyJump" type="Node" parent="Player Avatar"]
+script = ExtResource("6_yv2sl")
+_duration = 0.6
+_xDisplacement = SubResource("Curve_8ovjo")
+_yDisplacement = SubResource("Curve_wujat")
+_xScale = SubResource("Curve_6d2y5")
+_yScale = SubResource("Curve_ltq0m")
+_sprite = "Excited"
+
+[node name="ScaredShake" type="Node" parent="Player Avatar"]
+script = ExtResource("6_yv2sl")
+_duration = 2.0
+_xDisplacement = SubResource("Curve_cwji6")
+_yDisplacement = SubResource("Curve_l5ff0")
+_xScale = SubResource("Curve_4uuqp")
+_yScale = SubResource("Curve_ns1lk")
+_sprite = "Freakout"

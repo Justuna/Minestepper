@@ -10,6 +10,8 @@ public partial class PlayerMultiSprite : Node2D
     private Dictionary<string, PlayerSprite> _sprites = new Dictionary<string, PlayerSprite>();
     private PlayerSprite _currentSprite;
 
+    public string CurrentSprite => (_currentSprite != null) ? _currentSprite.Name : "";
+
     public void Init(Color color)
     {
         foreach (Node node in GetChildren())
@@ -41,11 +43,11 @@ public partial class PlayerMultiSprite : Node2D
         }
     }
 
-    public void Show(string spriteName)
+    public void ShowSprite(string name)
     {
-        if (_currentSprite == null || _currentSprite.Name != spriteName) 
+        if (_currentSprite == null || _currentSprite.Name != name) 
         {
-            bool found = _sprites.TryGetValue(spriteName, out PlayerSprite newSprite);
+            bool found = _sprites.TryGetValue(name, out PlayerSprite newSprite);
             if (!found) return;
 
             _currentSprite.Visible = false;

@@ -1,8 +1,9 @@
-res://Themes/cells.tres
 res://Prefabs/board.tscn
+res://Themes/cells.tres
 res://Prefabs/cell.tscn
-res://Scenes/Test.tscn
-res://Prefabs/Player1.tscn
+res://Scenes/PlayerWindow.tscn
+res://Scripts/Graphics/AvatarAnimationData.cs
+res://Scripts/Graphics/PlayerAvatar.cs
 res://Scripts/Graphics/PlayerMultiSprite.cs
 res://Scripts/Graphics/PlayerSprite.cs
 res://Scripts/Minesweeper/Flag.cs
@@ -11,7 +12,3 @@ res://Scripts/Minesweeper/MinesweeperGrid.cs
 res://Scripts/Minesweeper/PlayerInput.cs
 res://Scripts/Minesweeper/PlayerWindow.cs
 res://Scripts/Testing/TestMultiSprite.cs
-res://Scenes/TestMultiSprite.tscn
-res://Prefabs/Player2.tscn
-res://Prefabs/Player3.tscn
-res://Prefabs/Player4.tscn

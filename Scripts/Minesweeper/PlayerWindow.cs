@@ -5,6 +5,7 @@ public partial class PlayerWindow : Control
 {
     [ExportSubgroup("References")]
     [Export] private PlayerInput _playerInput;
+    [Export] private PlayerAvatar _playerAvatar;
     [Export] private Control _squeezeBounds;
     [Export] private PackedScene _gridTemplate;
 
@@ -13,8 +14,17 @@ public partial class PlayerWindow : Control
     [Export] private int _squeezePaddingV;
     [Export] private float _zoomStartScale;
 	[Export] private float _zoomIn;
+    [Export] private float _boardSwitchDuration;
+    [Export] private Curve _boardSwitchCurve;
 
-    public MinesweeperGrid Grid { get; private set; }
+    private Vector2 _screenCenter => new Vector2(Size.X / 2, Size.Y / 2);
+    private Vector2 _offscreenTop => _screenCenter + new Vector2(0, -2 * Size.Y);
+    private Vector2 _offscreenBottom => _screenCenter + new Vector2(0, 2 * Size.Y);
+    private MinesweeperGrid _oldGrid;
+    private MinesweeperGrid _newGrid;
+    private double _gridSwitchProgress = 1;
+
+    public MinesweeperGrid ActiveGrid { get; private set; }
     public PlayerInput Input { get; private set; }
     public Color PlayerColor { get; private set; }
     public int PlayerID { get; private set; }
@@ -49,39 +59,81 @@ public partial class PlayerWindow : Control
         }
 
         _playerInput.Init(this);
+        _playerAvatar.Init(this);
 
-        SpawnBoard();
+        SpawnNewGrid();
     }
 
-    public void SpawnBoard()
+    public override void _Process(double delta)
     {
-        if (Grid != null)
-        {
-            MinesweeperGrid old = Grid;
-            Grid = null;
+        base._Process(delta);
 
-            old.QueueFree();
+        if (_gridSwitchProgress < 1) SwitchGridAnimation(delta);
+    }
+
+    private void SwitchGridAnimation(double delta)
+    {
+        _gridSwitchProgress += delta / _boardSwitchDuration;
+        float t = _boardSwitchCurve.Sample((float) _gridSwitchProgress);
+
+        if (_oldGrid != null)
+        {
+            // Move old grid from center position upward so that it goes offscreen
+            _oldGrid.Position = (1 - t) * _screenCenter + t * _offscreenTop;
         }
+        if (_newGrid != null)
+        {
+            // Move new grid from position offscreen into center
+            _newGrid.Position = (1 - t) * _offscreenBottom + t * _screenCenter;
+        }
+
+        if (_gridSwitchProgress >= 1)
+        {
+            _gridSwitchProgress = 1;
+
+            // Animation finished, delete old grid now that it is offscreen
+            if (_oldGrid != null) _oldGrid.QueueFree();
+
+            ActiveGrid = _newGrid;
+            _newGrid = null;
+            _oldGrid = null;
+
+            ActiveGrid.TryStart();
+        }
+    }
+
+    private void SpawnNewGrid()
+    {
         try 
         {
-            MinesweeperGrid grid = _gridTemplate.Instantiate() as MinesweeperGrid;
+            _newGrid = _gridTemplate.Instantiate() as MinesweeperGrid;
 
-            grid.Init(this, 5, 5, 3);
-            _squeezeBounds.AddChild(grid);
+            _newGrid.Init(this, 5, 5, 3);
+            AddChild(_newGrid);
 
-            Grid = grid;
-            grid.GridAnimationComplete += () => 
-            {
-                SpawnBoard();
-            };
+            _newGrid.Position = _offscreenBottom;
+            
+            _newGrid.GridGameOver += ResolveGrid;
+            _newGrid.GridAnimationComplete += SpawnNewGrid;
+            
+            // Prepare for animation
+            _oldGrid = ActiveGrid;
+            ActiveGrid = null;
+
+            // Trigger animation start
+            _gridSwitchProgress = 0;
         }
         catch (InvalidCastException)
         {
             GD.PrintErr("Board scene must have MinesweeperGrid script as its root type.");
         }
-        catch (Exception e)
-        {
-            GD.PrintErr(e);
-        }
     }
+
+    private void ResolveGrid(bool win)
+    {
+        if (win) _playerAvatar.PlayAnimation("HappyJump");
+        else _playerAvatar.PlayAnimation("ScaredShake");
+    }
+
 }
+

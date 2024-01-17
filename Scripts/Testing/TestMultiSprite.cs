@@ -17,10 +17,10 @@ public partial class TestMultiSprite : Node2D
         _player.Init(_colorPicker.Color);
         _colorPicker.ColorChanged += color => _player.Recolor(color);
         
-        _idle.Pressed += () => _player.Show("Idle");
-        _excited.Pressed += () => _player.Show("Excited");
-        _freakout.Pressed += () => _player.Show("Freakout");
-        _disappointed.Pressed += () => _player.Show("Disappointed");
+        _idle.Pressed += () => _player.ShowSprite("Idle");
+        _excited.Pressed += () => _player.ShowSprite("Excited");
+        _freakout.Pressed += () => _player.ShowSprite("Freakout");
+        _disappointed.Pressed += () => _player.ShowSprite("Disappointed");
     }
 
 }

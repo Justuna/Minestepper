@@ -143,7 +143,10 @@ public partial class MinesweeperGrid : Control
 		}
 
 		_gridLayout.Columns = _width;
-		
+	}
+
+	public void TryStart()
+	{
 		if (_zoom)
 		{
 			_zooming = true;
