@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ca0x1mtihtawb"]
+
+[ext_resource type="Script" path="res://Scripts/Minesweeper/GridLevel.cs" id="1_epvt3"]
+
+[resource]
+script = ExtResource("1_epvt3")
+_gridWidth = 6
+_gridHeight = 6
+_gridMineCount = 4
+_correctWorth = 6
+_minePenalty = 2
+_clearBonus = 24

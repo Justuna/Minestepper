@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=3 format=3 uid="uid://chy6pl1ht3rxp"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm667"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxgqa"]
 draw_center = false
 border_width_left = 15
 border_width_top = 15
@@ -20,5 +20,6 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [resource]
-OutlinePanel/styles/panel = SubResource("StyleBoxFlat_mm667")
+OutlinePanel/base_type = &"Panel"
+OutlinePanel/styles/panel = SubResource("StyleBoxFlat_jxgqa")
 Panel/styles/panel = SubResource("StyleBoxFlat_4r232")

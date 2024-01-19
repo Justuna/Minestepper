@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=9 format=3 uid="uid://bulayail5moek"]
+
+[ext_resource type="Resource" uid="uid://bt62rd06c6xsd" path="res://Prefabs/Tracks/Normal/Level1.tres" id="1_i8dr0"]
+[ext_resource type="Resource" uid="uid://dt7ai5bq1i75p" path="res://Prefabs/Tracks/Normal/Level0.tres" id="1_ofg0d"]
+[ext_resource type="Script" path="res://Scripts/Minesweeper/GridLevelTrack.cs" id="2_kv7df"]
+[ext_resource type="Resource" uid="uid://s27bbydpfmbi" path="res://Prefabs/Tracks/Normal/Level2.tres" id="3_qmvtr"]
+[ext_resource type="Resource" uid="uid://ca0x1mtihtawb" path="res://Prefabs/Tracks/Normal/Level3.tres" id="4_aejrw"]
+[ext_resource type="Resource" uid="uid://dm222kio2f2cx" path="res://Prefabs/Tracks/Normal/Level4.tres" id="5_8r8s4"]
+[ext_resource type="Resource" uid="uid://crnlpu0fsnska" path="res://Prefabs/Tracks/Normal/Level5.tres" id="6_xlm6w"]
+[ext_resource type="Resource" uid="uid://dtj4o5jr7oy76" path="res://Prefabs/Tracks/Normal/Level6.tres" id="7_mgrcp"]
+
+[resource]
+script = ExtResource("2_kv7df")
+_track = Array[Resource]([ExtResource("1_ofg0d"), ExtResource("1_i8dr0"), ExtResource("3_qmvtr"), ExtResource("4_aejrw"), ExtResource("5_8r8s4"), ExtResource("6_xlm6w"), ExtResource("7_mgrcp")])
+_startLevel = 1

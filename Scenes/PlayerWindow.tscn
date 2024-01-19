@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://bw8l2u700t6mo"]
+[gd_scene load_steps=18 format=3 uid="uid://bw8l2u700t6mo"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerWindow.cs" id="1_fkkf7"]
 [ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/board.tscn" id="2_0qnsv"]
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerInput.cs" id="3_0jmo8"]
+[ext_resource type="Resource" uid="uid://bulayail5moek" path="res://Prefabs/Tracks/Normal/NormalTrack.tres" id="3_w8s6a"]
 [ext_resource type="Script" path="res://Scripts/Graphics/PlayerAvatar.cs" id="4_8lv8x"]
 [ext_resource type="PackedScene" uid="uid://caga2hqwweqod" path="res://Prefabs/Player1.tscn" id="4_gkrlj"]
 [ext_resource type="Script" path="res://Scripts/Graphics/AvatarAnimationData.cs" id="6_yv2sl"]
@@ -12,6 +13,11 @@ min_value = -1.0
 max_value = 2.0
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.159341, 0.0105262), 0.0, 0.0, 0, 0, Vector2(0.32967, -0.11579), 0.0, 0.0, 0, 0, Vector2(0.846154, 1.02105), 0.0, 0.0, 0, 0, Vector2(0.934066, 0.989473), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbd8u"]
+font_size = 72
+outline_size = 18
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Curve" id="Curve_8ovjo"]
 
@@ -47,7 +53,7 @@ point_count = 2
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 1, 0]
 point_count = 2
 
-[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds")]
+[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds", "_scoreDisplay")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,10 +64,12 @@ script = ExtResource("1_fkkf7")
 _playerInput = NodePath("Input Detector")
 _playerAvatar = NodePath("Player Avatar")
 _squeezeBounds = NodePath("Bounds")
+_scoreDisplay = NodePath("Label")
 _gridTemplate = ExtResource("2_0qnsv")
+_track = ExtResource("3_w8s6a")
 _squeezePaddingH = 100
 _squeezePaddingV = 100
-_zoomStartScale = 2.0
+_zoomStartScale = 3.0
 _zoomIn = 1.5
 _boardSwitchDuration = 1.7
 _boardSwitchCurve = SubResource("Curve_r1sfb")
@@ -82,13 +90,43 @@ size_flags_vertical = 6
 [node name="Input Detector" type="Node" parent="."]
 script = ExtResource("3_0jmo8")
 
-[node name="Player Avatar" type="Node2D" parent="."]
+[node name="Label" type="Label" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -127.0
+offset_right = 378.0
+offset_bottom = -25.0
+grow_vertical = 0
+text = "0 pts"
+label_settings = SubResource("LabelSettings_lbd8u")
+vertical_alignment = 1
+
+[node name="Player Avatar" type="Control" parent="." node_paths=PackedStringArray("_avatarRoot")]
 z_index = 10
-position = Vector2(969, 557)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
 scale = Vector2(0.7, 0.7)
 script = ExtResource("4_8lv8x")
 _playerPrefab = ExtResource("4_gkrlj")
+_avatarRoot = NodePath("Avatar Root")
 _startingBaseSprite = "Idle"
+
+[node name="Avatar Root" type="Control" parent="Player Avatar"]
+anchors_preset = 0
+offset_left = -244.286
+offset_top = -125.714
+offset_right = -204.286
+offset_bottom = -85.7143
 
 [node name="HappyJump" type="Node" parent="Player Avatar"]
 script = ExtResource("6_yv2sl")

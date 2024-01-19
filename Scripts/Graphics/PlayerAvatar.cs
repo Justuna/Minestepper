@@ -2,9 +2,10 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class PlayerAvatar : Node2D
+public partial class PlayerAvatar : Control
 {
     [Export] private PackedScene _playerPrefab;
+    [Export] private Control _avatarRoot;
     [Export] private string _startingBaseSprite;
 
     private PlayerWindow _window;
@@ -22,12 +23,11 @@ public partial class PlayerAvatar : Node2D
 
         foreach (Node node in GetChildren())
         {
-            try 
+            if (node is AvatarAnimationData) 
             {
                 AvatarAnimationData animation = node as AvatarAnimationData;
                 _animations.Add(animation.Name, animation);
             }
-            catch (InvalidCastException) {}
         }
 
         try
@@ -37,7 +37,7 @@ public partial class PlayerAvatar : Node2D
             _playerMultiSprite.Init(_window.PlayerColor);
             _playerMultiSprite.ShowSprite(BaseSprite);
 
-            AddChild(_playerMultiSprite);
+            _avatarRoot.AddChild(_playerMultiSprite);
         }
         catch (InvalidCastException) 
         {

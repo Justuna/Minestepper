@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 public partial class MinesweeperGrid : Control
 {
@@ -37,7 +36,6 @@ public partial class MinesweeperGrid : Control
 	private int _height;
 	private int _mineCount;
 	private int _revealed = 0;
-	private int _flags = 0;
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 	private int _area => _width * _height;
 	private bool _active = false;
@@ -46,8 +44,9 @@ public partial class MinesweeperGrid : Control
 	private int _selected;
 	private double _moveProgress = 0;
 
-	private bool _zoom = false;
-	private bool _zooming = false;
+	private bool _canZoom = false;
+	private bool _shouldZoom = false;
+	private bool _isZooming = false;
 	private double _zoomProgress = 0;
 	private Vector2 _cellOffset;
 	private Vector2 _zoomPos = Vector2.Zero;
@@ -59,6 +58,8 @@ public partial class MinesweeperGrid : Control
 	public delegate void GridAnimationCompleteEventHandler();
 
 	public PlayerWindow Window => _window;
+	public int TotalMines => _mineCount;
+	public int UnflaggedMines { get; private set; }
 
     public void Init(PlayerWindow window, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int mineCount = DEFAULT_MINE_COUNT)
 	{
@@ -138,18 +139,22 @@ public partial class MinesweeperGrid : Control
 
 			if (newScale < _window.ZoomStartScale)
 			{
-				_zoom = true;
+				_shouldZoom = true;
 			}
 		}
 
 		_gridLayout.Columns = _width;
+
+		GD.Print(_gridAnchor.Position);
 	}
 
 	public void TryStart()
 	{
-		if (_zoom)
+		GD.Print(_gridAnchor.Position);
+		if (_shouldZoom)
 		{
-			_zooming = true;
+			_canZoom = true;
+			_isZooming = true;
 		}
 		else
 		{
@@ -170,9 +175,16 @@ public partial class MinesweeperGrid : Control
 
     public override void _Process(double delta)
     {
-		if (_zooming)
+		if (_canZoom) ProcessZoom(delta);
+
+		if (_active) ProcessInput(delta);
+    }
+
+	private void ProcessZoom(double delta)
+	{
+		if (_isZooming)
 		{
-			if (_zoom)
+			if (_shouldZoom)
 			{
 				if (_zoomProgress < 1)
 				{
@@ -181,7 +193,7 @@ public partial class MinesweeperGrid : Control
 				else
 				{
 					_zoomProgress = 1;
-					_zooming = false;
+					_isZooming = false;
 					Start();
 				}
 			}
@@ -194,7 +206,7 @@ public partial class MinesweeperGrid : Control
 				else
 				{
 					_zoomProgress = 0;
-					_zooming = false;
+					_isZooming = false;
 					End();
 				}
 			}
@@ -205,7 +217,7 @@ public partial class MinesweeperGrid : Control
 			_gridAnchor.Scale = new Vector2(anchorScale, anchorScale);
 			_gridAnchor.Position = _zoomPos * f + Vector2.Zero * (1 - f);
 		}
-		else if (_zoom && !_zooming)
+		else if (_shouldZoom && !_isZooming)
 		{
 			Vector2 displacement = _zoomPos - _gridAnchor.Position;
 
@@ -214,9 +226,7 @@ public partial class MinesweeperGrid : Control
 			
 			_gridAnchor.Position = _gridAnchor.Position + movement;
 		}
-
-		if (_active) ProcessInput(delta);
-    }
+	}
 
 	private void ProcessInput(double delta)
 	{
@@ -343,10 +353,10 @@ public partial class MinesweeperGrid : Control
 			_active = false;
 			EmitSignal(SignalName.GridGameOver, false);
 
-			if (_zoom) 
+			if (_shouldZoom) 
 			{
-				_zoom = false;
-				_zooming = true;
+				_shouldZoom = false;
+				_isZooming = true;
 			}
 			else End();
 		}
@@ -390,10 +400,10 @@ public partial class MinesweeperGrid : Control
 				_active = false;
 				EmitSignal(SignalName.GridGameOver, true);
 
-				if (_zoom) 
+				if (_shouldZoom) 
 				{
-					_zoom = false;
-					_zooming = true;
+					_shouldZoom = false;
+					_isZooming = true;
 				}
 				else End();
 			}
@@ -404,9 +414,16 @@ public partial class MinesweeperGrid : Control
 	{
 		for (int i = 0; i < _area; i++)
 		{
-			if (flag && _gridCells[i].IsMine && !_gridCells[i].IsFlagged)
+			if (_gridCells[i].IsMine && !_gridCells[i].IsFlagged)
 			{
-				_gridCells[i].Flag();
+				if (flag)
+				{
+					_gridCells[i].Flag();
+				}
+				else
+				{
+					UnflaggedMines++;
+				}
 			}
 			_gridCells[i].Reveal();
 		}

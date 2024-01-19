@@ -7,7 +7,9 @@ public partial class PlayerWindow : Control
     [Export] private PlayerInput _playerInput;
     [Export] private PlayerAvatar _playerAvatar;
     [Export] private Control _squeezeBounds;
+    [Export] private Label _scoreDisplay;
     [Export] private PackedScene _gridTemplate;
+    [Export] private GridLevelTrack _track;
 
     [ExportSubgroup("Parameters")]
     [Export] private int _squeezePaddingH;
@@ -23,6 +25,8 @@ public partial class PlayerWindow : Control
     private MinesweeperGrid _oldGrid;
     private MinesweeperGrid _newGrid;
     private double _gridSwitchProgress = 1;
+    private int _score = 0;
+    private int _level;
 
     public MinesweeperGrid ActiveGrid { get; private set; }
     public PlayerInput Input { get; private set; }
@@ -57,6 +61,12 @@ public partial class PlayerWindow : Control
             _squeezeBounds.Position = new Vector2((Size.X - maxHeight) / 2, (Size.Y - maxHeight) / 2);
             _squeezeBounds.PivotOffset = new Vector2(maxHeight / 2, maxHeight / 2);
         }
+
+        _scoreDisplay.LabelSettings.FontColor = PlayerColor;
+        ScoreToDisplay();
+
+        _level = _track.StartLevel;
+        if (_level < 0) throw new Exception("Level track does not have any levels!");
 
         _playerInput.Init(this);
         _playerAvatar.Init(this);
@@ -108,7 +118,8 @@ public partial class PlayerWindow : Control
         {
             _newGrid = _gridTemplate.Instantiate() as MinesweeperGrid;
 
-            _newGrid.Init(this, 5, 5, 3);
+            GridLevel level = _track.GetLevel(_level);
+            _newGrid.Init(this, level.GridWidth, level.GridHeight, level.GridMineCount);
             AddChild(_newGrid);
 
             _newGrid.Position = _offscreenBottom;
@@ -131,9 +142,29 @@ public partial class PlayerWindow : Control
 
     private void ResolveGrid(bool win)
     {
-        if (win) _playerAvatar.PlayAnimation("HappyJump");
-        else _playerAvatar.PlayAnimation("ScaredShake");
+        GridLevel level = _track.GetLevel(_level);
+
+        int scoreChange = ((ActiveGrid.TotalMines - ActiveGrid.UnflaggedMines) * level.CorrectWorth) - (ActiveGrid.UnflaggedMines * level.MinePenalty);
+        if (ActiveGrid.UnflaggedMines == 0) scoreChange += level.ClearBonus;
+
+        _score += scoreChange;
+        ScoreToDisplay();
+
+        if (win) 
+        {
+            _level = Mathf.Min(_level + 1, _track.Length - 1);
+            _playerAvatar.PlayAnimation("HappyJump");
+        }
+        else
+        {
+            _level = Mathf.Max(_level - 1, 0);
+            _playerAvatar.PlayAnimation("ScaredShake");
+        } 
     }
 
+    private void ScoreToDisplay()
+    {
+        _scoreDisplay.Text = _score + " pts";
+    }
 }
 
