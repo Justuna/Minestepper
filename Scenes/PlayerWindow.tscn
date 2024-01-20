@@ -1,7 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://bw8l2u700t6mo"]
+[gd_scene load_steps=25 format=3 uid="uid://bw8l2u700t6mo"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerWindow.cs" id="1_fkkf7"]
-[ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/board.tscn" id="2_0qnsv"]
+[ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/Board.tscn" id="2_0qnsv"]
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerInput.cs" id="3_0jmo8"]
 [ext_resource type="Resource" uid="uid://bulayail5moek" path="res://Prefabs/Tracks/Normal/NormalTrack.tres" id="3_w8s6a"]
 [ext_resource type="Script" path="res://Scripts/Graphics/PlayerAvatar.cs" id="4_8lv8x"]
@@ -10,6 +10,7 @@
 [ext_resource type="FontFile" uid="uid://bfh51xkuwee3r" path="res://Assets/Fonts/Super Squad Italic.ttf" id="5_rouem"]
 [ext_resource type="PackedScene" uid="uid://cajohanco13sd" path="res://Prefabs/Flag.tscn" id="6_8t75f"]
 [ext_resource type="Script" path="res://Scripts/Graphics/AvatarAnimationData.cs" id="6_yv2sl"]
+[ext_resource type="PackedScene" uid="uid://bvr3oi0a5gqso" path="res://Prefabs/PointChangeTick.tscn" id="8_lcpqg"]
 
 [sub_resource type="Curve" id="Curve_r1sfb"]
 min_value = -1.0
@@ -75,7 +76,7 @@ point_count = 2
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 1, 0]
 point_count = 2
 
-[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds", "_scoreDisplay", "_mineDisplay", "_bonusDisplay", "_flagDisplay", "_flagIcon")]
+[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds", "_pointChangeTickSpawn", "_scoreDisplay", "_mineDisplay", "_bonusDisplay", "_flagDisplay", "_flagIcon")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -86,6 +87,8 @@ script = ExtResource("1_fkkf7")
 _playerInput = NodePath("Input Detector")
 _playerAvatar = NodePath("Player Avatar")
 _squeezeBounds = NodePath("Bounds")
+_pointChangeTickSpawn = NodePath("Points/Point Change Tick Spawn")
+_pointChangeTick = ExtResource("8_lcpqg")
 _scoreDisplay = NodePath("Points")
 _mineDisplay = NodePath("Mine Count")
 _bonusDisplay = NodePath("Bonus")
@@ -172,6 +175,13 @@ grow_vertical = 0
 text = "0 pts"
 label_settings = SubResource("LabelSettings_lbd8u")
 vertical_alignment = 1
+
+[node name="Point Change Tick Spawn" type="Control" parent="Points"]
+anchors_preset = 0
+offset_left = -12.0
+offset_top = -25.0
+offset_right = -12.0
+offset_bottom = -25.0
 
 [node name="Player Avatar" type="Control" parent="." node_paths=PackedStringArray("_avatarRoot")]
 z_index = 10

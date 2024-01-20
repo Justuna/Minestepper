@@ -16,3 +16,8 @@ res://Prefabs/Tracks/Normal/NormalTrack.tres
 res://Prefabs/cell.tscn
 res://Scenes/PlayerWindow.tscn
 res://Prefabs/Flag.tscn
+res://Prefabs/PointChangeTick.tscn
+res://Scripts/Graphics/Flag.cs
+res://Scripts/Graphics/PointChangeTick.cs
+res://Prefabs/Board.tscn
+res://Prefabs/Cell.tscn

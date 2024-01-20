@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvr3oi0a5gqso"]
+
+[ext_resource type="FontFile" uid="uid://bfh51xkuwee3r" path="res://Assets/Fonts/Super Squad Italic.ttf" id="1_20qvs"]
+[ext_resource type="Script" path="res://Scripts/Graphics/PointChangeTick.cs" id="2_pwmgf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ivsfo"]
+font = ExtResource("1_20qvs")
+font_size = 36
+outline_size = 14
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Curve" id="Curve_aific"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.47986, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_l8uog"]
+_data = [Vector2(0, 1), 0.0, 0.0282149, 0, 0, Vector2(1, 0), -3.08216, 0.0, 0, 0]
+point_count = 2
+
+[node name="Point Change Tick" type="Label"]
+z_index = -1
+offset_right = 207.0
+offset_bottom = 93.0
+text = "+400"
+label_settings = SubResource("LabelSettings_ivsfo")
+horizontal_alignment = 1
+script = ExtResource("2_pwmgf")
+_lifetime = 1.0
+_velocity = Vector2(0, -30)
+_velocityScaleCurve = SubResource("Curve_aific")
+_opacityCurve = SubResource("Curve_l8uog")

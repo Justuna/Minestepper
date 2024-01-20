@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://pcb2neyjjif"]
 
-[ext_resource type="Script" path="res://Scripts/Minesweeper/MinesweeperCell.cs" id="1_i5ewb"]
-[ext_resource type="Theme" uid="uid://chy6pl1ht3rxp" path="res://Themes/cells.tres" id="2_ltsuo"]
-[ext_resource type="Texture2D" uid="uid://dnhgj7dpe4vwy" path="res://Assets/Sprites/mine.png" id="3_ofwr2"]
-[ext_resource type="PackedScene" uid="uid://cajohanco13sd" path="res://Prefabs/Flag.tscn" id="4_3abpg"]
+[ext_resource type="Script" path="res://Scripts/Minesweeper/MinesweeperCell.cs" id="1_hvjvl"]
+[ext_resource type="Theme" uid="uid://chy6pl1ht3rxp" path="res://Themes/cells.tres" id="2_006ed"]
+[ext_resource type="Texture2D" uid="uid://dnhgj7dpe4vwy" path="res://Assets/Sprites/mine.png" id="3_ao3mb"]
+[ext_resource type="PackedScene" uid="uid://cajohanco13sd" path="res://Prefabs/Flag.tscn" id="4_pbd6o"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_thkp1"]
 font_size = 60
@@ -15,7 +15,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 100.0
 offset_bottom = 100.0
-script = ExtResource("1_i5ewb")
+script = ExtResource("1_hvjvl")
 _outline = NodePath("Outline")
 _panel = NodePath("Panel")
 _cover = NodePath("Cover")
@@ -33,7 +33,7 @@ layout_direction = 2
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
-theme = ExtResource("2_ltsuo")
+theme = ExtResource("2_006ed")
 
 [node name="Hint" type="Label" parent="."]
 visible = false
@@ -48,14 +48,14 @@ vertical_alignment = 1
 visible = false
 texture_filter = 1
 scale = Vector2(0.390625, 0.390625)
-texture = ExtResource("3_ofwr2")
+texture = ExtResource("3_ao3mb")
 centered = false
 
 [node name="Cover" type="Panel" parent="."]
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
-theme = ExtResource("2_ltsuo")
+theme = ExtResource("2_006ed")
 
 [node name="Outline" type="Panel" parent="."]
 z_index = 1
@@ -66,7 +66,7 @@ offset_left = -20.0
 offset_top = -20.0
 offset_right = 120.0
 offset_bottom = 120.0
-theme = ExtResource("2_ltsuo")
+theme = ExtResource("2_006ed")
 theme_type_variation = &"OutlinePanel"
 
-[node name="Flag" parent="." instance=ExtResource("4_3abpg")]
+[node name="Flag" parent="." instance=ExtResource("4_pbd6o")]

@@ -7,6 +7,8 @@ public partial class PlayerWindow : Control
     [Export] private PlayerInput _playerInput;
     [Export] private PlayerAvatar _playerAvatar;
     [Export] private Control _squeezeBounds;
+    [Export] private Control _pointChangeTickSpawn;
+    [Export] private PackedScene _pointChangeTick;
     [Export] private Label _scoreDisplay;
     [Export] private Label _mineDisplay;
     [Export] private Label _bonusDisplay;
@@ -169,6 +171,19 @@ public partial class PlayerWindow : Control
 
         _score += scoreChange;
         ScoreToDisplay();
+
+        Node node = _pointChangeTick.Instantiate();
+        if (node is PointChangeTick)
+        {
+            PointChangeTick tick = node as PointChangeTick;
+            tick.Init(scoreChange);
+
+            _pointChangeTickSpawn.AddChild(tick);
+        }
+        else
+        {
+            GD.PrintErr("Point change tick prefab must have the PointChangeTick script as its root node.");
+        }
 
         if (win) 
         {
