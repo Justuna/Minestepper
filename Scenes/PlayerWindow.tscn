@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bw8l2u700t6mo"]
+[gd_scene load_steps=22 format=3 uid="uid://bw8l2u700t6mo"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerWindow.cs" id="1_fkkf7"]
 [ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/board.tscn" id="2_0qnsv"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Graphics/PlayerAvatar.cs" id="4_8lv8x"]
 [ext_resource type="PackedScene" uid="uid://caga2hqwweqod" path="res://Prefabs/Player1.tscn" id="4_gkrlj"]
 [ext_resource type="FontFile" uid="uid://di6uqurcqgdvr" path="res://Assets/Fonts/Super Squad.ttf" id="5_4fv7t"]
+[ext_resource type="FontFile" uid="uid://bfh51xkuwee3r" path="res://Assets/Fonts/Super Squad Italic.ttf" id="5_rouem"]
 [ext_resource type="Script" path="res://Scripts/Graphics/AvatarAnimationData.cs" id="6_yv2sl"]
 
 [sub_resource type="Curve" id="Curve_r1sfb"]
@@ -14,6 +15,18 @@ min_value = -1.0
 max_value = 2.0
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.159341, 0.0105262), 0.0, 0.0, 0, 0, Vector2(0.32967, -0.11579), 0.0, 0.0, 0, 0, Vector2(0.846154, 1.02105), 0.0, 0.0, 0, 0, Vector2(0.934066, 0.989473), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_o4j0n"]
+font = ExtResource("5_rouem")
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wleu1"]
+font = ExtResource("5_rouem")
+font_size = 32
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_lbd8u"]
 font = ExtResource("5_4fv7t")
@@ -55,7 +68,7 @@ point_count = 2
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 1, 0]
 point_count = 2
 
-[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds", "_scoreDisplay")]
+[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds", "_scoreDisplay", "_mineDisplay", "_bonusDisplay")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -66,7 +79,9 @@ script = ExtResource("1_fkkf7")
 _playerInput = NodePath("Input Detector")
 _playerAvatar = NodePath("Player Avatar")
 _squeezeBounds = NodePath("Bounds")
-_scoreDisplay = NodePath("Label")
+_scoreDisplay = NodePath("Points")
+_mineDisplay = NodePath("Mine Count")
+_bonusDisplay = NodePath("Bonus")
 _gridTemplate = ExtResource("2_0qnsv")
 _track = ExtResource("3_w8s6a")
 _squeezePaddingH = 100
@@ -93,7 +108,26 @@ size_flags_vertical = 6
 [node name="Input Detector" type="Node" parent="."]
 script = ExtResource("3_0jmo8")
 
-[node name="Label" type="Label" parent="."]
+[node name="Bonus" type="Label" parent="."]
+z_index = 5
+offset_left = 24.0
+offset_top = 69.0
+offset_right = 518.0
+offset_bottom = 120.0
+label_settings = SubResource("LabelSettings_o4j0n")
+vertical_alignment = 1
+
+[node name="Mine Count" type="Label" parent="."]
+z_index = 5
+layout_mode = 1
+offset_left = 28.0
+offset_top = 18.0
+offset_right = 490.0
+offset_bottom = 75.0
+label_settings = SubResource("LabelSettings_wleu1")
+vertical_alignment = 1
+
+[node name="Points" type="Label" parent="."]
 z_index = 5
 layout_mode = 1
 anchors_preset = 2

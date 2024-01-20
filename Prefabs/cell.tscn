@@ -25,8 +25,8 @@ _hint = NodePath("Hint")
 _bomb = NodePath("Bomb")
 _defuseTint = Color(0.407843, 0.407843, 0.407843, 1)
 _flag = NodePath("Flag")
-_panelValueAdjustment = 0.3
-_coverValueAdjustment = 0.1
+_panelValueAdjustment = 0.35
+_coverValueAdjustment = 0.05
 _outlineValueAdjustment = -0.5
 
 [node name="Panel" type="Panel" parent="."]

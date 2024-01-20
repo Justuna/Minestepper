@@ -8,6 +8,8 @@ public partial class PlayerWindow : Control
     [Export] private PlayerAvatar _playerAvatar;
     [Export] private Control _squeezeBounds;
     [Export] private Label _scoreDisplay;
+    [Export] private Label _mineDisplay;
+    [Export] private Label _bonusDisplay;
     [Export] private PackedScene _gridTemplate;
     [Export] private GridLevelTrack _track;
 
@@ -63,7 +65,11 @@ public partial class PlayerWindow : Control
             _squeezeBounds.PivotOffset = new Vector2(maxHeight / 2, maxHeight / 2);
         }
 
-        _scoreDisplay.LabelSettings.OutlineColor = ColorOperations.AdjustValue(PlayerColor, _fontValueAdjustment, true);
+        Color fontOutline = ColorOperations.AdjustValue(PlayerColor, _fontValueAdjustment, true);
+        _scoreDisplay.LabelSettings.OutlineColor = fontOutline;
+        _bonusDisplay.LabelSettings.OutlineColor = fontOutline;
+        _mineDisplay.LabelSettings.OutlineColor = fontOutline;
+
         ScoreToDisplay();
 
         _level = _track.StartLevel;
@@ -108,6 +114,11 @@ public partial class PlayerWindow : Control
             ActiveGrid = _newGrid;
             _newGrid = null;
             _oldGrid = null;
+
+            GridLevel level = _track.GetLevel(_level);
+
+            _mineDisplay.Text = $"{level.GridMineCount} mines, +{level.CorrectWorth}/-{level.MinePenalty} per";
+            _bonusDisplay.Text = $"Clear Bonus: +{level.ClearBonus}";
 
             ActiveGrid.TryStart();
         }
