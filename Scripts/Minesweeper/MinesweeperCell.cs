@@ -33,6 +33,8 @@ public partial class MinesweeperCell : Control
     public bool IsEmpty => _state == MinesweeperCellState.EMPTY;
     public bool IsDecided => _state != MinesweeperCellState.UNDECIDED;
     public bool IsFlagged => _flagged;
+    public bool IsRevealed => _revealed;
+    public int HintValue { get; private set; }
 
     public PlayerWindow Window => _grid.Window;
 
@@ -66,6 +68,7 @@ public partial class MinesweeperCell : Control
         else
         {
             _state = MinesweeperCellState.HINT;
+            HintValue = hint;
             _hint.Text = "" + hint;
             _hint.Visible = true;
         }

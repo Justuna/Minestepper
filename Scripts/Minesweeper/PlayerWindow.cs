@@ -10,6 +10,8 @@ public partial class PlayerWindow : Control
     [Export] private Label _scoreDisplay;
     [Export] private Label _mineDisplay;
     [Export] private Label _bonusDisplay;
+    [Export] private Label _flagDisplay;
+    [Export] private Flag _flagIcon;
     [Export] private PackedScene _gridTemplate;
     [Export] private GridLevelTrack _track;
 
@@ -69,6 +71,9 @@ public partial class PlayerWindow : Control
         _scoreDisplay.LabelSettings.OutlineColor = fontOutline;
         _bonusDisplay.LabelSettings.OutlineColor = fontOutline;
         _mineDisplay.LabelSettings.OutlineColor = fontOutline;
+        _flagDisplay.LabelSettings.OutlineColor = fontOutline;
+
+        _flagIcon.Init(this);
 
         ScoreToDisplay();
 
@@ -119,6 +124,8 @@ public partial class PlayerWindow : Control
 
             _mineDisplay.Text = $"{level.GridMineCount} mines, +{level.CorrectWorth}/-{level.MinePenalty} per";
             _bonusDisplay.Text = $"Clear Bonus: +{level.ClearBonus}";
+            _flagDisplay.Text = $"0/{level.GridMineCount}";
+            _flagDisplay.Visible = true;
 
             ActiveGrid.TryStart();
         }
@@ -138,6 +145,7 @@ public partial class PlayerWindow : Control
             
             _newGrid.GridGameOver += ResolveGrid;
             _newGrid.GridAnimationComplete += SpawnNewGrid;
+            _newGrid.GridFlagNumberChanged += FlagDisplayChange;
             
             // Prepare for animation
             _oldGrid = ActiveGrid;
@@ -166,17 +174,28 @@ public partial class PlayerWindow : Control
         {
             _level = Mathf.Min(_level + 1, _track.Length - 1);
             _playerAvatar.PlayAnimation("HappyJump");
+            _flagDisplay.Text = $"{ActiveGrid.TotalMines}/{ActiveGrid.TotalMines}!!";
         }
         else
         {
             _level = Mathf.Max(_level - 1, 0);
             _playerAvatar.PlayAnimation("ScaredShake");
+            _flagDisplay.Text = $"{ActiveGrid.TotalMines - ActiveGrid.UnflaggedMines}/{ActiveGrid.TotalMines}...";
         } 
     }
 
     private void ScoreToDisplay()
     {
         _scoreDisplay.Text = _score + " pts";
+    }
+
+    private void FlagDisplayChange(int flags)
+    {
+        GridLevel level = _track.GetLevel(_level);
+
+        _flagDisplay.Text = $"{flags}/{level.GridMineCount}";
+        if (flags == level.GridMineCount) _flagDisplay.Text += "?";
+        else if (flags > level.GridMineCount) _flagDisplay.Text += "??";
     }
 }
 

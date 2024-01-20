@@ -34,6 +34,7 @@ public partial class MinesweeperGrid : Control
 	private int _width;
 	private int _height;
 	private int _mineCount;
+	private int _flagCount;
 	private int _revealed = 0;
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 	private int _area => _width * _height;
@@ -55,10 +56,13 @@ public partial class MinesweeperGrid : Control
 	public delegate void GridGameOverEventHandler(bool win);
 	[Signal]
 	public delegate void GridAnimationCompleteEventHandler();
+	[Signal]
+	public delegate void GridFlagNumberChangedEventHandler(int flags);
 
 	public PlayerWindow Window => _window;
 	public int TotalMines => _mineCount;
 	public int UnflaggedMines { get; private set; }
+	public MinesweeperCell CurrentCell => _gridCells[_selected];
 
     public void Init(PlayerWindow window, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int mineCount = DEFAULT_MINE_COUNT)
 	{
@@ -344,32 +348,74 @@ public partial class MinesweeperGrid : Control
 	{
 		if (!_active) return;
 
-		if (_gridCells[_selected].IsFlagged) return;
+		if (CurrentCell.IsFlagged) return;
 
-		if (_gridCells[_selected].IsMine)
+		if (CurrentCell.IsRevealed)
 		{
-			RevealAll(false);
-
-			_active = false;
-			EmitSignal(SignalName.GridGameOver, false);
-
-			if (_shouldZoom) 
+			if (CurrentCell.IsHint)
 			{
-				_shouldZoom = false;
-				_isZooming = true;
+				RevealHint();
 			}
-			else End();
 		}
 		else
 		{
-			if (!_gridCells[_selected].IsDecided)
+			RevealHidden(_selected);
+		}
+	}
+
+	private void RevealHint()
+	{
+		int[] neighbors = GetAdjacentCells(_selected);
+		int count = 0;
+
+		List<int> hiddenNeighbors = new();
+
+		for (int n = 0; n < 8; n++)
+		{
+			int neighbor = neighbors[n];
+
+			if (neighbor >= 0)
 			{
-				Fill(_selected);
+				if (_gridCells[neighbor].IsFlagged)
+				{
+					count++;
+				}
+				else
+				{
+					hiddenNeighbors.Add(neighbor);
+				}
+			}
+		}
+
+		if (count >= CurrentCell.HintValue)
+		{
+			foreach (int neighbor in hiddenNeighbors)
+			{
+				// With each neighbor revealed, there is a chance that other neighbors 
+				// are also revealed or that you ended the game
+
+				if (!_gridCells[neighbor].IsRevealed) RevealHidden(neighbor);
+				if (!_active) break;
+			}
+		}
+	}
+
+	private void RevealHidden(int index)
+	{
+		if (_gridCells[index].IsMine)
+		{
+			GameEnd(false);
+		}
+		else
+		{
+			if (!_gridCells[index].IsDecided)
+			{
+				Fill(index);
 			}
 
 			Queue<int> queue = new Queue<int>();
 
-			queue.Enqueue(_selected);
+			queue.Enqueue(index);
 
 			while (queue.Count > 0)
 			{
@@ -380,14 +426,14 @@ public partial class MinesweeperGrid : Control
 				{
 					_revealed += 1;
 
-					if (_gridCells[cell].IsEmpty && !_gridCells[cell].IsFlagged)
+					if (_gridCells[cell].IsEmpty)
 					{
 						int[] neighbors = GetAdjacentCells(cell);
 
 						for (int n = 0; n < 8; n++)
 						{
 							int neighbor = neighbors[n];
-							if (neighbor >= 0) queue.Enqueue(neighbor);
+							if (neighbor >= 0 && !_gridCells[neighbor].IsFlagged) queue.Enqueue(neighbor);
 						}
 					}
 				}
@@ -395,28 +441,43 @@ public partial class MinesweeperGrid : Control
 
 			if (_revealed + _mineCount == _area)
 			{
-				RevealAll(true);
-
-				_active = false;
-				EmitSignal(SignalName.GridGameOver, true);
-
-				if (_shouldZoom) 
-				{
-					_shouldZoom = false;
-					_isZooming = true;
-				}
-				else End();
+				GameEnd(true);
 			}
 		}
 	}
 
-	private void RevealAll(bool flag)
+	public void Flag()
+	{
+		CurrentCell.Flag();
+
+		if (CurrentCell.IsFlagged) _flagCount++;
+		else _flagCount--;
+
+		EmitSignal(SignalName.GridFlagNumberChanged, _flagCount);
+	}
+
+	private void GameEnd(bool win)
+	{
+		RevealAll(win);
+
+		_active = false;
+		EmitSignal(SignalName.GridGameOver, win);
+		
+		if (_shouldZoom) 
+		{
+			_shouldZoom = false;
+			_isZooming = true;
+		}
+		else End();
+	}
+
+	private void RevealAll(bool autoFlag)
 	{
 		for (int i = 0; i < _area; i++)
 		{
 			if (_gridCells[i].IsMine && !_gridCells[i].IsFlagged)
 			{
-				if (flag)
+				if (autoFlag)
 				{
 					_gridCells[i].Flag();
 				}
@@ -429,10 +490,5 @@ public partial class MinesweeperGrid : Control
 		}
 
 		_gridCells[_selected].Deselect();
-	}
-
-	public void Flag()
-	{
-		_gridCells[_selected].Flag();
 	}
 }

@@ -1,11 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://pcb2neyjjif"]
+[gd_scene load_steps=6 format=3 uid="uid://pcb2neyjjif"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/MinesweeperCell.cs" id="1_i5ewb"]
 [ext_resource type="Theme" uid="uid://chy6pl1ht3rxp" path="res://Themes/cells.tres" id="2_ltsuo"]
 [ext_resource type="Texture2D" uid="uid://dnhgj7dpe4vwy" path="res://Assets/Sprites/mine.png" id="3_ofwr2"]
-[ext_resource type="Script" path="res://Scripts/Minesweeper/Flag.cs" id="4_gjbpw"]
-[ext_resource type="Texture2D" uid="uid://deas4sywkanco" path="res://Assets/Sprites/flagfill.png" id="5_r60mg"]
-[ext_resource type="Texture2D" uid="uid://caamiqaaq4tao" path="res://Assets/Sprites/flagoutline.png" id="6_c1xti"]
+[ext_resource type="PackedScene" uid="uid://cajohanco13sd" path="res://Prefabs/Flag.tscn" id="4_3abpg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_thkp1"]
 font_size = 60
@@ -71,17 +69,4 @@ offset_bottom = 120.0
 theme = ExtResource("2_ltsuo")
 theme_type_variation = &"OutlinePanel"
 
-[node name="Flag" type="Node2D" parent="." node_paths=PackedStringArray("_flagFill")]
-visible = false
-script = ExtResource("4_gjbpw")
-_flagFill = NodePath("Flag Fill")
-
-[node name="Flag Fill" type="Sprite2D" parent="Flag"]
-scale = Vector2(0.39, 0.39)
-texture = ExtResource("5_r60mg")
-centered = false
-
-[node name="Flag Outline" type="Sprite2D" parent="Flag"]
-scale = Vector2(0.39, 0.39)
-texture = ExtResource("6_c1xti")
-centered = false
+[node name="Flag" parent="." instance=ExtResource("4_3abpg")]
