@@ -15,5 +15,3 @@ res://Scripts/Minesweeper/MinesweeperGrid.cs
 res://Scripts/Minesweeper/PlayerInput.cs
 res://Scripts/Minesweeper/PlayerWindow.cs
 res://Scripts/Testing/TestMultiSprite.cs
-res://Prefabs/Tracks/Normal/Level1.tres
-res://Prefabs/Tracks/Normal/Level2.tres

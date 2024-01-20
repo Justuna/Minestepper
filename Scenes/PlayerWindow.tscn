@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bw8l2u700t6mo"]
+[gd_scene load_steps=19 format=3 uid="uid://bw8l2u700t6mo"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerWindow.cs" id="1_fkkf7"]
 [ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/board.tscn" id="2_0qnsv"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://bulayail5moek" path="res://Prefabs/Tracks/Normal/NormalTrack.tres" id="3_w8s6a"]
 [ext_resource type="Script" path="res://Scripts/Graphics/PlayerAvatar.cs" id="4_8lv8x"]
 [ext_resource type="PackedScene" uid="uid://caga2hqwweqod" path="res://Prefabs/Player1.tscn" id="4_gkrlj"]
+[ext_resource type="FontFile" uid="uid://di6uqurcqgdvr" path="res://Assets/Fonts/Super Squad.ttf" id="5_4fv7t"]
 [ext_resource type="Script" path="res://Scripts/Graphics/AvatarAnimationData.cs" id="6_yv2sl"]
 
 [sub_resource type="Curve" id="Curve_r1sfb"]
@@ -15,6 +16,7 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.159341, 0.0105262), 0.0, 0.0, 
 point_count = 6
 
 [sub_resource type="LabelSettings" id="LabelSettings_lbd8u"]
+font = ExtResource("5_4fv7t")
 font_size = 72
 outline_size = 18
 outline_color = Color(0, 0, 0, 1)
@@ -73,6 +75,7 @@ _zoomStartScale = 3.0
 _zoomIn = 1.5
 _boardSwitchDuration = 1.7
 _boardSwitchCurve = SubResource("Curve_r1sfb")
+_fontValueAdjustment = -0.5
 
 [node name="Bounds" type="Control" parent="."]
 layout_direction = 1

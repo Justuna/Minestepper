@@ -91,4 +91,74 @@ public static class ColorOperations
 
         return Blend(new Color(newR, newG, newB, top.A), bottom);
     }
+
+    /// <summary>
+    /// Adjusts the hue of a color's HSV representation, and returns the adjusted color.
+    /// If the adjustment would push the hue past 0 or 1, it wraps around to the other end of the range.
+    /// </summary>
+    /// <param name="color">The color to adjust.</param>
+    /// <param name="amount">The amount to adjust by.</param>
+    /// <returns>The color with the same saturation and value and an adjusted hue.</returns>
+    public static Color AdjustHue(Color color, float amount)
+    {
+        color.ToHsv(out float h, out float s, out float v);
+
+        float newH = (h + amount) % 1;
+
+        return Color.FromHsv(newH, s, v);
+    }
+
+    /// <summary>
+    /// Adjusts the saturation of a color's HSV representation, and returns the adjusted color.
+    /// If the adjustment would push the saturation past 0 or 1, it clamps to 0 or 1, respectively.
+    /// </summary>
+    /// <param name="color">The color to adjust.</param>
+    /// <param name="amount">The amount to adjust by.</param>
+    /// The color with the same hue and value and an adjusted saturation.
+    /// </returns>
+    public static Color AdjustSaturation(Color color, float amount)
+    {
+        color.ToHsv(out float h, out float s, out float v);
+
+        float newS = Mathf.Clamp(s + amount, 0, 1);
+
+        return Color.FromHsv(h, newS, v);
+    }
+
+    /// <summary>
+    /// Adjusts the value of a color's HSV representation, and returns the adjusted color.
+    /// If the adjustment would push the value past 0 or 1, it clamps to 0 or 1, respectively.
+    /// </summary>
+    /// <param name="color">The color to adjust.</param>
+    /// <param name="amount">The amount to adjust by.</param>
+    /// <param name="compensateSaturation">
+    /// Whether or not to take adjustment overflow on value and use it to reduce saturation.
+    /// Since HSV colors with full saturation cannot reach pure black or white, reducing saturation
+    /// in some cases might be the only way to brighten/darken a color further.
+    /// </param>
+    /// <returns>
+    /// The color with the same hue, an adjusted value, and possibly an adjusted saturation.
+    /// </returns>
+    public static Color AdjustValue(Color color, float amount, bool compensateSaturation = false)
+    {
+        color.ToHsv(out float h, out float s, out float v);
+
+        float newV = v + amount;
+        float newS = s;
+        if (compensateSaturation)
+        {
+            if (newV > 1)
+            {
+                newS = Mathf.Clamp(s - (newV - 1), 0, 1);
+            }
+            else if (newV < 0)
+            {
+                newS = Mathf.Clamp(s - (0 - newV), 0, 1);
+            }
+        }
+
+        newV = Mathf.Clamp(newV, 0, 1);
+
+        return Color.FromHsv(h, newS, newV);
+    }
 }

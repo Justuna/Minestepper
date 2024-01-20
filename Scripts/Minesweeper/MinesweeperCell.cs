@@ -18,12 +18,9 @@ public partial class MinesweeperCell : Control
     [Export] private Sprite2D _bomb;
     [Export] private Color _defuseTint;
     [Export] private Flag _flag;
-    [Export] private Color _panelTint;
-	[Export] private BlendModes _panelBlendMode;
-    [Export] private Color _coverTint;
-	[Export] private BlendModes _coverBlendMode;
-    [Export] private Color _outlineTint;
-	[Export] private BlendModes _outlineBlendMode;
+    [Export] private float _panelValueAdjustment;
+    [Export] private float _coverValueAdjustment;
+    [Export] private float _outlineValueAdjustment;
 
     private MinesweeperCellState _state = MinesweeperCellState.UNDECIDED;
     private MinesweeperGrid _grid;
@@ -44,9 +41,9 @@ public partial class MinesweeperCell : Control
         _grid = grid;
         _index = index;
 
-        _panel.Modulate = ColorOperations.Mix(_panelTint, Window.PlayerColor, _panelBlendMode);
-        _cover.Modulate = ColorOperations.Mix(_coverTint, Window.PlayerColor, _coverBlendMode);
-        _hint.LabelSettings.Set("outline_color", ColorOperations.Mix(_outlineTint, Window.PlayerColor, _outlineBlendMode));
+        _panel.Modulate = ColorOperations.AdjustValue(Window.PlayerColor, _panelValueAdjustment, true);
+        _cover.Modulate = ColorOperations.AdjustValue(Window.PlayerColor, _coverValueAdjustment, true);
+        _hint.LabelSettings.Set("outline_color", ColorOperations.AdjustValue(Window.PlayerColor, _outlineValueAdjustment, true));
         _outline.Hide();
 
         _flag.Init(this);

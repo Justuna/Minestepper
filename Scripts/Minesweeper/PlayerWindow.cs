@@ -18,6 +18,7 @@ public partial class PlayerWindow : Control
 	[Export] private float _zoomIn;
     [Export] private float _boardSwitchDuration;
     [Export] private Curve _boardSwitchCurve;
+    [Export] private float _fontValueAdjustment;
 
     private Vector2 _screenCenter => new Vector2(Size.X / 2, Size.Y / 2);
     private Vector2 _offscreenTop => _screenCenter + new Vector2(0, -2 * Size.Y);
@@ -62,7 +63,7 @@ public partial class PlayerWindow : Control
             _squeezeBounds.PivotOffset = new Vector2(maxHeight / 2, maxHeight / 2);
         }
 
-        _scoreDisplay.LabelSettings.FontColor = PlayerColor;
+        _scoreDisplay.LabelSettings.OutlineColor = ColorOperations.AdjustValue(PlayerColor, _fontValueAdjustment, true);
         ScoreToDisplay();
 
         _level = _track.StartLevel;

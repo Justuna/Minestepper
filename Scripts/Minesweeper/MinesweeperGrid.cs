@@ -13,8 +13,7 @@ public partial class MinesweeperGrid : Control
 	[ExportSubgroup("Visual Parameters")]
 	[Export] private int _spacing;
 	[Export] private int _padding;
-	[Export] private Color _bgTint;
-	[Export] private BlendModes _bgBlendMode;
+	[Export] private float _bgValueAdjustment;
 
 	[ExportSubgroup("Animation Parameters")]
 	[Export] private float _zoomDuration;
@@ -97,7 +96,8 @@ public partial class MinesweeperGrid : Control
 
 					_background.SetSize(new Vector2(sizeX, sizeY));
 					_gridLayout.SetSize(new Vector2(sizeX - 2 * _padding, sizeY - 2 * _padding));
-					_background.GetThemeStylebox("panel").Set("bg_color", ColorOperations.Mix(_bgTint, _window.PlayerColor, _bgBlendMode));
+					_background.GetThemeStylebox("panel").Set("bg_color", 
+						ColorOperations.AdjustValue(_window.PlayerColor, _bgValueAdjustment, true));
 				}
 
 				_gridLayout.AddChild(cell);

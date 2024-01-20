@@ -10,12 +10,6 @@ public partial class Flag : Node2D
     {
         _cell = cell;
 
-        float h;
-        float s;
-        float v;
-        cell.Window.PlayerColor.ToHsv(out h, out s, out v);
-
-        // Get a complementary color with roughly the same saturation/brightness
-        _flagFill.Modulate = Color.FromHsv((h + 0.5f) % 1, s, v);
+        _flagFill.Modulate = ColorOperations.AdjustHue(cell.Window.PlayerColor, 0.5f);
     }
 }
