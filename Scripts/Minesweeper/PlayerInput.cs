@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
 
@@ -11,6 +12,7 @@ public partial class PlayerInput : Node
 
     public Vector2 Direction = Vector2.Zero;
     public bool Fast { get; private set; } = false;
+    public int ZoomDirection { get; private set; } = 0;
 
     private PlayerWindow _window;
     private int _deviceID;
@@ -47,6 +49,12 @@ public partial class PlayerInput : Node
 
     public override void _Process(double delta)
     {
+        ProcessVelocity(delta);   
+        ProcessZoom();
+    }
+
+    private void ProcessVelocity(double delta)
+    {
         Vector2 velocity;
 
         if (_leftButton)
@@ -78,6 +86,22 @@ public partial class PlayerInput : Node
         }
 
         Direction = velocity;
+    }
+
+    private void ProcessZoom()
+    {
+        if (Input.IsActionPressed("Zoom In") ^ Input.IsActionPressed("Zoom Out"))
+        {
+            if (Input.IsActionPressed("Zoom In"))
+            {
+                ZoomDirection = 1;
+            }
+            else
+            {
+                ZoomDirection = -1;
+            }
+        }
+        else ZoomDirection = 0;
     }
 
     public override void _Input(InputEvent @event)

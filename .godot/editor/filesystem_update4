@@ -1,8 +1,9 @@
 res://Scripts/Graphics/AvatarAnimationData.cs
+res://Scripts/Graphics/Flag.cs
 res://Scripts/Graphics/PlayerAvatar.cs
 res://Scripts/Graphics/PlayerMultiSprite.cs
 res://Scripts/Graphics/PlayerSprite.cs
-res://Scripts/Minesweeper/Flag.cs
+res://Scripts/Graphics/PointChangeTick.cs
 res://Scripts/Minesweeper/GridLevel.cs
 res://Scripts/Minesweeper/GridLevelTrack.cs
 res://Scripts/Minesweeper/MinesweeperCell.cs
@@ -10,14 +11,8 @@ res://Scripts/Minesweeper/MinesweeperGrid.cs
 res://Scripts/Minesweeper/PlayerInput.cs
 res://Scripts/Minesweeper/PlayerWindow.cs
 res://Scripts/Testing/TestMultiSprite.cs
-res://Prefabs/board.tscn
 res://Themes/cells.tres
 res://Prefabs/Tracks/Normal/NormalTrack.tres
-res://Prefabs/cell.tscn
-res://Scenes/PlayerWindow.tscn
-res://Prefabs/Flag.tscn
-res://Prefabs/PointChangeTick.tscn
-res://Scripts/Graphics/Flag.cs
-res://Scripts/Graphics/PointChangeTick.cs
 res://Prefabs/Board.tscn
 res://Prefabs/Cell.tscn
+res://Scenes/PlayerWindow.tscn

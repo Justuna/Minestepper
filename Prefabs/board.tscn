@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Minesweeper/MinesweeperGrid.cs" id="1_sf5kq"]
 [ext_resource type="PackedScene" uid="uid://pcb2neyjjif" path="res://Prefabs/Cell.tscn" id="2_pwk4a"]
 
-[sub_resource type="Curve" id="Curve_8ouox"]
+[sub_resource type="Curve" id="Curve_5ma2i"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -30,10 +30,11 @@ _gridCellTemplate = ExtResource("2_pwk4a")
 _spacing = 10
 _padding = 20
 _bgValueAdjustment = -0.4
-_zoomDuration = 1.0
-_zoomCurve = SubResource("Curve_8ouox")
-_zoomPanMinSpeed = 50.0
-_zoomPanMaxSpeed = 5000.0
+_recenterDuration = 1.5
+_recenterCurve = SubResource("Curve_5ma2i")
+_panMinSpeed = 10.0
+_panMaxSpeed = 10000.0
+_zoomSpeed = 5.0
 _speed = 4.0
 _fastFactor = 2.0
 

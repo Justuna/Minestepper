@@ -20,8 +20,6 @@ public partial class PlayerWindow : Control
     [ExportSubgroup("Parameters")]
     [Export] private int _squeezePaddingH;
     [Export] private int _squeezePaddingV;
-    [Export] private float _zoomStartScale;
-	[Export] private float _zoomIn;
     [Export] private float _boardSwitchDuration;
     [Export] private Curve _boardSwitchCurve;
     [Export] private float _fontValueAdjustment;
@@ -40,8 +38,6 @@ public partial class PlayerWindow : Control
     public Color PlayerColor { get; private set; }
     public int PlayerID { get; private set; }
     public Vector2 SqueezeSize => new Vector2(_squeezeBounds.Size.X, _squeezeBounds.Size.Y);
-    public float ZoomStartScale => _zoomStartScale;
-    public float ZoomIn => _zoomIn;
 
     public override void _Ready()
     {
@@ -129,7 +125,7 @@ public partial class PlayerWindow : Control
             _flagDisplay.Text = $"0/{level.GridMineCount}";
             _flagDisplay.Visible = true;
 
-            ActiveGrid.TryStart();
+            ActiveGrid.Start();
         }
     }
 

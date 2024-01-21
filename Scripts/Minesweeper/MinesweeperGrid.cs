@@ -16,10 +16,13 @@ public partial class MinesweeperGrid : Control
 	[Export] private float _bgValueAdjustment;
 
 	[ExportSubgroup("Animation Parameters")]
-	[Export] private float _zoomDuration;
-	[Export] private Curve _zoomCurve;
-	[Export] private float _zoomPanMinSpeed;
-	[Export] private float _zoomPanMaxSpeed;
+	[Export] private float _recenterDuration;
+	[Export] private Curve _recenterCurve;
+	[Export] private float _panMinSpeed;
+	[Export] private float _panMaxSpeed;
+	[Export] private float _zoomSpeed;
+	[Export] private float _maxZoom = 5;
+	[Export] private float _minZoom = 0.2f;
 
 	[ExportSubgroup("Gameplay Parameters")]
 	[Export] private float _speed;
@@ -44,12 +47,12 @@ public partial class MinesweeperGrid : Control
 	private int _selected;
 	private double _moveProgress = 0;
 
-	private bool _canZoom = false;
-	private bool _shouldZoom = false;
-	private bool _isZooming = false;
-	private double _zoomProgress = 0;
+	
+	private float _zoomScale = 1;
 	private Vector2 _cellOffset;
-	private Vector2 _zoomPos = Vector2.Zero;
+	private Vector2 _cameraPos = Vector2.Zero;
+	private bool _recentering = false;
+	private float _recenterProgress = 0;
 	
 
 	[Signal]
@@ -131,20 +134,6 @@ public partial class MinesweeperGrid : Control
 			float newScale = Mathf.Min(ratioX, ratioY);
 
 			Scale = new Vector2(newScale, newScale);
-
-			if (_width % 2 == 0)
-			{
-				_zoomPos.X += _cellOffset.X / 2 * (_window.ZoomIn / newScale);
-			}
-			if (_height % 2 == 0)
-			{
-				_zoomPos.Y += _cellOffset.Y / 2 * (_window.ZoomIn / newScale);
-			}
-
-			if (newScale < _window.ZoomStartScale)
-			{
-				_shouldZoom = true;
-			}
 		}
 
 		_gridLayout.Columns = _width;
@@ -152,87 +141,59 @@ public partial class MinesweeperGrid : Control
 		GD.Print(_gridAnchor.Position);
 	}
 
-	public void TryStart()
-	{
-		GD.Print(_gridAnchor.Position);
-		if (_shouldZoom)
-		{
-			_canZoom = true;
-			_isZooming = true;
-		}
-		else
-		{
-			Start();
-		}
-	}
-
-	private void Start()
+	public void Start()
 	{
 		_active = true;
 		_gridCells[_selected].Select();
 	}
 
-	private void End()
-	{
-		EmitSignal(SignalName.GridAnimationComplete);
-	}
-
     public override void _Process(double delta)
     {
-		if (_canZoom) ProcessZoom(delta);
+		if (_active) 
+		{
+			ProcessCamera(delta);
+			ProcessNavigation(delta);
+		}
 
-		if (_active) ProcessInput(delta);
+		if (_recentering)
+		{
+			RecenterAnimation(delta);
+		}
     }
 
-	private void ProcessZoom(double delta)
+	private void ProcessCamera(double delta)
 	{
-		if (_isZooming)
+		// Zoom
+
+		float newScale = Mathf.Clamp
+		(
+			_zoomScale * (1 + _zoomSpeed * (float) delta * Window.Input.ZoomDirection), 
+			_minZoom,
+			_maxZoom
+		);
+
+		_gridAnchor.Scale = new Vector2(newScale, newScale);
+
+		float shrinkGrow = (newScale / _zoomScale) - 1;
+		_gridAnchor.Position += shrinkGrow * _gridAnchor.Position;
+		_cameraPos += shrinkGrow * _cameraPos;
+
+		_zoomScale = newScale;
+
+		// Pan
+
+		if (Window.Input.ZoomDirection == 0)
 		{
-			if (_shouldZoom)
-			{
-				if (_zoomProgress < 1)
-				{
-					_zoomProgress += delta / _zoomDuration;
-				}
-				else
-				{
-					_zoomProgress = 1;
-					_isZooming = false;
-					Start();
-				}
-			}
-			else
-			{
-				if (_zoomProgress > 0)
-				{
-					_zoomProgress -= delta / _zoomDuration;
-				}
-				else
-				{
-					_zoomProgress = 0;
-					_isZooming = false;
-					End();
-				}
-			}
+			Vector2 displacement = _cameraPos - _gridAnchor.Position;
 
-			float f = _zoomCurve.Sample((float) _zoomProgress);
-			float anchorScale = _window.ZoomIn / Scale.X * f + (1 - f);
-
-			_gridAnchor.Scale = new Vector2(anchorScale, anchorScale);
-			_gridAnchor.Position = _zoomPos * f + Vector2.Zero * (1 - f);
-		}
-		else if (_shouldZoom && !_isZooming)
-		{
-			Vector2 displacement = _zoomPos - _gridAnchor.Position;
-
-			float speed = Mathf.Clamp(Mathf.Pow(displacement.Length(), 2), _zoomPanMinSpeed, _zoomPanMaxSpeed) * ((float) delta);
+			float speed = Mathf.Clamp(Mathf.Pow(displacement.Length(), 2), _panMinSpeed, _panMaxSpeed) * ((float) delta);
 			Vector2 movement = displacement.Normalized() * Mathf.Min(displacement.Length(), speed);
 			
-			_gridAnchor.Position = _gridAnchor.Position + movement;
+			_gridAnchor.Position += movement;
 		}
 	}
 
-	private void ProcessInput(double delta)
+	private void ProcessNavigation(double delta)
 	{
         if (!_direction.Equals(_window.Input.Direction))
 		{
@@ -245,7 +206,7 @@ public partial class MinesweeperGrid : Control
 		_moveProgress += (_window.Input.Fast ? _speed * _fastFactor : _speed) * delta;
 		if (_moveProgress >= 1)
 		{
-			_gridCells[_selected].Deselect();
+			CurrentCell.Deselect();
 
 			_moveProgress = 0;
 			int[] adjacent = GetAdjacentCells(_selected);
@@ -253,25 +214,27 @@ public partial class MinesweeperGrid : Control
 			if (_direction.Equals(Vector2.Left) && adjacent[(int) Direction.WEST] >= 0)
 			{
 				_selected = adjacent[(int) Direction.WEST];
-				_zoomPos += _gridAnchor.Scale * _cellOffset * Vector2.Right;
 			}
 			else if (_direction.Equals(Vector2.Right) && adjacent[(int) Direction.EAST] >= 0)
 			{
 				_selected = adjacent[(int) Direction.EAST];
-				_zoomPos += _gridAnchor.Scale * _cellOffset * Vector2.Left;
 			}
 			else if (_direction.Equals(Vector2.Up) && adjacent[(int) Direction.NORTH] >= 0)
 			{
 				_selected = adjacent[(int) Direction.NORTH];
-				_zoomPos += _gridAnchor.Scale * _cellOffset * Vector2.Down;
 			}
 			else if (_direction.Equals(Vector2.Down) && adjacent[(int) Direction.SOUTH] >= 0)
 			{
 				_selected = adjacent[(int) Direction.SOUTH];
-				_zoomPos += _gridAnchor.Scale * _cellOffset * Vector2.Up;
 			}
 
-			_gridCells[_selected].Select();
+			// Get center of current cell relative to center of the board
+			float offsetX = (_selected % _width) - (((float) _width - 1) / 2 );
+			float offsetY = Mathf.Floor(_selected / _width) - (((float) _height - 1) / 2);
+
+			_cameraPos = new Vector2(offsetX, offsetY) * _zoomScale * _cellOffset * -1;
+
+			CurrentCell.Select();
 		}
 	}
 
@@ -461,14 +424,9 @@ public partial class MinesweeperGrid : Control
 		RevealAll(win);
 
 		_active = false;
+		_recentering = true;
+
 		EmitSignal(SignalName.GridGameOver, win);
-		
-		if (_shouldZoom) 
-		{
-			_shouldZoom = false;
-			_isZooming = true;
-		}
-		else End();
 	}
 
 	private void RevealAll(bool autoFlag)
@@ -490,5 +448,21 @@ public partial class MinesweeperGrid : Control
 		}
 
 		_gridCells[_selected].Deselect();
+	}
+
+	private void RecenterAnimation(double delta)
+	{
+		_recenterProgress += (float) delta / _recenterDuration;
+		float f = _recenterCurve.Sample(_recenterProgress);
+
+		_gridAnchor.Scale = (f + (1 - f) * _zoomScale) * Vector2.One;
+		_gridAnchor.Position = f * Vector2.Zero + (1 - f) * _cameraPos;
+
+		if (_recenterProgress >= 1)
+		{
+			_recenterProgress = 1;
+			_recentering = false;
+			EmitSignal(SignalName.GridAnimationComplete);
+		}
 	}
 }
