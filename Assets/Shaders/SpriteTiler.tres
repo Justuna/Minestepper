@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://deatmnilpkhs3"]
+
+[ext_resource type="Shader" path="res://Assets/Shaders/SpriteTiler.gdshader" id="1_bqo60"]
+
+[resource]
+shader = ExtResource("1_bqo60")
+shader_parameter/tileScale = Vector2(1, 1)
+shader_parameter/tileOffset = Vector2(0, 0)

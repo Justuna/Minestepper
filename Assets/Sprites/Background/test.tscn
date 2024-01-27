@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dntf1mia70l0"]
+
+[ext_resource type="SpriteFrames" uid="uid://55tktj83mwgt" path="res://Assets/Sprites/Background/Background.tres" id="1_addok"]
+
+[node name="Node2D" type="AnimatedSprite2D"]
+use_parent_material = true
+sprite_frames = ExtResource("1_addok")
+autoplay = "default"
+centered = false

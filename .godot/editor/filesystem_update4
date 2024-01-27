@@ -1,3 +1,11 @@
+res://Prefabs/Board.tscn
+res://Themes/cells.tres
+res://Prefabs/Tracks/Normal/NormalTrack.tres
+res://Assets/Shaders/SpriteTiler.gdshader
+res://Assets/Shaders/SpriteTilerSmall.tres
+res://Assets/Shaders/SpriteTiler.tres
+res://Prefabs/Cell.tscn
+res://Scenes/PlayerWindow.tscn
 res://Scripts/Graphics/AvatarAnimationData.cs
 res://Scripts/Graphics/Flag.cs
 res://Scripts/Graphics/PlayerAvatar.cs
@@ -11,8 +19,4 @@ res://Scripts/Minesweeper/MinesweeperGrid.cs
 res://Scripts/Minesweeper/PlayerInput.cs
 res://Scripts/Minesweeper/PlayerWindow.cs
 res://Scripts/Testing/TestMultiSprite.cs
-res://Themes/cells.tres
-res://Prefabs/Tracks/Normal/NormalTrack.tres
-res://Prefabs/Board.tscn
-res://Prefabs/Cell.tscn
-res://Scenes/PlayerWindow.tscn
+res://Scenes/MainGame.tscn

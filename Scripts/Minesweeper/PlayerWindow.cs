@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 public partial class PlayerWindow : Control
 {
@@ -16,6 +18,7 @@ public partial class PlayerWindow : Control
     [Export] private Flag _flagIcon;
     [Export] private PackedScene _gridTemplate;
     [Export] private GridLevelTrack _track;
+    [Export] private AnimatedSprite2D[] _backgrounds;
 
     [ExportSubgroup("Parameters")]
     [Export] private int _squeezePaddingH;
@@ -23,6 +26,8 @@ public partial class PlayerWindow : Control
     [Export] private float _boardSwitchDuration;
     [Export] private Curve _boardSwitchCurve;
     [Export] private float _fontValueAdjustment;
+    [Export] private PackedScene _playerAvatarPrefab;
+    [Export] private Color _playerColor;
 
     private Vector2 _screenCenter => new Vector2(Size.X / 2, Size.Y / 2);
     private Vector2 _offscreenTop => _screenCenter + new Vector2(0, -2 * Size.Y);
@@ -35,7 +40,8 @@ public partial class PlayerWindow : Control
 
     public MinesweeperGrid ActiveGrid { get; private set; }
     public PlayerInput Input { get; private set; }
-    public Color PlayerColor { get; private set; }
+    public PackedScene PlayerAvatarPrefab => _playerAvatarPrefab;
+    public Color PlayerColor => _playerColor;
     public int PlayerID { get; private set; }
     public Vector2 SqueezeSize => new Vector2(_squeezeBounds.Size.X, _squeezeBounds.Size.Y);
 
@@ -48,7 +54,6 @@ public partial class PlayerWindow : Control
     {
         Input = _playerInput;
         PlayerID = playerID;
-        PlayerColor = Color.FromHsv(0, 1, 1);
 
         float maxWidth = Size.X - (_squeezePaddingH * 2);
         float maxHeight = Size.Y - (_squeezePaddingV * 2);
@@ -71,6 +76,15 @@ public partial class PlayerWindow : Control
         _mineDisplay.LabelSettings.OutlineColor = fontOutline;
         _flagDisplay.LabelSettings.OutlineColor = fontOutline;
 
+        foreach (AnimatedSprite2D background in _backgrounds)
+        {
+            background.Play("default");
+            background.Modulate = new Color(PlayerColor, background.Modulate.A);
+        }   
+
+        GetTree().Root.SizeChanged += SetUpBackgrounds;
+        SetUpBackgrounds();
+
         _flagIcon.Init(this);
 
         ScoreToDisplay();
@@ -84,9 +98,33 @@ public partial class PlayerWindow : Control
         SpawnNewGrid();
     }
 
+    private Queue<Action> _nextTickActions = new();
+    private void NextTick(Action action)
+    {
+        _nextTickActions.Enqueue(action);
+    }
+
+    public void SetUpBackgrounds()
+    {
+        NextTick(() => 
+        {
+            foreach (AnimatedSprite2D background in _backgrounds)
+            {
+                GD.Print(Size);
+                GD.Print(background.SpriteFrames.GetFrameTexture("default", 0).GetSize());
+                background.Scale = Size / background.SpriteFrames.GetFrameTexture("default", 0).GetSize();
+            }   
+        });
+    }
+
     public override void _Process(double delta)
     {
         base._Process(delta);
+
+        foreach (Action action in _nextTickActions)
+        {
+            action.Invoke();
+        }
 
         if (_gridSwitchProgress < 1) SwitchGridAnimation(delta);
     }

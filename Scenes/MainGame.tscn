@@ -1,0 +1,107 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmrniir621gmj"]
+
+[ext_resource type="PackedScene" uid="uid://bw8l2u700t6mo" path="res://Scenes/PlayerWindow.tscn" id="1_larhb"]
+[ext_resource type="PackedScene" uid="uid://c8fukc1sjsldm" path="res://Prefabs/Player2.tscn" id="2_c3aqy"]
+[ext_resource type="PackedScene" uid="uid://xlrm662f5dfl" path="res://Prefabs/Player3.tscn" id="3_xoiwx"]
+[ext_resource type="PackedScene" uid="uid://5dy5pklrcj5r" path="res://Prefabs/Player4.tscn" id="4_1ii3k"]
+
+[node name="MainGame" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Splitscreen" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="1-2" type="HBoxContainer" parent="Splitscreen"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Player 1 Viewport" type="SubViewportContainer" parent="Splitscreen/1-2"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="Player 1 SubViewport" type="SubViewport" parent="Splitscreen/1-2/Player 1 Viewport"]
+handle_input_locally = false
+size = Vector2i(574, 322)
+render_target_update_mode = 4
+
+[node name="Player 1 Game" parent="Splitscreen/1-2/Player 1 Viewport/Player 1 SubViewport" instance=ExtResource("1_larhb")]
+_playerColor = Color(0.866667, 0.223529, 0.176471, 1)
+
+[node name="Camera2D" type="Camera2D" parent="Splitscreen/1-2/Player 1 Viewport"]
+scale = Vector2(0.5, 0.5)
+anchor_mode = 0
+
+[node name="Player 2 Viewport" type="SubViewportContainer" parent="Splitscreen/1-2"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="Player 2 SubViewport" type="SubViewport" parent="Splitscreen/1-2/Player 2 Viewport"]
+handle_input_locally = false
+size = Vector2i(574, 322)
+render_target_update_mode = 4
+
+[node name="Player 2 Game" parent="Splitscreen/1-2/Player 2 Viewport/Player 2 SubViewport" instance=ExtResource("1_larhb")]
+_playerAvatarPrefab = ExtResource("2_c3aqy")
+_playerColor = Color(0, 0.772549, 1, 1)
+
+[node name="Camera2D" type="Camera2D" parent="Splitscreen/1-2/Player 2 Viewport"]
+anchor_mode = 0
+
+[node name="3-4" type="HBoxContainer" parent="Splitscreen"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Player 3 Viewport" type="SubViewportContainer" parent="Splitscreen/3-4"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="Player 3 SubViewport" type="SubViewport" parent="Splitscreen/3-4/Player 3 Viewport"]
+handle_input_locally = false
+size = Vector2i(574, 322)
+render_target_update_mode = 4
+
+[node name="Player 3 Game" parent="Splitscreen/3-4/Player 3 Viewport/Player 3 SubViewport" instance=ExtResource("1_larhb")]
+_playerAvatarPrefab = ExtResource("3_xoiwx")
+_playerColor = Color(0.635294, 0.831373, 0, 1)
+
+[node name="Camera2D" type="Camera2D" parent="Splitscreen/3-4/Player 3 Viewport"]
+anchor_mode = 0
+
+[node name="Player 4 Viewport" type="SubViewportContainer" parent="Splitscreen/3-4"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="Player 4 SubViewport" type="SubViewport" parent="Splitscreen/3-4/Player 4 Viewport"]
+handle_input_locally = false
+size = Vector2i(574, 322)
+render_target_update_mode = 4
+
+[node name="Player 4 Game" parent="Splitscreen/3-4/Player 4 Viewport/Player 4 SubViewport" instance=ExtResource("1_larhb")]
+_playerAvatarPrefab = ExtResource("4_1ii3k")
+_playerColor = Color(0.67451, 0, 0.756863, 1)
+
+[node name="Camera2D" type="Camera2D" parent="Splitscreen/3-4/Player 4 Viewport"]
+anchor_mode = 0

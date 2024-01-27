@@ -1,2 +1,6 @@
+ShaderMaterial
+TileSet
+AnimatedTexture
+SpriteFrames
 FontFile
 Resource

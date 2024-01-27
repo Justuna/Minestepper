@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public partial class PlayerAvatar : Control
 {
-    [Export] private PackedScene _playerPrefab;
     [Export] private Control _avatarRoot;
     [Export] private string _startingBaseSprite;
 
@@ -32,7 +31,7 @@ public partial class PlayerAvatar : Control
 
         try
         {
-            _playerMultiSprite = _playerPrefab.Instantiate() as PlayerMultiSprite;
+            _playerMultiSprite = window.PlayerAvatarPrefab.Instantiate() as PlayerMultiSprite;
 
             _playerMultiSprite.Init(_window.PlayerColor);
             _playerMultiSprite.ShowSprite(BaseSprite);
