@@ -8,6 +8,8 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydysm"]
+bg_color = Color(1, 1, 1, 1)
+border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
@@ -27,7 +29,6 @@ _gridAnchor = NodePath("Anchor")
 _background = NodePath("Anchor/Background")
 _gridLayout = NodePath("Anchor/Grid Layout")
 _gridCellTemplate = ExtResource("2_pwk4a")
-_spacing = 10
 _padding = 20
 _bgValueAdjustment = -0.4
 _recenterDuration = 1.5
@@ -39,7 +40,10 @@ _speed = 4.0
 _fastFactor = 2.0
 
 [node name="Anchor" type="Control" parent="."]
+layout_mode = 2
 anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Background" type="Panel" parent="Anchor"]
 layout_mode = 1
@@ -70,6 +74,4 @@ offset_right = 125.0
 offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/h_separation = 100
-theme_override_constants/v_separation = 100
 columns = 10

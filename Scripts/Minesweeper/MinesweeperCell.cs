@@ -15,7 +15,7 @@ public partial class MinesweeperCell : Control
     [Export] private Panel _panel;
     [Export] private Panel _cover;
     [Export] private Label _hint;
-    [Export] private Sprite2D _bomb;
+    [Export] private TextureRect _bomb;
     [Export] private Color _defuseTint;
     [Export] private Flag _flag;
     [Export] private float _panelValueAdjustment;
@@ -45,7 +45,8 @@ public partial class MinesweeperCell : Control
 
         _panel.Modulate = ColorOperations.AdjustValue(Window.PlayerColor, _panelValueAdjustment, true);
         _cover.Modulate = ColorOperations.AdjustValue(Window.PlayerColor, _coverValueAdjustment, true);
-        _hint.LabelSettings.Set("outline_color", ColorOperations.AdjustValue(Window.PlayerColor, _outlineValueAdjustment, true));
+        _hint.LabelSettings = _hint.LabelSettings.Duplicate() as LabelSettings;
+        _hint.LabelSettings.OutlineColor = ColorOperations.AdjustValue(Window.PlayerColor, _outlineValueAdjustment, true);
         _outline.Hide();
 
         _flag.Init(this);
@@ -89,9 +90,9 @@ public partial class MinesweeperCell : Control
         _outline.Show();
     }
 
-    public void Flag()
+    public bool Flag()
     {
-        if (_revealed) return;
+        if (_revealed) return false;
 
         _flagged = !_flagged;
         _flag.Visible = _flagged;
@@ -104,6 +105,8 @@ public partial class MinesweeperCell : Control
         {
             _bomb.Modulate = Colors.White;
         }
+
+        return true;
     }
 
     public void Deselect()

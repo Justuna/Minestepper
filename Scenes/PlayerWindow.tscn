@@ -9,7 +9,7 @@
 [ext_resource type="FontFile" uid="uid://di6uqurcqgdvr" path="res://Assets/Fonts/Super Squad.ttf" id="5_4fv7t"]
 [ext_resource type="Material" uid="uid://blpdqvm6sg25d" path="res://Assets/Shaders/SpriteTilerSmall.tres" id="5_gkf8g"]
 [ext_resource type="FontFile" uid="uid://bfh51xkuwee3r" path="res://Assets/Fonts/Super Squad Italic.ttf" id="5_rouem"]
-[ext_resource type="PackedScene" uid="uid://cajohanco13sd" path="res://Prefabs/Flag.tscn" id="6_8t75f"]
+[ext_resource type="PackedScene" uid="uid://bk5lv1q5fc66m" path="res://Prefabs/Flag.tscn" id="6_8t75f"]
 [ext_resource type="Script" path="res://Scripts/Graphics/AvatarAnimationData.cs" id="6_yv2sl"]
 [ext_resource type="PackedScene" uid="uid://bvr3oi0a5gqso" path="res://Prefabs/PointChangeTick.tscn" id="8_lcpqg"]
 [ext_resource type="Material" uid="uid://deatmnilpkhs3" path="res://Assets/Shaders/SpriteTiler.tres" id="12_3ypmp"]
@@ -21,38 +21,14 @@ max_value = 2.0
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.159341, 0.0105262), 0.0, 0.0, 0, 0, Vector2(0.32967, -0.11579), 0.0, 0.0, 0, 0, Vector2(0.846154, 1.02105), 0.0, 0.0, 0, 0, Vector2(0.934066, 0.989473), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 6
 
-[sub_resource type="LabelSettings" id="LabelSettings_0ws5t"]
-font = ExtResource("5_rouem")
-font_size = 32
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_o4j0n"]
-font = ExtResource("5_rouem")
-font_size = 24
-outline_size = 8
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_wleu1"]
-font = ExtResource("5_rouem")
-font_size = 32
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_lbd8u"]
-font = ExtResource("5_4fv7t")
-font_size = 36
-outline_size = 12
-outline_color = Color(0, 0, 0, 1)
-
 [sub_resource type="Curve" id="Curve_8ovjo"]
 
 [sub_resource type="Curve" id="Curve_wujat"]
 resource_local_to_scene = true
 min_value = -300.0
 max_value = 50.0
-_data = [Vector2(0, 0), 0.0, 264.988, 0, 0, Vector2(0.1, 15), -427.288, -427.288, 0, 0, Vector2(0.6, -90), 0.0, 0.0, 0, 0, Vector2(1, -10), 388.0, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 0), 0.0, 264.988, 0, 0, Vector2(0.1, 15), -427.288, -427.288, 0, 0, Vector2(0.4, -90), 0.0, 0.0, 0, 0, Vector2(0.68, 0), 723.875, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
 metadata/_snap_enabled = true
 
 [sub_resource type="Curve" id="Curve_6d2y5"]
@@ -79,6 +55,30 @@ point_count = 2
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 1, 0]
 point_count = 2
 
+[sub_resource type="LabelSettings" id="LabelSettings_o4j0n"]
+font = ExtResource("5_rouem")
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wleu1"]
+font = ExtResource("5_rouem")
+font_size = 32
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbd8u"]
+font = ExtResource("5_4fv7t")
+font_size = 36
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0ws5t"]
+font = ExtResource("5_rouem")
+font_size = 18
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds", "_pointChangeTickSpawn", "_scoreDisplay", "_mineDisplay", "_bonusDisplay", "_flagDisplay", "_flagIcon", "_backgrounds")]
 layout_mode = 3
 anchors_preset = 15
@@ -90,22 +90,28 @@ script = ExtResource("1_fkkf7")
 _playerInput = NodePath("Input Detector")
 _playerAvatar = NodePath("Player Avatar")
 _squeezeBounds = NodePath("Bounds")
-_pointChangeTickSpawn = NodePath("Points/Point Change Tick Spawn")
+_pointChangeTickSpawn = NodePath("Bottom Left Text/Points/Point Change Tick Spawn")
 _pointChangeTick = ExtResource("8_lcpqg")
-_scoreDisplay = NodePath("Points")
-_mineDisplay = NodePath("Mine Count")
-_bonusDisplay = NodePath("Bonus")
-_flagDisplay = NodePath("Flag Count")
-_flagIcon = NodePath("Flag Count/Flag")
+_scoreDisplay = NodePath("Bottom Left Text/Points")
+_mineDisplay = NodePath("Top Left Text/Mine Count")
+_bonusDisplay = NodePath("Top Left Text/Bonus")
+_flagDisplay = NodePath("Top Right UI/Flag Count")
+_flagIcon = NodePath("Top Right UI/AspectRatioContainer/Flag")
 _gridTemplate = ExtResource("2_0qnsv")
 _track = ExtResource("3_w8s6a")
 _backgrounds = [NodePath("Backgrounds/Background"), NodePath("Backgrounds/Background2")]
-_squeezePaddingH = 100
-_squeezePaddingV = 100
 _boardSwitchDuration = 1.7
 _boardSwitchCurve = SubResource("Curve_r1sfb")
 _fontValueAdjustment = -0.5
-_playerAvatarPrefab = ExtResource("4_gkrlj")
+_playerSpritePrefab = ExtResource("4_gkrlj")
+_smallThreshold = Vector2(1500, 900)
+_playerColor = Color(0, 0.705882, 0.439216, 1)
+_playerSpriteScaleLarge = 0.75
+_fontLarge = 30
+_fontOutlineLarge = 12
+_playerSpriteScaleSmall = 0.4
+_fontSmall = 18
+_fontOutlineSmall = 6
 
 [node name="Backgrounds" type="Node2D" parent="."]
 
@@ -127,83 +133,21 @@ autoplay = "default"
 centered = false
 
 [node name="Bounds" type="Control" parent="."]
-layout_direction = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
 
 [node name="Input Detector" type="Node" parent="."]
 script = ExtResource("3_0jmo8")
-
-[node name="Flag Count" type="Label" parent="."]
-visible = false
-z_index = 5
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -400.0
-offset_top = 21.0
-offset_right = -100.0
-offset_bottom = 85.0
-grow_horizontal = 0
-label_settings = SubResource("LabelSettings_0ws5t")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Flag" parent="Flag Count" instance=ExtResource("6_8t75f")]
-visible = true
-position = Vector2(324, 4)
-scale = Vector2(0.57, 0.57)
-
-[node name="Bonus" type="Label" parent="."]
-z_index = 5
-layout_mode = 0
-offset_left = 24.0
-offset_top = 69.0
-offset_right = 518.0
-offset_bottom = 120.0
-label_settings = SubResource("LabelSettings_o4j0n")
-vertical_alignment = 1
-
-[node name="Mine Count" type="Label" parent="."]
-z_index = 5
-layout_mode = 1
-offset_left = 28.0
-offset_top = 18.0
-offset_right = 490.0
-offset_bottom = 75.0
-label_settings = SubResource("LabelSettings_wleu1")
-vertical_alignment = 1
-
-[node name="Points" type="Label" parent="."]
-z_index = 5
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = -127.0
-offset_right = 378.0
-offset_bottom = -25.0
-grow_vertical = 0
-text = "0 pts"
-label_settings = SubResource("LabelSettings_lbd8u")
-vertical_alignment = 1
-
-[node name="Point Change Tick Spawn" type="Control" parent="Points"]
-anchors_preset = 0
-offset_left = -12.0
-offset_top = -25.0
-offset_right = -12.0
-offset_bottom = -25.0
 
 [node name="Player Avatar" type="Control" parent="." node_paths=PackedStringArray("_avatarRoot")]
 z_index = 10
@@ -229,7 +173,7 @@ offset_bottom = -85.7143
 
 [node name="HappyJump" type="Node" parent="Player Avatar"]
 script = ExtResource("6_yv2sl")
-_duration = 0.6
+_duration = 1.0
 _xDisplacement = SubResource("Curve_8ovjo")
 _yDisplacement = SubResource("Curve_wujat")
 _xScale = SubResource("Curve_6d2y5")
@@ -244,3 +188,89 @@ _yDisplacement = SubResource("Curve_l5ff0")
 _xScale = SubResource("Curve_4uuqp")
 _yScale = SubResource("Curve_ns1lk")
 _sprite = "Freakout"
+
+[node name="Top Left Text" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.03
+anchor_right = 0.02
+anchor_bottom = 0.03
+offset_right = 392.0
+offset_bottom = 165.0
+
+[node name="Bonus" type="Label" parent="Top Left Text"]
+z_index = 5
+layout_mode = 2
+size_flags_vertical = 1
+label_settings = SubResource("LabelSettings_o4j0n")
+vertical_alignment = 1
+
+[node name="Mine Count" type="Label" parent="Top Left Text"]
+z_index = 5
+layout_mode = 2
+size_flags_vertical = 1
+label_settings = SubResource("LabelSettings_wleu1")
+vertical_alignment = 1
+
+[node name="Bottom Left Text" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.98
+anchor_right = 0.02
+anchor_bottom = 0.98
+offset_left = -0.039999
+offset_top = -115.04
+offset_right = 203.96
+offset_bottom = -0.0400391
+grow_vertical = 0
+alignment = 2
+
+[node name="Points" type="Label" parent="Bottom Left Text"]
+z_index = 5
+layout_mode = 2
+text = "0 pts"
+label_settings = SubResource("LabelSettings_lbd8u")
+vertical_alignment = 1
+
+[node name="Point Change Tick Spawn" type="Control" parent="Bottom Left Text/Points"]
+anchors_preset = 0
+offset_left = -12.0
+offset_top = -25.0
+offset_right = -12.0
+offset_bottom = -25.0
+
+[node name="Top Right UI" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.98
+anchor_top = 0.03
+anchor_right = 0.98
+anchor_bottom = 0.08
+offset_left = -325.96
+offset_top = -0.439999
+offset_right = 0.0400391
+grow_horizontal = 0
+size_flags_vertical = 3
+alignment = 2
+
+[node name="Flag Count" type="Label" parent="Top Right UI"]
+z_index = 5
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 5.95
+label_settings = SubResource("LabelSettings_0ws5t")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Top Right UI"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch_mode = 1
+
+[node name="Flag" parent="Top Right UI/AspectRatioContainer" instance=ExtResource("6_8t75f")]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_group_ = true

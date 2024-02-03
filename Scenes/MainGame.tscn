@@ -62,7 +62,7 @@ size = Vector2i(574, 322)
 render_target_update_mode = 4
 
 [node name="Player 2 Game" parent="Splitscreen/1-2/Player 2 Viewport/Player 2 SubViewport" instance=ExtResource("1_larhb")]
-_playerAvatarPrefab = ExtResource("2_c3aqy")
+_playerSpritePrefab = ExtResource("2_c3aqy")
 _playerColor = Color(0, 0.772549, 1, 1)
 
 [node name="Camera2D" type="Camera2D" parent="Splitscreen/1-2/Player 2 Viewport"]
@@ -83,7 +83,7 @@ size = Vector2i(574, 322)
 render_target_update_mode = 4
 
 [node name="Player 3 Game" parent="Splitscreen/3-4/Player 3 Viewport/Player 3 SubViewport" instance=ExtResource("1_larhb")]
-_playerAvatarPrefab = ExtResource("3_xoiwx")
+_playerSpritePrefab = ExtResource("3_xoiwx")
 _playerColor = Color(0.635294, 0.831373, 0, 1)
 
 [node name="Camera2D" type="Camera2D" parent="Splitscreen/3-4/Player 3 Viewport"]
@@ -100,7 +100,7 @@ size = Vector2i(574, 322)
 render_target_update_mode = 4
 
 [node name="Player 4 Game" parent="Splitscreen/3-4/Player 4 Viewport/Player 4 SubViewport" instance=ExtResource("1_larhb")]
-_playerAvatarPrefab = ExtResource("4_1ii3k")
+_playerSpritePrefab = ExtResource("4_1ii3k")
 _playerColor = Color(0.67451, 0, 0.756863, 1)
 
 [node name="Camera2D" type="Camera2D" parent="Splitscreen/3-4/Player 4 Viewport"]

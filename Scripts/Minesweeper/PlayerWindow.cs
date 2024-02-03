@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 
 public partial class PlayerWindow : Control
 {
-    [ExportSubgroup("References")]
+    [ExportGroup("References")]
     [Export] private PlayerInput _playerInput;
     [Export] private PlayerAvatar _playerAvatar;
     [Export] private Control _squeezeBounds;
@@ -20,14 +20,23 @@ public partial class PlayerWindow : Control
     [Export] private GridLevelTrack _track;
     [Export] private AnimatedSprite2D[] _backgrounds;
 
-    [ExportSubgroup("Parameters")]
-    [Export] private int _squeezePaddingH;
-    [Export] private int _squeezePaddingV;
+    [ExportGroup("Parameters")]
     [Export] private float _boardSwitchDuration;
     [Export] private Curve _boardSwitchCurve;
     [Export] private float _fontValueAdjustment;
-    [Export] private PackedScene _playerAvatarPrefab;
+    [Export] private PackedScene _playerSpritePrefab;
+    [Export] private Vector2 _smallThreshold;
     [Export] private Color _playerColor;
+    
+    [ExportSubgroup("Large UI")]
+    [Export] private float _playerSpriteScaleLarge;
+    [Export] private int _fontLarge;
+    [Export] private int _fontOutlineLarge;
+    
+    [ExportSubgroup("Small UI")]
+    [Export] private float _playerSpriteScaleSmall;
+    [Export] private int _fontSmall;
+    [Export] private int _fontOutlineSmall;
 
     private Vector2 _screenCenter => new Vector2(Size.X / 2, Size.Y / 2);
     private Vector2 _offscreenTop => _screenCenter + new Vector2(0, -2 * Size.Y);
@@ -40,7 +49,7 @@ public partial class PlayerWindow : Control
 
     public MinesweeperGrid ActiveGrid { get; private set; }
     public PlayerInput Input { get; private set; }
-    public PackedScene PlayerAvatarPrefab => _playerAvatarPrefab;
+    public PackedScene PlayerSpritePrefab => _playerSpritePrefab;
     public Color PlayerColor => _playerColor;
     public int PlayerID { get; private set; }
     public Vector2 SqueezeSize => new Vector2(_squeezeBounds.Size.X, _squeezeBounds.Size.Y);
@@ -55,22 +64,13 @@ public partial class PlayerWindow : Control
         Input = _playerInput;
         PlayerID = playerID;
 
-        float maxWidth = Size.X - (_squeezePaddingH * 2);
-        float maxHeight = Size.Y - (_squeezePaddingV * 2);
-        if (maxWidth < maxHeight)
-        {
-            _squeezeBounds.Size = new Vector2(maxWidth, maxWidth);
-            _squeezeBounds.Position = new Vector2((Size.X - maxWidth) / 2, (Size.Y - maxWidth) / 2);
-            _squeezeBounds.PivotOffset = new Vector2(maxWidth / 2, maxWidth / 2);
-        }
-        else
-        {
-            _squeezeBounds.Size = new Vector2(maxHeight, maxHeight);
-            _squeezeBounds.Position = new Vector2((Size.X - maxHeight) / 2, (Size.Y - maxHeight) / 2);
-            _squeezeBounds.PivotOffset = new Vector2(maxHeight / 2, maxHeight / 2);
-        }
-
         Color fontOutline = ColorOperations.AdjustValue(PlayerColor, _fontValueAdjustment, true);
+
+        _scoreDisplay.LabelSettings = _scoreDisplay.LabelSettings.Duplicate() as LabelSettings;
+        _bonusDisplay.LabelSettings = _scoreDisplay.LabelSettings.Duplicate() as LabelSettings;
+        _mineDisplay.LabelSettings = _scoreDisplay.LabelSettings.Duplicate() as LabelSettings;
+        _flagDisplay.LabelSettings = _scoreDisplay.LabelSettings.Duplicate() as LabelSettings;
+
         _scoreDisplay.LabelSettings.OutlineColor = fontOutline;
         _bonusDisplay.LabelSettings.OutlineColor = fontOutline;
         _mineDisplay.LabelSettings.OutlineColor = fontOutline;
@@ -82,8 +82,8 @@ public partial class PlayerWindow : Control
             background.Modulate = new Color(PlayerColor, background.Modulate.A);
         }   
 
-        GetTree().Root.SizeChanged += SetUpBackgrounds;
-        SetUpBackgrounds();
+        GetTree().Root.SizeChanged += Resize;
+        Resize();
 
         _flagIcon.Init(this);
 
@@ -95,7 +95,8 @@ public partial class PlayerWindow : Control
         _playerInput.Init(this);
         _playerAvatar.Init(this);
 
-        SpawnNewGrid();
+        // Need to wait for the controls to actually establish their sizes
+        NextTick(SpawnNewGrid);
     }
 
     private Queue<Action> _nextTickActions = new();
@@ -104,16 +105,45 @@ public partial class PlayerWindow : Control
         _nextTickActions.Enqueue(action);
     }
 
-    public void SetUpBackgrounds()
+    public void Resize()
     {
         NextTick(() => 
         {
             foreach (AnimatedSprite2D background in _backgrounds)
             {
-                GD.Print(Size);
-                GD.Print(background.SpriteFrames.GetFrameTexture("default", 0).GetSize());
                 background.Scale = Size / background.SpriteFrames.GetFrameTexture("default", 0).GetSize();
             }   
+
+            if (GetTree().Root.Size.X >= _smallThreshold.X && GetTree().Root.Size.Y >= _smallThreshold.Y)
+            {
+                _playerAvatar.Scale = new Vector2(_playerSpriteScaleLarge, _playerSpriteScaleLarge);
+
+                _scoreDisplay.LabelSettings.FontSize = _fontLarge;
+                _bonusDisplay.LabelSettings.FontSize = _fontLarge;
+                _mineDisplay.LabelSettings.FontSize = _fontLarge;
+                _flagDisplay.LabelSettings.FontSize = _fontLarge;
+
+                _scoreDisplay.LabelSettings.OutlineSize = _fontOutlineLarge;
+                _bonusDisplay.LabelSettings.OutlineSize = _fontOutlineLarge;
+                _mineDisplay.LabelSettings.OutlineSize = _fontOutlineLarge;
+                _flagDisplay.LabelSettings.OutlineSize = _fontOutlineLarge;
+            }
+            else 
+            {
+                _playerAvatar.Scale = new Vector2(_playerSpriteScaleSmall, _playerSpriteScaleSmall);
+
+                _scoreDisplay.LabelSettings.FontSize = _fontSmall;
+                _bonusDisplay.LabelSettings.FontSize = _fontSmall;
+                _mineDisplay.LabelSettings.FontSize = _fontSmall;
+                _flagDisplay.LabelSettings.FontSize = _fontSmall;
+
+                _scoreDisplay.LabelSettings.OutlineSize = _fontOutlineSmall;
+                _bonusDisplay.LabelSettings.OutlineSize = _fontOutlineSmall;
+                _mineDisplay.LabelSettings.OutlineSize = _fontOutlineSmall;
+                _flagDisplay.LabelSettings.OutlineSize = _fontOutlineSmall;
+            }
+
+            
         });
     }
 
@@ -121,10 +151,7 @@ public partial class PlayerWindow : Control
     {
         base._Process(delta);
 
-        foreach (Action action in _nextTickActions)
-        {
-            action.Invoke();
-        }
+        while (_nextTickActions.Count > 0) _nextTickActions.Dequeue().Invoke();
 
         if (_gridSwitchProgress < 1) SwitchGridAnimation(delta);
     }

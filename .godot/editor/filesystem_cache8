@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1706384938
+::res://::1706970608
 icon.svg::CompressedTexture2D::6780086601546551240::1700417837::1700417841::1::::<><>::
 ::res://Assets/::1705869123
 ::res://Assets/Fonts/::1705722983
@@ -7,10 +7,10 @@ Kids Magazine.ttf::FontFile::8072959450647248907::1705722967::1705722967::1::::<
 Raisin Up Italic.ttf::FontFile::2178583684111287583::1705722982::1705722983::1::::<><>::
 Super Squad Italic.ttf::FontFile::2753684711009570777::1705722975::1705722976::1::::<><>::
 Super Squad.ttf::FontFile::7786012499958393111::1705722975::1705722976::1::::<><>::
-::res://Assets/Shaders/::1705882934
-SpriteTiler.gdshader::Shader::-1::1705882934::0::1::::<><>::
-SpriteTiler.tres::ShaderMaterial::7441193173703077948::1705882273::0::1::::<><>::res://Assets/Shaders/SpriteTiler.gdshader
-SpriteTilerSmall.tres::ShaderMaterial::3189675476663957915::1705882279::0::1::::<><>::res://Assets/Shaders/SpriteTiler.gdshader
+::res://Assets/Shaders/::1706390397
+SpriteTiler.gdshader::Shader::-1::1706390397::0::1::::<><>::
+SpriteTiler.tres::ShaderMaterial::7441193173703077948::1706384946::0::1::::<><>::res://Assets/Shaders/SpriteTiler.gdshader
+SpriteTilerSmall.tres::ShaderMaterial::3189675476663957915::1706384946::0::1::::<><>::res://Assets/Shaders/SpriteTiler.gdshader
 ::res://Assets/Sprites/::1705866707
 betabomb.png::CompressedTexture2D::8268360962729995390::1704592824::1705722916::1::::<><>::
 betaflag.png::CompressedTexture2D::4970016495286504225::1704592824::1705722916::1::::<><>::
@@ -209,9 +209,9 @@ Player4FreakoutBase.png::CompressedTexture2D::3496896059814875705::1705164924::1
 Player4FreakoutFill.png::CompressedTexture2D::5942176798691965652::1705164944::1705722916::1::::<><>::
 Player4IdleBase.png::CompressedTexture2D::110760053285113457::1705165973::1705722916::1::::<><>::
 Player4IdleFill.png::CompressedTexture2D::6876601200770918906::1705165955::1705722916::1::::<><>::
-::res://Prefabs/::1705882855
-Board.tscn::PackedScene::5234031283568002690::1705882855::0::1::::<><>::res://Scripts/Minesweeper/MinesweeperGrid.cs<>uid://pcb2neyjjif::::res://Prefabs/Cell.tscn
-Cell.tscn::PackedScene::31090324517423937::1705882855::0::1::::<><>::res://Scripts/Minesweeper/MinesweeperCell.cs<>uid://chy6pl1ht3rxp::::res://Themes/cells.tres<>uid://dnhgj7dpe4vwy::::res://Assets/Sprites/mine.png<>uid://cajohanco13sd::::res://Prefabs/Flag.tscn
+::res://Prefabs/::1706389976
+Board.tscn::PackedScene::5234031283568002690::1706389976::0::1::::<><>::res://Scripts/Minesweeper/MinesweeperGrid.cs<>uid://pcb2neyjjif::::res://Prefabs/Cell.tscn
+Cell.tscn::PackedScene::31090324517423937::1706389976::0::1::::<><>::res://Scripts/Minesweeper/MinesweeperCell.cs<>uid://chy6pl1ht3rxp::::res://Themes/cells.tres<>uid://dnhgj7dpe4vwy::::res://Assets/Sprites/mine.png<>uid://cajohanco13sd::::res://Prefabs/Flag.tscn
 Flag.tscn::PackedScene::4792283325821896711::1705770045::0::1::::<><>::res://Scripts/Graphics/Flag.cs<>uid://deas4sywkanco::::res://Assets/Sprites/flagfill.png<>uid://caamiqaaq4tao::::res://Assets/Sprites/flagoutline.png
 Player1.tscn::PackedScene::4785276243755469535::1705722915::0::1::::<><>::uid://livqvkfjdkt8::::res://Assets/Sprites/Cogijinkas/Player 1/Player1DisappointedLine.png<>res://Scripts/Graphics/PlayerMultiSprite.cs<>uid://chl6ljj4gwwvt::::res://Assets/Sprites/Cogijinkas/Player 1/Shaded/Player1DisappointedBase.png<>res://Scripts/Graphics/PlayerSprite.cs<>uid://cdrgrigrcqyqt::::res://Assets/Sprites/Cogijinkas/Player 1/Shaded/Player1DisappointedFill.png<>uid://g58ppivebueg::::res://Assets/Sprites/Cogijinkas/Player 1/Shaded/Player1ExcitedBase.png<>uid://syk16npdm3ba::::res://Assets/Sprites/Cogijinkas/Player 1/Shaded/Player1ExcitedFill.png<>uid://djidj1omjvo5y::::res://Assets/Sprites/Cogijinkas/Player 1/Player1ExcitedLine.png<>uid://db3mwhmcns0v3::::res://Assets/Sprites/Cogijinkas/Player 1/Player1FreakoutLine.png<>uid://bthfmaaqrhjij::::res://Assets/Sprites/Cogijinkas/Player 1/Shaded/Player1FreakoutBase.png<>uid://dv8qyuimogg0l::::res://Assets/Sprites/Cogijinkas/Player 1/Shaded/Player1FreakoutFill.png<>uid://bvwqsicm4aerf::::res://Assets/Sprites/Cogijinkas/Player 1/Shaded/Player1IdleBase.png<>uid://e0w2rj133pe8::::res://Assets/Sprites/Cogijinkas/Player 1/Shaded/Player1IdleFill.png<>uid://cc5m4i2fc77s6::::res://Assets/Sprites/Cogijinkas/Player 1/Player1IdleLine.png
 Player2.tscn::PackedScene::7100627440048147966::1705722915::0::1::::<><>::res://Scripts/Graphics/PlayerMultiSprite.cs<>res://Scripts/Graphics/PlayerSprite.cs<>uid://yiih50pgfrr::::res://Assets/Sprites/Cogijinkas/Player 2/Shaded/Player2DisappointedBase.png<>uid://l0ej7xbdqs4::::res://Assets/Sprites/Cogijinkas/Player 2/Shaded/Player2DisappointedFill.png<>uid://dtjk47jo5e65t::::res://Assets/Sprites/Cogijinkas/Player 2/Player2DisappointedLine.png<>uid://d05idv0jij7p0::::res://Assets/Sprites/Cogijinkas/Player 2/Shaded/Player2ExcitedBase.png<>uid://hkmco5ht3tix::::res://Assets/Sprites/Cogijinkas/Player 2/Shaded/Player2ExcitedFill.png<>uid://dayjd1sqigrrq::::res://Assets/Sprites/Cogijinkas/Player 2/Player2ExcitedLine.png<>uid://yyt87u8dno13::::res://Assets/Sprites/Cogijinkas/Player 2/Shaded/Player2FreakoutBase.png<>uid://cje3d4d8rekkq::::res://Assets/Sprites/Cogijinkas/Player 2/Shaded/Player2FreakoutFill.png<>uid://xybhuv1dejuu::::res://Assets/Sprites/Cogijinkas/Player 2/Player2FreakoutLine.png<>uid://b3k6hw06u82d1::::res://Assets/Sprites/Cogijinkas/Player 2/Shaded/Player2IdleBase.png<>uid://q1xf6n3e0x1f::::res://Assets/Sprites/Cogijinkas/Player 2/Shaded/Player2IdleFill.png<>uid://dwlnfwo03n3m6::::res://Assets/Sprites/Cogijinkas/Player 2/Player2IdleLine.png
@@ -219,7 +219,7 @@ Player3.tscn::PackedScene::1638106854720703265::1705722915::0::1::::<><>::res://
 Player4.tscn::PackedScene::2113370027867586609::1705722915::0::1::::<><>::res://Scripts/Graphics/PlayerMultiSprite.cs<>res://Scripts/Graphics/PlayerSprite.cs<>uid://b372y60tj50x2::::res://Assets/Sprites/Cogijinkas/Player 4/Shaded/Player4DisappointedBase.png<>uid://dcc1fbncptt7q::::res://Assets/Sprites/Cogijinkas/Player 4/Shaded/Player4DisappointedFill.png<>uid://bf2hlb200f5b::::res://Assets/Sprites/Cogijinkas/Player 4/Player4DisappointedLine.png<>uid://bh2tpdv4ih1hv::::res://Assets/Sprites/Cogijinkas/Player 4/Shaded/Player4ExcitedBase.png<>uid://v8f16w7v3l32::::res://Assets/Sprites/Cogijinkas/Player 4/Shaded/Player4ExcitedFill.png<>uid://dk6ejmepx61do::::res://Assets/Sprites/Cogijinkas/Player 4/Player4ExcitedLine.png<>uid://bp26mqqrtuduv::::res://Assets/Sprites/Cogijinkas/Player 4/Shaded/Player4FreakoutBase.png<>uid://cqwo1v788c2iy::::res://Assets/Sprites/Cogijinkas/Player 4/Shaded/Player4FreakoutFill.png<>uid://dltcly3244ust::::res://Assets/Sprites/Cogijinkas/Player 4/Player4FreakoutLine.png<>uid://btwg4nkbi7e0::::res://Assets/Sprites/Cogijinkas/Player 4/Shaded/Player4IdleBase.png<>uid://c48cu8mhf6p51::::res://Assets/Sprites/Cogijinkas/Player 4/Shaded/Player4IdleFill.png<>uid://c33ing8p3rq8::::res://Assets/Sprites/Cogijinkas/Player 4/Player4IdleLine.png
 PointChangeTick.tscn::PackedScene::3897206357670183426::1705770045::0::1::::<><>::uid://bfh51xkuwee3r::::res://Assets/Fonts/Super Squad Italic.ttf<>res://Scripts/Graphics/PointChangeTick.cs
 ::res://Prefabs/Tracks/::1705535665
-::res://Prefabs/Tracks/Normal/::1705869371
+::res://Prefabs/Tracks/Normal/::1706384945
 Level0.tres::Resource::8558926032690443179::1705536184::0::1::::<><>::res://Scripts/Minesweeper/GridLevel.cs
 Level1.tres::Resource/Resource::3785674338095224443::1705630365::0::1::::<><>::res://Scripts/Minesweeper/GridLevel.cs
 Level2.tres::Resource/Resource::1321082204161846482::1705632273::0::1::::<><>::res://Scripts/Minesweeper/GridLevel.cs
@@ -227,9 +227,10 @@ Level3.tres::Resource::4825894392717923381::1705536007::0::1::::<><>::res://Scri
 Level4.tres::Resource::8058954487599774047::1705536036::0::1::::<><>::res://Scripts/Minesweeper/GridLevel.cs
 Level5.tres::Resource::5993584383203410820::1705536078::0::1::::<><>::res://Scripts/Minesweeper/GridLevel.cs
 Level6.tres::Resource::8513216864312840591::1705536273::0::1::::<><>::res://Scripts/Minesweeper/GridLevel.cs
-NormalTrack.tres::Resource::3812948583700926826::1705869371::0::1::::<><>::uid://bt62rd06c6xsd::::res://Prefabs/Tracks/Normal/Level1.tres<>uid://dt7ai5bq1i75p::::res://Prefabs/Tracks/Normal/Level0.tres<>res://Scripts/Minesweeper/GridLevelTrack.cs<>uid://s27bbydpfmbi::::res://Prefabs/Tracks/Normal/Level2.tres<>uid://ca0x1mtihtawb::::res://Prefabs/Tracks/Normal/Level3.tres<>uid://dm222kio2f2cx::::res://Prefabs/Tracks/Normal/Level4.tres<>uid://crnlpu0fsnska::::res://Prefabs/Tracks/Normal/Level5.tres<>uid://dtj4o5jr7oy76::::res://Prefabs/Tracks/Normal/Level6.tres
-::res://Scenes/::1705882855
-PlayerWindow.tscn::PackedScene::3999416914040470634::1705882855::0::1::::<><>::res://Scripts/Minesweeper/PlayerWindow.cs<>uid://cgtny3rdlhy55::::res://Prefabs/Board.tscn<>res://Scripts/Minesweeper/PlayerInput.cs<>uid://bulayail5moek::::res://Prefabs/Tracks/Normal/NormalTrack.tres<>res://Scripts/Graphics/PlayerAvatar.cs<>uid://caga2hqwweqod::::res://Prefabs/Player1.tscn<>uid://di6uqurcqgdvr::::res://Assets/Fonts/Super Squad.ttf<>uid://blpdqvm6sg25d::::res://Assets/Shaders/SpriteTilerSmall.tres<>uid://bfh51xkuwee3r::::res://Assets/Fonts/Super Squad Italic.ttf<>uid://cajohanco13sd::::res://Prefabs/Flag.tscn<>res://Scripts/Graphics/AvatarAnimationData.cs<>uid://bvr3oi0a5gqso::::res://Prefabs/PointChangeTick.tscn<>uid://deatmnilpkhs3::::res://Assets/Shaders/SpriteTiler.tres<>uid://55tktj83mwgt::::res://Assets/Sprites/Background/Background.tres
+NormalTrack.tres::Resource::3812948583700926826::1706384945::0::1::::<><>::uid://bt62rd06c6xsd::::res://Prefabs/Tracks/Normal/Level1.tres<>uid://dt7ai5bq1i75p::::res://Prefabs/Tracks/Normal/Level0.tres<>res://Scripts/Minesweeper/GridLevelTrack.cs<>uid://s27bbydpfmbi::::res://Prefabs/Tracks/Normal/Level2.tres<>uid://ca0x1mtihtawb::::res://Prefabs/Tracks/Normal/Level3.tres<>uid://dm222kio2f2cx::::res://Prefabs/Tracks/Normal/Level4.tres<>uid://crnlpu0fsnska::::res://Prefabs/Tracks/Normal/Level5.tres<>uid://dtj4o5jr7oy76::::res://Prefabs/Tracks/Normal/Level6.tres
+::res://Scenes/::1706389976
+MainGame.tscn::PackedScene::3264585284319793753::1706389976::0::1::::<><>::uid://bw8l2u700t6mo::::res://Scenes/PlayerWindow.tscn<>uid://c8fukc1sjsldm::::res://Prefabs/Player2.tscn<>uid://xlrm662f5dfl::::res://Prefabs/Player3.tscn<>uid://5dy5pklrcj5r::::res://Prefabs/Player4.tscn
+PlayerWindow.tscn::PackedScene::3999416914040470634::1706389976::0::1::::<><>::res://Scripts/Minesweeper/PlayerWindow.cs<>uid://cgtny3rdlhy55::::res://Prefabs/Board.tscn<>res://Scripts/Minesweeper/PlayerInput.cs<>uid://bulayail5moek::::res://Prefabs/Tracks/Normal/NormalTrack.tres<>res://Scripts/Graphics/PlayerAvatar.cs<>uid://caga2hqwweqod::::res://Prefabs/Player1.tscn<>uid://di6uqurcqgdvr::::res://Assets/Fonts/Super Squad.ttf<>uid://blpdqvm6sg25d::::res://Assets/Shaders/SpriteTilerSmall.tres<>uid://bfh51xkuwee3r::::res://Assets/Fonts/Super Squad Italic.ttf<>uid://cajohanco13sd::::res://Prefabs/Flag.tscn<>res://Scripts/Graphics/AvatarAnimationData.cs<>uid://bvr3oi0a5gqso::::res://Prefabs/PointChangeTick.tscn<>uid://deatmnilpkhs3::::res://Assets/Shaders/SpriteTiler.tres<>uid://55tktj83mwgt::::res://Assets/Sprites/Background/Background.tres
 TestMultiSprite.tscn::PackedScene::9200762483485609419::1705177177::0::1::::<><>::res://Scripts/Testing/TestMultiSprite.cs<>uid://5dy5pklrcj5r
 ::res://Scripts/::1705175657
 Helpers.cs::CSharpScript::-1::1705725453::0::1::::<><>::
@@ -237,7 +238,7 @@ mini_game_manager.gd::GDScript::-1::1704052957::0::1::::MiniGameManager<>Node<>:
 ::res://Scripts/Graphics/::1705768934
 AvatarAnimationData.cs::CSharpScript::-1::1705184560::0::1::::<>Node<>::
 Flag.cs::CSharpScript::-1::1705767056::0::1::::<>Node2D<>::
-PlayerAvatar.cs::CSharpScript::-1::1705634019::0::1::::<>Control<>::
+PlayerAvatar.cs::CSharpScript::-1::1706385066::0::1::::<>Control<>::
 PlayerMultiSprite.cs::CSharpScript::-1::1705184731::0::1::::<>Node2D<>::
 PlayerSprite.cs::CSharpScript::-1::1705175025::0::1::::<>Node2D<>::
 PointChangeTick.cs::CSharpScript::-1::1705769530::0::1::::<>Label<>::
@@ -247,8 +248,8 @@ GridLevelTrack.cs::CSharpScript::-1::1705630365::0::1::::<>Resource<>::
 MinesweeperCell.cs::CSharpScript::-1::1705764159::0::1::::<>Control<>::
 MinesweeperGrid.cs::CSharpScript::-1::1705801054::0::1::::<>Control<>::
 PlayerInput.cs::CSharpScript::-1::1705780685::0::1::::<>Node<>::
-PlayerWindow.cs::CSharpScript::-1::1705882850::0::1::::<>Control<>::
+PlayerWindow.cs::CSharpScript::-1::1706389951::0::1::::<>Control<>::
 ::res://Scripts/Testing/::1705175664
 TestMultiSprite.cs::CSharpScript::-1::1705184726::0::1::::<>Node2D<>::
-::res://Themes/::1705869371
-cells.tres::Theme::5315617970900522961::1705869371::0::1::::<><>::
+::res://Themes/::1706384945
+cells.tres::Theme::5315617970900522961::1706384945::0::1::::<><>::

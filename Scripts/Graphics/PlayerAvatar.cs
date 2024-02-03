@@ -31,7 +31,7 @@ public partial class PlayerAvatar : Control
 
         try
         {
-            _playerMultiSprite = window.PlayerAvatarPrefab.Instantiate() as PlayerMultiSprite;
+            _playerMultiSprite = window.PlayerSpritePrefab.Instantiate() as PlayerMultiSprite;
 
             _playerMultiSprite.Init(_window.PlayerColor);
             _playerMultiSprite.ShowSprite(BaseSprite);

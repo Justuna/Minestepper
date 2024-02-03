@@ -6,6 +6,7 @@ res://Assets/Shaders/SpriteTilerSmall.tres
 res://Assets/Shaders/SpriteTiler.tres
 res://Prefabs/Cell.tscn
 res://Scenes/PlayerWindow.tscn
+res://Scenes/MainGame.tscn
 res://Scripts/Graphics/AvatarAnimationData.cs
 res://Scripts/Graphics/Flag.cs
 res://Scripts/Graphics/PlayerAvatar.cs
@@ -19,4 +20,5 @@ res://Scripts/Minesweeper/MinesweeperGrid.cs
 res://Scripts/Minesweeper/PlayerInput.cs
 res://Scripts/Minesweeper/PlayerWindow.cs
 res://Scripts/Testing/TestMultiSprite.cs
-res://Scenes/MainGame.tscn
+res://Prefabs/Flag.tscn
+res://Prefabs/Player1.tscn

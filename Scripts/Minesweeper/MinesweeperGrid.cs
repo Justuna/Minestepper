@@ -11,7 +11,6 @@ public partial class MinesweeperGrid : Control
 	[Export] private PackedScene _gridCellTemplate;
 
 	[ExportSubgroup("Visual Parameters")]
-	[Export] private int _spacing;
 	[Export] private int _padding;
 	[Export] private float _bgValueAdjustment;
 
@@ -93,26 +92,24 @@ public partial class MinesweeperGrid : Control
 					int cWidth = Mathf.CeilToInt(cell.GetRect().Size.X);
 					int cHeight = Mathf.CeilToInt(cell.GetRect().Size.Y);
 
-					_cellOffset = new Vector2(cWidth + _spacing, cHeight + _spacing);
-					_gridLayout.AddThemeConstantOverride("h_separation", (int) _cellOffset.X);
-					_gridLayout.AddThemeConstantOverride("v_separation", (int) _cellOffset.Y);
-					
+					_cellOffset = new Vector2(cWidth, cHeight);
+					// _gridLayout.AddThemeConstantOverride("h_separation", (int) _cellOffset.X);
+					// _gridLayout.AddThemeConstantOverride("v_separation", (int) _cellOffset.Y);
 
-					float sizeX = (2 * _padding) + (cWidth * _width) + (_spacing * (_width - 1));
-					float sizeY = (2 * _padding) + (cHeight * _height) + (_spacing * (_height - 1));
+					float sizeX = (2 * _padding) + (cWidth * _width);
+					float sizeY = (2 * _padding) + (cHeight * _height);
 
 					_background.SetSize(new Vector2(sizeX, sizeY));
 					_gridLayout.SetSize(new Vector2(sizeX - 2 * _padding, sizeY - 2 * _padding));
-					_background.GetThemeStylebox("panel").Set("bg_color", 
-						ColorOperations.AdjustValue(_window.PlayerColor, _bgValueAdjustment, true));
+					_background.Modulate = ColorOperations.AdjustValue(_window.PlayerColor, _bgValueAdjustment, true);
+
+					_gridLayout.PivotOffset = new Vector2(_gridLayout.Size.X / 2, _gridLayout.Size.Y / 2);
+					_background.PivotOffset = new Vector2(_background.Size.X / 2, _background.Size.Y / 2);
+					_gridLayout.SetPosition(-_gridLayout.PivotOffset);
+					_background.SetPosition(-_background.PivotOffset);
 				}
 
 				_gridLayout.AddChild(cell);
-
-				_gridLayout.PivotOffset = new Vector2(_gridLayout.Size.X / 2, _gridLayout.Size.Y / 2);
-				_background.PivotOffset = new Vector2(_background.Size.X / 2, _background.Size.Y / 2);
-				_gridLayout.SetPosition(-_gridLayout.PivotOffset);
-				_background.SetPosition(-_background.PivotOffset);
 
 				cell.Init(this, i);
 				_gridCells[i] = cell;
@@ -133,12 +130,13 @@ public partial class MinesweeperGrid : Control
 			float ratioY = _window.SqueezeSize.Y / _background.Size.Y;
 			float newScale = Mathf.Min(ratioX, ratioY);
 
+			GD.Print(_window.SqueezeSize.X);
+			GD.Print(newScale);
+
 			Scale = new Vector2(newScale, newScale);
 		}
 
 		_gridLayout.Columns = _width;
-
-		GD.Print(_gridAnchor.Position);
 	}
 
 	public void Start()
@@ -411,7 +409,7 @@ public partial class MinesweeperGrid : Control
 
 	public void Flag()
 	{
-		CurrentCell.Flag();
+		if (!CurrentCell.Flag()) return;
 
 		if (CurrentCell.IsFlagged) _flagCount++;
 		else _flagCount--;

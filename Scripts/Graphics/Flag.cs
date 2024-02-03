@@ -1,8 +1,8 @@
 using Godot;
 
-public partial class Flag : Node2D
+public partial class Flag : Control
 {
-    [Export] private Sprite2D _flagFill;
+    [Export] private TextureRect _flagFill;
 
     private MinesweeperCell _cell;
     private PlayerWindow _window;
