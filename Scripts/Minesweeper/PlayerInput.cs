@@ -20,6 +20,8 @@ public partial class PlayerInput : Node
     private bool _rightButton = false;
     private bool _upButton = false;
     private bool _downButton = false;
+    private bool _zoomIn = false;
+    private bool _zoomOut = false;
 
     public void Init(PlayerWindow window)
     {
@@ -27,7 +29,7 @@ public partial class PlayerInput : Node
 
         try 
         {
-            _deviceID = Input.GetConnectedJoypads()[_window.PlayerID - 1];
+            _deviceID = Input.GetConnectedJoypads()[_window.PlayerIndex];
         }
         catch (Exception)
         {
@@ -35,7 +37,7 @@ public partial class PlayerInput : Node
 
             _deviceID = -1;
 
-            if (_window.PlayerID <= 0)
+            if (_window.PlayerIndex <= 0)
             {
                 // Negative player means this player viewport is not being used
                 // Zero player is unused
@@ -90,9 +92,9 @@ public partial class PlayerInput : Node
 
     private void ProcessZoom()
     {
-        if (Input.IsActionPressed("Zoom In") ^ Input.IsActionPressed("Zoom Out"))
+        if (_zoomIn ^ _zoomOut)
         {
-            if (Input.IsActionPressed("Zoom In"))
+            if (_zoomIn)
             {
                 ZoomDirection = 1;
             }
@@ -154,6 +156,24 @@ public partial class PlayerInput : Node
         else if (@event.IsActionReleased("Down"))
         {
             _downButton = false;
+        }
+
+        if (@event.IsActionPressed("Zoom In"))
+        {
+            _zoomIn = true;
+        }
+        else if (@event.IsActionReleased("Zoom In"))
+        {
+            _zoomIn = false;
+        }
+
+        if (@event.IsActionPressed("Zoom Out"))
+        {
+            _zoomOut = true;
+        }
+        else if (@event.IsActionReleased("Zoom Out"))
+        {
+            _zoomOut = false;
         }
 
         if (@event.IsActionPressed("Reveal"))

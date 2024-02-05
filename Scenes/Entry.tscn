@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4ona5p0c7ybm"]
+
+[ext_resource type="Script" path="res://Scripts/mini_game_manager.gd" id="1_q48n7"]
+[ext_resource type="Script" path="res://Scripts/Minesweeper/EntryPoint.cs" id="2_kvd7r"]
+[ext_resource type="PackedScene" uid="uid://bpldld5pqaas0" path="res://Scenes/2PlayerGame.tscn" id="3_v4ejo"]
+[ext_resource type="PackedScene" uid="uid://bd7cyoifgwavk" path="res://Scenes/3PlayerGame.tscn" id="4_rb85l"]
+[ext_resource type="PackedScene" uid="uid://bmrniir621gmj" path="res://Scenes/4PlayerGame.tscn" id="5_g0vt5"]
+
+[node name="Entry Point" type="Node"]
+
+[node name="Minigame Manager" type="Node" parent="."]
+script = ExtResource("1_q48n7")
+game_name = null
+min_player_count = null
+max_player_count = null
+
+[node name="Game" type="Node" parent="."]
+script = ExtResource("2_kvd7r")
+_2PlayerScene = ExtResource("3_v4ejo")
+_3PlayerScene = ExtResource("4_rb85l")
+_4PlayerScene = ExtResource("5_g0vt5")
+
+[connection signal="game_started" from="Minigame Manager" to="Game" method="Init"]

@@ -28,10 +28,10 @@ const DUMMY_SAVE_DATA: Dictionary = {
 			"color": "#327ba8",
 			"points": 2,
 		},
-		{
-			"color": "#7932a8",
-			"points": 0,
-		},
+		# {
+		# 	"color": "#7932a8",
+		# 	"points": 0,
+		# },
 	],
 	"games": [
 		{

@@ -26,7 +26,6 @@ public partial class PlayerWindow : Control
     [Export] private float _fontValueAdjustment;
     [Export] private PackedScene _playerSpritePrefab;
     [Export] private Vector2 _smallThreshold;
-    [Export] private Color _playerColor;
     
     [ExportSubgroup("Large UI")]
     [Export] private float _playerSpriteScaleLarge;
@@ -38,6 +37,7 @@ public partial class PlayerWindow : Control
     [Export] private int _fontSmall;
     [Export] private int _fontOutlineSmall;
 
+    private PlayerData _data;
     private Vector2 _screenCenter => new Vector2(Size.X / 2, Size.Y / 2);
     private Vector2 _offscreenTop => _screenCenter + new Vector2(0, -2 * Size.Y);
     private Vector2 _offscreenBottom => _screenCenter + new Vector2(0, 2 * Size.Y);
@@ -50,19 +50,14 @@ public partial class PlayerWindow : Control
     public MinesweeperGrid ActiveGrid { get; private set; }
     public PlayerInput Input { get; private set; }
     public PackedScene PlayerSpritePrefab => _playerSpritePrefab;
-    public Color PlayerColor => _playerColor;
-    public int PlayerID { get; private set; }
+    public Color PlayerColor => _data.color;
+    public int PlayerIndex => _data.index;
     public Vector2 SqueezeSize => new Vector2(_squeezeBounds.Size.X, _squeezeBounds.Size.Y);
 
-    public override void _Ready()
-    {
-        Init(1);
-    }
-
-    public void Init(int playerID)
+    public void Init(PlayerData data)
     {
         Input = _playerInput;
-        PlayerID = playerID;
+        _data = data;
 
         Color fontOutline = ColorOperations.AdjustValue(PlayerColor, _fontValueAdjustment, true);
 
