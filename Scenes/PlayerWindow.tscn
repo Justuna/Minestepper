@@ -1,7 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://bw8l2u700t6mo"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerWindow.cs" id="1_fkkf7"]
-[ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/board.tscn" id="2_0qnsv"]
+[ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/Board.tscn" id="2_0qnsv"]
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerInput.cs" id="3_0jmo8"]
 [ext_resource type="Resource" uid="uid://bulayail5moek" path="res://Prefabs/Tracks/Normal/NormalTrack.tres" id="3_w8s6a"]
 [ext_resource type="Script" path="res://Scripts/Graphics/PlayerAvatar.cs" id="4_8lv8x"]
@@ -105,7 +105,6 @@ _boardSwitchCurve = SubResource("Curve_r1sfb")
 _fontValueAdjustment = -0.5
 _playerSpritePrefab = ExtResource("4_gkrlj")
 _smallThreshold = Vector2(1500, 900)
-_playerColor = Color(0, 0.705882, 0.439216, 1)
 _playerSpriteScaleLarge = 0.75
 _fontLarge = 30
 _fontOutlineLarge = 12
@@ -216,14 +215,12 @@ vertical_alignment = 1
 [node name="Bottom Left Text" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.98
-anchor_right = 0.02
-anchor_bottom = 0.98
-offset_left = -0.039999
-offset_top = -115.04
-offset_right = 203.96
-offset_bottom = -0.0400391
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -105.0
+offset_right = 205.0
+offset_bottom = -15.0
 grow_vertical = 0
 alignment = 2
 

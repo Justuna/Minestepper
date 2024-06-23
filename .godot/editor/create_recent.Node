@@ -1,5 +1,7 @@
-HBoxContainer
+Label
+Panel
 ColorRect
+HBoxContainer
 BoxContainer
 HFlowContainer
 Node
@@ -11,4 +13,3 @@ CenterContainer
 Container
 MarginContainer
 Camera2D
-SubViewport

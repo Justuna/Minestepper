@@ -10,9 +10,6 @@
 
 [node name="Minigame Manager" type="Node" parent="."]
 script = ExtResource("1_q48n7")
-game_name = null
-min_player_count = null
-max_player_count = null
 
 [node name="Game" type="Node" parent="."]
 script = ExtResource("2_kvd7r")

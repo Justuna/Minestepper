@@ -21,17 +21,17 @@ const DUMMY_SAVE_DATA: Dictionary = {
 			"points": 0,
 		},
 		{
+			"color": "#327ba8",
+			"points": 0,
+		},
+		{
 			"color": "#63a832",
 			"points": 0,
 		},
 		{
-			"color": "#327ba8",
-			"points": 2,
+			"color": "#7932a8",
+			"points": 0,
 		},
-		# {
-		# 	"color": "#7932a8",
-		# 	"points": 0,
-		# },
 	],
 	"games": [
 		{

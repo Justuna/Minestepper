@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmrniir621gmj"]
+[gd_scene load_steps=7 format=3 uid="uid://bmrniir621gmj"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/GameWindow.cs" id="1_bf4nl"]
 [ext_resource type="PackedScene" uid="uid://bw8l2u700t6mo" path="res://Scenes/PlayerWindow.tscn" id="1_larhb"]
 [ext_resource type="PackedScene" uid="uid://c8fukc1sjsldm" path="res://Prefabs/Player2.tscn" id="2_c3aqy"]
 [ext_resource type="PackedScene" uid="uid://xlrm662f5dfl" path="res://Prefabs/Player3.tscn" id="3_xoiwx"]
 [ext_resource type="PackedScene" uid="uid://5dy5pklrcj5r" path="res://Prefabs/Player4.tscn" id="4_1ii3k"]
+[ext_resource type="PackedScene" uid="uid://b23kx8oui25lx" path="res://Prefabs/GameTimer.tscn" id="6_5alys"]
 
-[node name="MainGame" type="Control" node_paths=PackedStringArray("_playerWindows")]
+[node name="MainGame" type="Control" node_paths=PackedStringArray("_playerWindows", "_timer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bf4nl")
 _playerWindows = [NodePath("Splitscreen/1-2/Player 1 Viewport/Player 1 SubViewport/Player 1 Game"), NodePath("Splitscreen/1-2/Player 2 Viewport/Player 2 SubViewport/Player 2 Game"), NodePath("Splitscreen/3-4/Player 3 Viewport/Player 3 SubViewport/Player 3 Game"), NodePath("Splitscreen/3-4/Player 4 Viewport/Player 4 SubViewport/Player 4 Game")]
+_timer = NodePath("Game Timer")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -44,7 +46,7 @@ stretch = true
 
 [node name="Player 1 SubViewport" type="SubViewport" parent="Splitscreen/1-2/Player 1 Viewport"]
 handle_input_locally = false
-size = Vector2i(574, 322)
+size = Vector2i(552, 300)
 render_target_update_mode = 4
 
 [node name="Player 1 Game" parent="Splitscreen/1-2/Player 1 Viewport/Player 1 SubViewport" instance=ExtResource("1_larhb")]
@@ -53,6 +55,11 @@ render_target_update_mode = 4
 scale = Vector2(0.5, 0.5)
 anchor_mode = 0
 
+[node name="ColorRect" type="ColorRect" parent="Splitscreen/1-2"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
 [node name="Player 2 Viewport" type="SubViewportContainer" parent="Splitscreen/1-2"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -60,7 +67,7 @@ stretch = true
 
 [node name="Player 2 SubViewport" type="SubViewport" parent="Splitscreen/1-2/Player 2 Viewport"]
 handle_input_locally = false
-size = Vector2i(574, 322)
+size = Vector2i(552, 300)
 render_target_update_mode = 4
 
 [node name="Player 2 Game" parent="Splitscreen/1-2/Player 2 Viewport/Player 2 SubViewport" instance=ExtResource("1_larhb")]
@@ -68,6 +75,11 @@ _playerSpritePrefab = ExtResource("2_c3aqy")
 
 [node name="Camera2D" type="Camera2D" parent="Splitscreen/1-2/Player 2 Viewport"]
 anchor_mode = 0
+
+[node name="Horizontal Separator" type="ColorRect" parent="Splitscreen"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
 
 [node name="3-4" type="HBoxContainer" parent="Splitscreen"]
 layout_mode = 2
@@ -80,7 +92,7 @@ stretch = true
 
 [node name="Player 3 SubViewport" type="SubViewport" parent="Splitscreen/3-4/Player 3 Viewport"]
 handle_input_locally = false
-size = Vector2i(574, 322)
+size = Vector2i(552, 300)
 render_target_update_mode = 4
 
 [node name="Player 3 Game" parent="Splitscreen/3-4/Player 3 Viewport/Player 3 SubViewport" instance=ExtResource("1_larhb")]
@@ -89,6 +101,11 @@ _playerSpritePrefab = ExtResource("3_xoiwx")
 [node name="Camera2D" type="Camera2D" parent="Splitscreen/3-4/Player 3 Viewport"]
 anchor_mode = 0
 
+[node name="ColorRect" type="ColorRect" parent="Splitscreen/3-4"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
 [node name="Player 4 Viewport" type="SubViewportContainer" parent="Splitscreen/3-4"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -96,7 +113,7 @@ stretch = true
 
 [node name="Player 4 SubViewport" type="SubViewport" parent="Splitscreen/3-4/Player 4 Viewport"]
 handle_input_locally = false
-size = Vector2i(574, 322)
+size = Vector2i(552, 300)
 render_target_update_mode = 4
 
 [node name="Player 4 Game" parent="Splitscreen/3-4/Player 4 Viewport/Player 4 SubViewport" instance=ExtResource("1_larhb")]
@@ -104,3 +121,14 @@ _playerSpritePrefab = ExtResource("4_1ii3k")
 
 [node name="Camera2D" type="Camera2D" parent="Splitscreen/3-4/Player 4 Viewport"]
 anchor_mode = 0
+
+[node name="Game Timer" parent="." instance=ExtResource("6_5alys")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.69, 0.69)

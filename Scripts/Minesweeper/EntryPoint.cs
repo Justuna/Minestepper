@@ -71,6 +71,6 @@ public partial class EntryPoint : Node
         }
          
         AddChild(window);
-        window.Init(this, data);
+        window.Init(this, data, 15);
     }
 }
