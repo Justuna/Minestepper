@@ -17,6 +17,6 @@ _2PlayerScene = ExtResource("3_v4ejo")
 _3PlayerScene = ExtResource("4_rb85l")
 _4PlayerScene = ExtResource("5_g0vt5")
 _minigameManager = NodePath("../Minigame Manager")
-_gameLength = 10.0
+_gameLength = 90.0
 
 [connection signal="game_started" from="Minigame Manager" to="Game" method="Init"]
