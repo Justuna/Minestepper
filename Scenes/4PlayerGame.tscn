@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmrniir621gmj"]
+[gd_scene load_steps=8 format=3 uid="uid://bmrniir621gmj"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/GameWindow.cs" id="1_bf4nl"]
 [ext_resource type="PackedScene" uid="uid://bw8l2u700t6mo" path="res://Scenes/PlayerWindow.tscn" id="1_larhb"]
@@ -6,8 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://xlrm662f5dfl" path="res://Prefabs/Player3.tscn" id="3_xoiwx"]
 [ext_resource type="PackedScene" uid="uid://5dy5pklrcj5r" path="res://Prefabs/Player4.tscn" id="4_1ii3k"]
 [ext_resource type="PackedScene" uid="uid://b23kx8oui25lx" path="res://Prefabs/GameTimer.tscn" id="6_5alys"]
+[ext_resource type="PackedScene" uid="uid://dimdu0cjh0nq2" path="res://Prefabs/Countdown.tscn" id="7_chbc2"]
 
-[node name="MainGame" type="Control" node_paths=PackedStringArray("_playerWindows", "_timer")]
+[node name="MainGame" type="Control" node_paths=PackedStringArray("_playerWindows", "_timer", "_countdown")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +18,7 @@ grow_vertical = 2
 script = ExtResource("1_bf4nl")
 _playerWindows = [NodePath("Splitscreen/1-2/Player 1 Viewport/Player 1 SubViewport/Player 1 Game"), NodePath("Splitscreen/1-2/Player 2 Viewport/Player 2 SubViewport/Player 2 Game"), NodePath("Splitscreen/3-4/Player 3 Viewport/Player 3 SubViewport/Player 3 Game"), NodePath("Splitscreen/3-4/Player 4 Viewport/Player 4 SubViewport/Player 4 Game")]
 _timer = NodePath("Game Timer")
+_countdown = NodePath("Countdown")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -132,3 +134,6 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.69, 0.69)
+
+[node name="Countdown" parent="." instance=ExtResource("7_chbc2")]
+layout_mode = 1

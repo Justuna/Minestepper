@@ -89,8 +89,11 @@ public partial class PlayerWindow : Control
 
         _playerInput.Init(this);
         _playerAvatar.Init(this);
+    }
 
-        // Need to wait for the controls to actually establish their sizes
+    public void Start() 
+    {
+        _playerAvatar.PlayAnimation("HappyFlash");
         NextTick(SpawnNewGrid);
     }
 

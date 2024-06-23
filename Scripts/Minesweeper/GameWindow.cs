@@ -15,13 +15,14 @@ public partial class GameWindow : Control
     [ExportGroup("References")]
     [Export] private PlayerWindow[] _playerWindows;
     [Export] private GameTimer _timer;
+    [Export] private Countdown _countdown;
 
     [ExportGroup("Parameters")]
     [Export] private double _hurryUpTime = 10;
     
     private EntryPoint _entryPoint;
     private double _timeLeft;
-    private bool _gameOver = false;
+    private bool _gameRunning = false;
 
     public void Init(EntryPoint entryPoint, List<PlayerData> data, double time)
     {
@@ -33,11 +34,21 @@ public partial class GameWindow : Control
         {
             _playerWindows[i].Init(data[i]);
         }
+
+        _countdown.CountdownFinished += Start;
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < _playerWindows.Length; i++)
+        {
+            _playerWindows[i].Start();
+        }
     }
 
     public override void _Process(double delta) 
     {
-        if (!_gameOver) 
+        if (!_gameRunning) 
         {
             _timeLeft -= delta;
             _timer.Display(_timeLeft);
@@ -56,7 +67,7 @@ public partial class GameWindow : Control
 
     void GameEnd() 
     {
-        _gameOver = true;
+        _gameRunning = true;
         _timer.HurryUpMode = false;
         _timer.Display(0);
 

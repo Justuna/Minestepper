@@ -16,5 +16,6 @@ script = ExtResource("2_kvd7r")
 _2PlayerScene = ExtResource("3_v4ejo")
 _3PlayerScene = ExtResource("4_rb85l")
 _4PlayerScene = ExtResource("5_g0vt5")
+_gameLength = 120.0
 
 [connection signal="game_started" from="Minigame Manager" to="Game" method="Init"]

@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://dimdu0cjh0nq2"]
+
+[ext_resource type="Script" path="res://Scripts/Graphics/Countdown.cs" id="1_8ehg3"]
+[ext_resource type="FontFile" uid="uid://di6uqurcqgdvr" path="res://Assets/Fonts/Super Squad.ttf" id="1_wi088"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gjdmb"]
+font = ExtResource("1_wi088")
+font_size = 100
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Countdown" type="Control" node_paths=PackedStringArray("_timer", "_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8ehg3")
+_timer = NodePath("Timer")
+_label = NodePath("Label")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.109804, 0.109804, 0.109804, 0.541176)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.5
+offset_top = -56.0
+offset_right = 161.5
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "3"
+label_settings = SubResource("LabelSettings_gjdmb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true

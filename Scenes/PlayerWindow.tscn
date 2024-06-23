@@ -25,10 +25,9 @@ point_count = 6
 
 [sub_resource type="Curve" id="Curve_wujat"]
 resource_local_to_scene = true
-min_value = -300.0
-max_value = 50.0
-_data = [Vector2(0, 0), 0.0, 264.988, 0, 0, Vector2(0.1, 15), -427.288, -427.288, 0, 0, Vector2(0.4, -90), 0.0, 0.0, 0, 0, Vector2(0.68, 0), 723.875, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 5
+max_value = 0.01
+_data = [Vector2(0, 0.005), 0.0, 0.0, 0, 1, Vector2(1, 0.005), 0.0, 0.0, 1, 0]
+point_count = 2
 metadata/_snap_enabled = true
 
 [sub_resource type="Curve" id="Curve_6d2y5"]
@@ -169,6 +168,15 @@ offset_left = -244.286
 offset_top = -125.714
 offset_right = -204.286
 offset_bottom = -85.7143
+
+[node name="HappyFlash" type="Node" parent="Player Avatar"]
+script = ExtResource("6_yv2sl")
+_duration = 1.0
+_xDisplacement = SubResource("Curve_8ovjo")
+_yDisplacement = SubResource("Curve_wujat")
+_xScale = SubResource("Curve_6d2y5")
+_yScale = SubResource("Curve_ltq0m")
+_sprite = "Excited"
 
 [node name="HappyJump" type="Node" parent="Player Avatar"]
 script = ExtResource("6_yv2sl")
