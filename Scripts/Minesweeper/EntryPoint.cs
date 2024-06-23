@@ -7,9 +7,16 @@ using Array = Godot.Collections.Array;
 
 public partial class EntryPoint : Node
 {
+    [ExportGroup("References")]
     [Export] private PackedScene _2PlayerScene;
     [Export] private PackedScene _3PlayerScene;
     [Export] private PackedScene _4PlayerScene;
+    [Export] private Node _minigameManager;
+
+    [ExportGroup("Parameters")]
+    [Export] private double _gameLength;
+
+    public GodotObject MinigameManager => _minigameManager;
 
     public void Init(Variant playersVariant)
     {
@@ -71,6 +78,6 @@ public partial class EntryPoint : Node
         }
          
         AddChild(window);
-        window.Init(this, data);
+        window.Init(this, data, _gameLength);
     }
 }

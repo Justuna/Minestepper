@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 
-public partial class PlayerWindow : Control
+public partial class PlayerWindow : Control, IComparable<PlayerWindow>
 {
     [ExportGroup("References")]
     [Export] private PlayerInput _playerInput;
@@ -15,6 +15,9 @@ public partial class PlayerWindow : Control
     [Export] private Label _mineDisplay;
     [Export] private Label _bonusDisplay;
     [Export] private Label _flagDisplay;
+    [Export] private Label _gameEndDisplay;
+    [Export] private ColorRect _defeatOverlay;
+    [Export] private ColorRect _victoryOverlay;
     [Export] private Flag _flagIcon;
     [Export] private PackedScene _gridTemplate;
     [Export] private GridLevelTrack _track;
@@ -44,9 +47,9 @@ public partial class PlayerWindow : Control
     private MinesweeperGrid _oldGrid;
     private MinesweeperGrid _newGrid;
     private double _gridSwitchProgress = 1;
-    private int _score = 0;
     private int _level;
 
+    public int Score { get; private set; }
     public MinesweeperGrid ActiveGrid { get; private set; }
     public PlayerInput Input { get; private set; }
     public PackedScene PlayerSpritePrefab => _playerSpritePrefab;
@@ -89,9 +92,36 @@ public partial class PlayerWindow : Control
 
         _playerInput.Init(this);
         _playerAvatar.Init(this);
+    }
 
-        // Need to wait for the controls to actually establish their sizes
+    public void Start() 
+    {
+        _playerAvatar.PlayAnimation("HappyFlash");
+        Input.Active = true;
         NextTick(SpawnNewGrid);
+    }
+
+    public void End()
+    {
+        _playerAvatar.PlayAnimation("ScaredShake");
+        Input.Active = false;
+        _gameEndDisplay.Visible = true;
+    }
+
+    public void Results(bool won, string message)
+    {
+        _gameEndDisplay.Text = message;
+        if (won)
+        {
+            _playerAvatar.PlayAnimation("HappyJump");
+            _playerAvatar.BaseSprite = "Excited";
+            _victoryOverlay.Visible = true;
+        }
+        else 
+        {
+            _playerAvatar.BaseSprite = "Disappointed";
+            _defeatOverlay.Visible = true;
+        }
     }
 
     private Queue<Action> _nextTickActions = new();
@@ -225,7 +255,7 @@ public partial class PlayerWindow : Control
         int scoreChange = ((ActiveGrid.TotalMines - ActiveGrid.UnflaggedMines) * level.CorrectWorth) - (ActiveGrid.UnflaggedMines * level.MinePenalty);
         if (ActiveGrid.UnflaggedMines == 0) scoreChange += level.ClearBonus;
 
-        _score += scoreChange;
+        Score += scoreChange;
         ScoreToDisplay();
 
         Node node = _pointChangeTick.Instantiate();
@@ -257,7 +287,7 @@ public partial class PlayerWindow : Control
 
     private void ScoreToDisplay()
     {
-        _scoreDisplay.Text = _score + " pts";
+        _scoreDisplay.Text = Score + " pts";
     }
 
     private void FlagDisplayChange(int flags)
@@ -267,6 +297,22 @@ public partial class PlayerWindow : Control
         _flagDisplay.Text = $"{flags}/{level.GridMineCount}";
         if (flags == level.GridMineCount) _flagDisplay.Text += "?";
         else if (flags > level.GridMineCount) _flagDisplay.Text += "??";
+    }
+
+    public int CompareTo(PlayerWindow other)
+    {
+        if (other.Score > Score)
+        {
+            return 1;
+        }
+        else if (other.Score < Score)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        } 
     }
 }
 

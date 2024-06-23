@@ -1,7 +1,7 @@
-[gd_scene load_steps=28 format=3 uid="uid://bw8l2u700t6mo"]
+[gd_scene load_steps=29 format=3 uid="uid://bw8l2u700t6mo"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerWindow.cs" id="1_fkkf7"]
-[ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/board.tscn" id="2_0qnsv"]
+[ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/Board.tscn" id="2_0qnsv"]
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerInput.cs" id="3_0jmo8"]
 [ext_resource type="Resource" uid="uid://bulayail5moek" path="res://Prefabs/Tracks/Normal/NormalTrack.tres" id="3_w8s6a"]
 [ext_resource type="Script" path="res://Scripts/Graphics/PlayerAvatar.cs" id="4_8lv8x"]
@@ -25,10 +25,9 @@ point_count = 6
 
 [sub_resource type="Curve" id="Curve_wujat"]
 resource_local_to_scene = true
-min_value = -300.0
-max_value = 50.0
-_data = [Vector2(0, 0), 0.0, 264.988, 0, 0, Vector2(0.1, 15), -427.288, -427.288, 0, 0, Vector2(0.4, -90), 0.0, 0.0, 0, 0, Vector2(0.68, 0), 723.875, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 5
+max_value = 0.01
+_data = [Vector2(0, 0.005), 0.0, 0.0, 0, 1, Vector2(1, 0.005), 0.0, 0.0, 1, 0]
+point_count = 2
 metadata/_snap_enabled = true
 
 [sub_resource type="Curve" id="Curve_6d2y5"]
@@ -79,7 +78,13 @@ font_size = 18
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds", "_pointChangeTickSpawn", "_scoreDisplay", "_mineDisplay", "_bonusDisplay", "_flagDisplay", "_flagIcon", "_backgrounds")]
+[sub_resource type="LabelSettings" id="LabelSettings_1imuv"]
+font = ExtResource("5_4fv7t")
+font_size = 72
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds", "_pointChangeTickSpawn", "_scoreDisplay", "_mineDisplay", "_bonusDisplay", "_flagDisplay", "_gameEndDisplay", "_defeatOverlay", "_victoryOverlay", "_flagIcon", "_backgrounds")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,6 +101,9 @@ _scoreDisplay = NodePath("Bottom Left Text/Points")
 _mineDisplay = NodePath("Top Left Text/Mine Count")
 _bonusDisplay = NodePath("Top Left Text/Bonus")
 _flagDisplay = NodePath("Top Right UI/Flag Count")
+_gameEndDisplay = NodePath("Game End Message")
+_defeatOverlay = NodePath("Defeat Overlay")
+_victoryOverlay = NodePath("Victory Overlay")
 _flagIcon = NodePath("Top Right UI/AspectRatioContainer/Flag")
 _gridTemplate = ExtResource("2_0qnsv")
 _track = ExtResource("3_w8s6a")
@@ -105,7 +113,6 @@ _boardSwitchCurve = SubResource("Curve_r1sfb")
 _fontValueAdjustment = -0.5
 _playerSpritePrefab = ExtResource("4_gkrlj")
 _smallThreshold = Vector2(1500, 900)
-_playerColor = Color(0, 0.705882, 0.439216, 1)
 _playerSpriteScaleLarge = 0.75
 _fontLarge = 30
 _fontOutlineLarge = 12
@@ -171,6 +178,15 @@ offset_top = -125.714
 offset_right = -204.286
 offset_bottom = -85.7143
 
+[node name="HappyFlash" type="Node" parent="Player Avatar"]
+script = ExtResource("6_yv2sl")
+_duration = 1.0
+_xDisplacement = SubResource("Curve_8ovjo")
+_yDisplacement = SubResource("Curve_wujat")
+_xScale = SubResource("Curve_6d2y5")
+_yScale = SubResource("Curve_ltq0m")
+_sprite = "Excited"
+
 [node name="HappyJump" type="Node" parent="Player Avatar"]
 script = ExtResource("6_yv2sl")
 _duration = 1.0
@@ -216,19 +232,17 @@ vertical_alignment = 1
 [node name="Bottom Left Text" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.98
-anchor_right = 0.02
-anchor_bottom = 0.98
-offset_left = -0.039999
-offset_top = -115.04
-offset_right = 203.96
-offset_bottom = -0.0400391
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -105.0
+offset_right = 205.0
+offset_bottom = -15.0
 grow_vertical = 0
 alignment = 2
 
 [node name="Points" type="Label" parent="Bottom Left Text"]
-z_index = 5
+z_index = 10
 layout_mode = 2
 text = "0 pts"
 label_settings = SubResource("LabelSettings_lbd8u")
@@ -274,3 +288,45 @@ stretch_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 metadata/_edit_group_ = true
+
+[node name="Game End Message" type="Label" parent="."]
+visible = false
+z_index = 100
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -56.0
+offset_right = 196.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Time's up!"
+label_settings = SubResource("LabelSettings_1imuv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Victory Overlay" type="ColorRect" parent="."]
+visible = false
+z_index = 7
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.701961, 0.701961, 0.701961, 0.560784)
+
+[node name="Defeat Overlay" type="ColorRect" parent="."]
+visible = false
+z_index = 7
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0823529, 0.0823529, 0.0823529, 0.823529)
