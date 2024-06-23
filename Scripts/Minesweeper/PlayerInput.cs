@@ -13,6 +13,20 @@ public partial class PlayerInput : Node
     public Vector2 Direction = Vector2.Zero;
     public bool Fast { get; private set; } = false;
     public int ZoomDirection { get; private set; } = 0;
+    public bool Active 
+    { 
+        get { return _active; } 
+        set 
+        {
+            if (!value)
+            {
+                ZoomDirection = 0;
+                Direction = Vector2.Zero;
+            }
+
+            _active = value;
+        }
+    }
 
     private PlayerWindow _window;
     private int _deviceID;
@@ -22,6 +36,7 @@ public partial class PlayerInput : Node
     private bool _downButton = false;
     private bool _zoomIn = false;
     private bool _zoomOut = false;
+    private bool _active = false;
 
     public void Init(PlayerWindow window)
     {
@@ -51,8 +66,11 @@ public partial class PlayerInput : Node
 
     public override void _Process(double delta)
     {
-        ProcessVelocity(delta);   
-        ProcessZoom();
+        if (_active) 
+        {
+            ProcessVelocity(delta);   
+            ProcessZoom();
+        }
     }
 
     private void ProcessVelocity(double delta)
@@ -178,12 +196,12 @@ public partial class PlayerInput : Node
 
         if (@event.IsActionPressed("Reveal"))
         {
-            if (_window.ActiveGrid != null) _window.ActiveGrid.Reveal();
+            if (_window.ActiveGrid != null && _active) _window.ActiveGrid.Reveal();
         }
 
         if (@event.IsActionPressed("Flag"))
         {
-            if (_window.ActiveGrid != null) _window.ActiveGrid.Flag();
+            if (_window.ActiveGrid != null && _active) _window.ActiveGrid.Flag();
         }
     }
 }

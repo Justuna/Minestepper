@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bw8l2u700t6mo"]
+[gd_scene load_steps=29 format=3 uid="uid://bw8l2u700t6mo"]
 
 [ext_resource type="Script" path="res://Scripts/Minesweeper/PlayerWindow.cs" id="1_fkkf7"]
 [ext_resource type="PackedScene" uid="uid://cgtny3rdlhy55" path="res://Prefabs/Board.tscn" id="2_0qnsv"]
@@ -78,7 +78,13 @@ font_size = 18
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds", "_pointChangeTickSpawn", "_scoreDisplay", "_mineDisplay", "_bonusDisplay", "_flagDisplay", "_flagIcon", "_backgrounds")]
+[sub_resource type="LabelSettings" id="LabelSettings_1imuv"]
+font = ExtResource("5_4fv7t")
+font_size = 72
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Test" type="Control" node_paths=PackedStringArray("_playerInput", "_playerAvatar", "_squeezeBounds", "_pointChangeTickSpawn", "_scoreDisplay", "_mineDisplay", "_bonusDisplay", "_flagDisplay", "_gameEndDisplay", "_defeatOverlay", "_victoryOverlay", "_flagIcon", "_backgrounds")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -95,6 +101,9 @@ _scoreDisplay = NodePath("Bottom Left Text/Points")
 _mineDisplay = NodePath("Top Left Text/Mine Count")
 _bonusDisplay = NodePath("Top Left Text/Bonus")
 _flagDisplay = NodePath("Top Right UI/Flag Count")
+_gameEndDisplay = NodePath("Game End Message")
+_defeatOverlay = NodePath("Defeat Overlay")
+_victoryOverlay = NodePath("Victory Overlay")
 _flagIcon = NodePath("Top Right UI/AspectRatioContainer/Flag")
 _gridTemplate = ExtResource("2_0qnsv")
 _track = ExtResource("3_w8s6a")
@@ -233,7 +242,7 @@ grow_vertical = 0
 alignment = 2
 
 [node name="Points" type="Label" parent="Bottom Left Text"]
-z_index = 5
+z_index = 10
 layout_mode = 2
 text = "0 pts"
 label_settings = SubResource("LabelSettings_lbd8u")
@@ -279,3 +288,45 @@ stretch_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 metadata/_edit_group_ = true
+
+[node name="Game End Message" type="Label" parent="."]
+visible = false
+z_index = 100
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -56.0
+offset_right = 196.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Time's up!"
+label_settings = SubResource("LabelSettings_1imuv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Victory Overlay" type="ColorRect" parent="."]
+visible = false
+z_index = 7
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.701961, 0.701961, 0.701961, 0.560784)
+
+[node name="Defeat Overlay" type="ColorRect" parent="."]
+visible = false
+z_index = 7
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0823529, 0.0823529, 0.0823529, 0.823529)

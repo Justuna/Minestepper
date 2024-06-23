@@ -56,11 +56,6 @@ public partial class PlayerAvatar : Control
                 _playerMultiSprite.Position = Vector2.Zero;
                 _playerMultiSprite.Scale = Vector2.One;
 
-                if (_playerMultiSprite.CurrentSprite != BaseSprite)
-                {
-                    _playerMultiSprite.ShowSprite(BaseSprite);
-                }
-
                 _currentAnimation = null;
             }
             else
@@ -72,6 +67,13 @@ public partial class PlayerAvatar : Control
 
                 _playerMultiSprite.Position = new Vector2(xPos, yPos);
                 _playerMultiSprite.Scale = new Vector2(xScale, yScale);
+            }
+        }
+        else 
+        {
+            if (_playerMultiSprite.CurrentSprite != BaseSprite)
+            {
+                _playerMultiSprite.ShowSprite(BaseSprite);
             }
         }
     }

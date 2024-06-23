@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b23kx8oui25lx" path="res://Prefabs/GameTimer.tscn" id="6_5alys"]
 [ext_resource type="PackedScene" uid="uid://dimdu0cjh0nq2" path="res://Prefabs/Countdown.tscn" id="7_chbc2"]
 
-[node name="MainGame" type="Control" node_paths=PackedStringArray("_playerWindows", "_timer", "_countdown")]
+[node name="MainGame" type="Control" node_paths=PackedStringArray("_playerWindows", "_gameTimer", "_countdown", "_resultTimer", "_closeGameTimer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,8 +17,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bf4nl")
 _playerWindows = [NodePath("Splitscreen/1-2/Player 1 Viewport/Player 1 SubViewport/Player 1 Game"), NodePath("Splitscreen/1-2/Player 2 Viewport/Player 2 SubViewport/Player 2 Game"), NodePath("Splitscreen/3-4/Player 3 Viewport/Player 3 SubViewport/Player 3 Game"), NodePath("Splitscreen/3-4/Player 4 Viewport/Player 4 SubViewport/Player 4 Game")]
-_timer = NodePath("Game Timer")
+_gameTimer = NodePath("Game Timer")
 _countdown = NodePath("Countdown")
+_resultTimer = NodePath("Results Timer")
+_closeGameTimer = NodePath("Exit Timer")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -137,3 +139,11 @@ scale = Vector2(0.69, 0.69)
 
 [node name="Countdown" parent="." instance=ExtResource("7_chbc2")]
 layout_mode = 1
+
+[node name="Exit Timer" type="Timer" parent="."]
+wait_time = 7.0
+one_shot = true
+
+[node name="Results Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true

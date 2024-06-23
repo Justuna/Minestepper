@@ -169,6 +169,7 @@ func apply_results(results: Array):
 ## 	  },
 ## ]
 func end_game(results = null):
+	print(results);
 	game_ended.emit()
 	
 	if results != null:

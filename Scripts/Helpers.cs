@@ -1,4 +1,5 @@
 using Godot;
+using Godot.NativeInterop;
 
 public enum BlendModes
 {
@@ -160,5 +161,35 @@ public static class ColorOperations
         newV = Mathf.Clamp(newV, 0, 1);
 
         return Color.FromHsv(h, newS, newV);
+    }
+}
+
+public static class NumberOperations
+{
+    public static string ToOrdinal(int n)
+    {
+        int lastDigit = n % 10;
+        if (lastDigit == 1)
+        {
+            int lastTwoDigits = n % 100;
+            if (lastTwoDigits == 11 || lastTwoDigits == 12 || lastTwoDigits == 13)
+            {
+                return n + "th";
+            }
+
+            return n + "st";
+        }
+        else if (lastDigit == 2)
+        {
+            return n + "nd";
+        }
+        else if (lastDigit == 3)
+        {
+            return n + "rd";
+        }
+        else
+        {
+            return n + "th";
+        }
     }
 }
